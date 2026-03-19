@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Programme — Reine Mère Maah Mentsih</title>
+<meta name="description" content="Hommage à la Reine Mère Maah Mentsih Tsobgni Marie Claire, épouse Fohmiatsuet Nguetsop.">
+<meta property="og:title" content="In Memoriam — Reine Mère Maah Mentsih Tsobgni Marie Claire">
+<meta property="og:description" content="Vers 1938 – 17 février 2026. Obsèques du 24 au 27 juin 2026 à Miatsuet, Bafou.">
+<meta property="og:image" content="images/hero.jpg">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="watermark" aria-hidden="true"></div>
+<div class="ndop" aria-hidden="true"></div>
+<nav class="nav" id="nav">
+<div class="nav-inner">
+  <a class="nav-brand" href="/">In Memoriam</a>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Menu">☰</button>
+  <div class="nav-links" id="nav-links">
+    <a href="/">Accueil</a>
+    <a href="/biographie">Biographie</a>
+    <a href="/famille">Famille</a>
+    <a href="/programme">Programme</a>
+    <a href="/galerie">Galerie</a>
+    <a href="/temoignages">Hommages</a>
+    <a href="/livre-dor">Livre d'or</a>
+    <a href="/dons">Dons</a>
+  </div>
+</div>
+</nav>
+
+
+<section class="sec" style="padding-top:5rem">
+<div class="sec-in reveal">
+  <div class="sec-label">Célébration de vie</div>
+  <h2 class="sec-title">Programme des obsèques</h2>
+  <div class="sec-div"></div>
+
+  <!-- Day tabs -->
+  <div class="prog-tabs" id="prog-tabs">
+    <div class="prog-tab active" onclick="showDay(0)"><span class="prog-tab-day">Jour 1</span>Mer. 24</div>
+    <div class="prog-tab" onclick="showDay(1)"><span class="prog-tab-day">Jour 2</span>Jeu. 25</div>
+    <div class="prog-tab" onclick="showDay(2)"><span class="prog-tab-day">Jour 3</span>Ven. 26</div>
+    <div class="prog-tab" onclick="showDay(3)"><span class="prog-tab-day">Jour 4</span>Sam. 27</div>
+  </div>
+
+  <!-- Jour 1 -->
+  <div class="prog-day active" id="day-0">
+    <h3 style="font-family:var(--font-d);font-size:1.2rem;font-weight:600;color:var(--cream);margin-bottom:1rem">Mercredi 24 juin 2026</h3>
+    <div class="prog-event">
+      <div class="prog-event-title">Arrivée de la dépouille</div>
+      <div class="prog-event-desc">Accueil de la dépouille à Miatsuet.</div>
+    </div>
+    <div class="prog-event">
+      <div class="prog-event-title">Veillée en famille</div>
+      <div class="prog-event-desc">Début des veillées à la concession familiale.</div>
+    </div>
+    <div style="font-size:.8rem;color:var(--text-m);font-style:italic;margin-top:.75rem">Les horaires détaillés seront communiqués prochainement.</div>
+  </div>
+
+  <!-- Jour 2 -->
+  <div class="prog-day" id="day-1">
+    <h3 style="font-family:var(--font-d);font-size:1.2rem;font-weight:600;color:var(--cream);margin-bottom:1rem">Jeudi 25 juin 2026</h3>
+    <div class="prog-event">
+      <div class="prog-event-title">Veillée traditionnelle</div>
+      <div class="prog-event-desc">Rites traditionnels et veillée communautaire à la concession familiale.</div>
+    </div>
+    <div style="font-size:.8rem;color:var(--text-m);font-style:italic;margin-top:.75rem">Les horaires détaillés seront communiqués prochainement.</div>
+  </div>
+
+  <!-- Jour 3 -->
+  <div class="prog-day" id="day-2">
+    <h3 style="font-family:var(--font-d);font-size:1.2rem;font-weight:600;color:var(--cream);margin-bottom:1rem">Vendredi 26 juin 2026</h3>
+    <div class="prog-event">
+      <div class="prog-event-title">Cérémonie officielle</div>
+      <div class="prog-event-desc">Culte d'action de grâce et hommages officiels.</div>
+    </div>
+    <div class="prog-event">
+      <div class="prog-event-title">Inhumation</div>
+      <div class="prog-event-desc">Mise en terre de la Reine Mère.</div>
+    </div>
+    <div style="font-size:.8rem;color:var(--text-m);font-style:italic;margin-top:.75rem">Les horaires détaillés seront communiqués prochainement.</div>
+  </div>
+
+  <!-- Jour 4 -->
+  <div class="prog-day" id="day-3">
+    <h3 style="font-family:var(--font-d);font-size:1.2rem;font-weight:600;color:var(--cream);margin-bottom:1rem">Samedi 27 juin 2026</h3>
+    <div class="prog-event">
+      <div class="prog-event-title">Célébration de la vie</div>
+      <div class="prog-event-desc">Célébration de la vie de la Reine Mère.</div>
+    </div>
+    <div class="prog-event">
+      <div class="prog-event-title">Réception</div>
+      <div class="prog-event-desc">Réception et retrouvailles familiales.</div>
+    </div>
+    <div style="font-size:.8rem;color:var(--text-m);font-style:italic;margin-top:.75rem">Les horaires détaillés seront communiqués prochainement.</div>
+  </div>
+
+  <!-- Download -->
+  <a class="prog-dl" href="/programme/programme-obseques.pdf" download>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+    Télécharger le programme (PDF)
+  </a>
+
+  <!-- DIASPORA -->
+  <div style="margin-top:3rem">
+    <h3 style="font-family:var(--font-d);font-size:1.15rem;font-weight:600;color:var(--cream);margin-bottom:.5rem;text-align:center">La diaspora en route vers Miatsuet</h3>
+    <p style="font-size:.85rem;color:var(--text-m);text-align:center;margin-bottom:1.5rem">Famille et proches accourent du monde entier pour lui rendre un ultime hommage</p>
+    
+    <div class="diaspora-wrap">
+      <svg class="diaspora-map" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+        <!-- Simplified world map background -->
+        <rect width="800" height="400" fill="none"/>
+        
+        <!-- Cameroon (destination) -->
+        <circle cx="390" cy="235" r="6" fill="#c8a45c" opacity="1">
+          <animate attributeName="r" values="6;10;6" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="390" cy="235" r="16" fill="none" stroke="#c8a45c" stroke-width=".5" opacity=".4">
+          <animate attributeName="r" values="16;24;16" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <text x="390" y="258" text-anchor="middle" font-family="Outfit,sans-serif" font-size="9" fill="#c8a45c" font-weight="600">CAMEROUN</text>
+        
+        <!-- France -->
+        <circle cx="370" cy="145" r="3.5" fill="#e0c478"/>
+        <path d="M370,145 Q380,190 390,235" stroke="#c8a45c" stroke-width=".8" fill="none" opacity=".3" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="7;0" dur="2s" repeatCount="indefinite"/></path>
+        <text x="370" y="138" text-anchor="middle" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">France</text>
+        
+        <!-- Allemagne -->
+        <circle cx="392" cy="135" r="3" fill="#e0c478"/>
+        <path d="M392,135 Q391,185 390,235" stroke="#c8a45c" stroke-width=".8" fill="none" opacity=".3" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="7;0" dur="2.3s" repeatCount="indefinite"/></path>
+        <text x="392" y="128" text-anchor="middle" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">Allemagne</text>
+        
+        <!-- Angleterre -->
+        <circle cx="355" cy="127" r="3" fill="#e0c478"/>
+        <path d="M355,127 Q370,180 390,235" stroke="#c8a45c" stroke-width=".8" fill="none" opacity=".3" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="7;0" dur="1.8s" repeatCount="indefinite"/></path>
+        <text x="355" y="120" text-anchor="middle" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">Angleterre</text>
+        
+        <!-- Italie -->
+        <circle cx="400" cy="155" r="3" fill="#e0c478"/>
+        <path d="M400,155 Q395,195 390,235" stroke="#c8a45c" stroke-width=".8" fill="none" opacity=".3" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="7;0" dur="2.1s" repeatCount="indefinite"/></path>
+        <text x="410" y="152" text-anchor="start" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">Italie</text>
+        
+        <!-- Suisse -->
+        <circle cx="383" cy="145" r="3" fill="#e0c478"/>
+        <path d="M383,145 Q386,190 390,235" stroke="#c8a45c" stroke-width=".8" fill="none" opacity=".3" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="7;0" dur="1.9s" repeatCount="indefinite"/></path>
+        <text x="383" y="139" text-anchor="middle" font-family="Outfit,sans-serif" font-size="6" fill="#d4c9b5">Suisse</text>
+        
+        <!-- États-Unis -->
+        <circle cx="170" cy="160" r="3.5" fill="#e0c478"/>
+        <path d="M170,160 Q280,200 390,235" stroke="#c8a45c" stroke-width=".8" fill="none" opacity=".3" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="7;0" dur="3s" repeatCount="indefinite"/></path>
+        <text x="170" y="153" text-anchor="middle" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">États-Unis</text>
+        
+        <!-- Canada -->
+        <circle cx="175" cy="120" r="3" fill="#e0c478"/>
+        <path d="M175,120 Q280,180 390,235" stroke="#c8a45c" stroke-width=".8" fill="none" opacity=".3" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="7;0" dur="3.2s" repeatCount="indefinite"/></path>
+        <text x="175" y="113" text-anchor="middle" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">Canada</text>
+        
+        <!-- Guadeloupe -->
+        <circle cx="215" cy="210" r="3" fill="#e0c478"/>
+        <path d="M215,210 Q300,225 390,235" stroke="#c8a45c" stroke-width=".8" fill="none" opacity=".3" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="7;0" dur="2.5s" repeatCount="indefinite"/></path>
+        <text x="205" y="205" text-anchor="end" font-family="Outfit,sans-serif" font-size="6" fill="#d4c9b5">Guadeloupe</text>
+        
+        <!-- Chine -->
+        <circle cx="620" cy="170" r="3" fill="#e0c478"/>
+        <path d="M620,170 Q510,200 390,235" stroke="#c8a45c" stroke-width=".8" fill="none" opacity=".3" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="7;0" dur="3.5s" repeatCount="indefinite"/></path>
+        <text x="620" y="163" text-anchor="middle" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">Chine</text>
+        
+        <!-- Congo -->
+        <circle cx="405" cy="265" r="3" fill="#e0c478"/>
+        <path d="M405,265 Q398,250 390,235" stroke="#c8a45c" stroke-width=".8" fill="none" opacity=".3" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="7;0" dur="1.5s" repeatCount="indefinite"/></path>
+        <text x="415" y="275" text-anchor="start" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">Congo</text>
+        
+        <!-- Avion emoji au centre -->
+        <text x="390" y="220" text-anchor="middle" font-size="14">✈</text>
+      </svg>
+      
+      </div>
+
+</div>
+</section>
+
+<script>
+function showDay(idx){
+  document.querySelectorAll('.prog-day').forEach(function(d,i){d.classList.toggle('active',i===idx)});
+  document.querySelectorAll('.prog-tab').forEach(function(t,i){t.classList.toggle('active',i===idx)});
+}
+</script>
+</div>
+</section>
+
+<section class="sec" style="background:linear-gradient(180deg,var(--bg2),var(--bg))">
+<div class="sec-in reveal">
+  <div class="sec-label">Informations pratiques</div>
+  <h2 class="sec-title">Lieu & Hébergement</h2>
+  <div class="sec-div"></div>
+  <div class="map-embed">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31802.8!2d10.0!3d5.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x105f41a2a4e0e3af%3A0x0!2sBafou!5e0!3m2!1sfr!2scm!4v1" allowfullscreen loading="lazy" title="Localisation Bafou Miatsuet"></iframe>
+  </div>
+  <div class="info-cards">
+    <div class="info-card"><div class="ic-icon">📍</div><div class="ic-title">Lieu des obsèques</div><div class="ic-text"><strong>Miatsuet</strong>, par Bafou<br>Arrondissement de Nkong-Ni, Département de la Menoua<br>Région de l'Ouest, Cameroun (Commune de Dschang)</div></div>
+    <div class="info-card"><div class="ic-icon">🏨</div><div class="ic-title">Hébergement à Dschang</div><div class="ic-text"><strong>Hôtel Le Centre Climatique</strong> — Dschang centre<br><strong>Hôtel Menoua Palace</strong> — Dschang<br><strong>Auberge de Foto</strong> — Quartier Foto, Dschang<br><em>D'autres options seront communiquées prochainement.</em></div></div>
+    <div class="info-card"><div class="ic-icon">🚗</div><div class="ic-title">Comment s'y rendre</div><div class="ic-text">Depuis <strong>Douala</strong> : environ 4h30 via Bafoussam puis Dschang.<br>Depuis <strong>Yaoundé</strong> : environ 5h via Bafoussam puis Dschang.<br>Depuis <strong>Dschang</strong> : route de Bafou (environ 20 min), direction Miatsuet.</div></div>
+    <div class="info-card"><div class="ic-icon">📞</div><div class="ic-title">Contact famille</div><div class="ic-text">Pour toute information :<br><a href="tel:+237XXXXXXXXX">+237 XXX XXX XXX</a></div></div>
+  </div>
+</div>
+</section>
+<footer class="footer">
+<div class="f-orn"></div>
+<div class="f-name">Reine Mère Maah Mentsih Tsobgni Marie Claire</div>
+<div class="f-dates">Vers 1938 — 17 février 2026</div>
+<div class="f-share-label">Partager cet hommage</div>
+<div class="share-btns">
+  <a class="sh-btn" id="sh-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</a>
+  <a class="sh-btn" id="sh-fb" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>Facebook</a>
+  <a class="sh-btn" id="sh-sms" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>SMS</a>
+  <a class="sh-btn" id="sh-copy" href="#" onclick="copyLink(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copier</a>
+</div>
+<div class="f-copy">© 2026 Famille Maah Mentsih — Tous droits réservés</div>
+</footer>
+
+<script src="/js/main.js"></script>
+</body>
+</html>
