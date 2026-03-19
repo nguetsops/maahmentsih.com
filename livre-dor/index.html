@@ -36,27 +36,24 @@
 
 <section class="sec" style="padding-top:5rem">
 <div class="sec-in reveal">
-  <div class="sec-label">Condoléances</div>
+  <div class="sec-label">Condéléances</div>
   <h2 class="sec-title">Livre d'or</h2>
   <div class="sec-div"></div>
   <p style="font-size:.9rem;color:var(--cream-s);margin-bottom:2rem;line-height:1.7">
     Partagez un souvenir, un mot de réconfort ou un hommage à la Reine Mère.
   </p>
 
-  <!-- Form -->
   <div class="card" style="margin-bottom:2rem">
     <input id="msg-name" type="text" placeholder="Votre nom" style="width:100%;padding:.6rem .8rem;margin-bottom:.75rem;background:var(--bg3);border:1px solid rgba(200,164,92,.12);border-radius:8px;color:var(--cream);font-family:var(--font-b);font-size:.9rem;outline:none">
     <textarea id="msg-text" rows="4" placeholder="Votre message..." style="width:100%;padding:.6rem .8rem;margin-bottom:.75rem;background:var(--bg3);border:1px solid rgba(200,164,92,.12);border-radius:8px;color:var(--cream);font-family:var(--font-b);font-size:.9rem;resize:vertical;outline:none"></textarea>
     <button onclick="submitMessage()" style="padding:.6rem 1.5rem;background:rgba(200,164,92,.15);border:1.5px solid var(--gold-d);border-radius:8px;color:var(--cream);font-family:var(--font-b);font-size:.85rem;cursor:pointer;transition:background .2s">Envoyer</button>
   </div>
 
-  <!-- Messages list -->
   <div id="msg-list" style="display:flex;flex-direction:column;gap:.75rem">
     <div style="text-align:center;color:var(--text-m);font-style:italic;padding:2rem 0">Chargement des messages...</div>
   </div>
 
-  <!-- Admin panel (hidden) -->
-  <div id="admin-toggle" style="margin-top:2rem;text-align:center">
+  <div style="margin-top:2rem;text-align:center">
     <span onclick="showAdmin()" style="font-size:.7rem;color:var(--text-m);cursor:pointer;opacity:.4;border-bottom:1px dotted var(--text-m)">Administration</span>
   </div>
   <div id="admin-panel" style="display:none;margin-top:1rem;padding:1rem;background:var(--bg3);border:1px solid rgba(200,164,92,.1);border-radius:10px">
@@ -80,7 +77,6 @@
 <div class="f-copy">© 2026 Famille Maah Mentsih — Tous droits réservés</div>
 </footer>
 
-<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script>
@@ -92,71 +88,104 @@ firebase.initializeApp({
   messagingSenderId:"296174723200",
   appId:"1:296174723200:web:8e6b0129970da7e4d8c665"
 });
-var db=firebase.firestore();
-var ADMIN_HASH="a3f2b8c1d9e4";
-var isAdmin=false;
-var myMsgIds=JSON.parse(localStorage.getItem("my_msgs")||"[]");
+var db = firebase.firestore();
+var isAdmin = false;
+var myMsgIds = [];
+try { myMsgIds = JSON.parse(localStorage.getItem("my_msgs") || "[]"); } catch(e) { myMsgIds = []; }
 
-function esc(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML}
+function esc(s) {
+  var d = document.createElement("div");
+  d.textContent = s;
+  return d.innerHTML;
+}
 
-function renderMessages(msgs){
-  var list=document.getElementById("msg-list");
-  if(!msgs.length){list.innerHTML='<div style="text-align:center;color:var(--text-m);font-style:italic;padding:2rem 0">Aucun message pour le moment. Soyez le premier à écrire.</div>';return}
-  var now=Date.now();
-  var h24=24*60*60*1000;
-  list.innerHTML=msgs.map(function(m){
-    var canDelete=isAdmin||(myMsgIds.indexOf(m.id)!==-1&&(now-m.ts)<h24);
-    var delBtn=canDelete?'<span onclick="deleteMsg(''+m.id+'')" style="cursor:pointer;font-size:.75rem;color:var(--text-m);opacity:.5;margin-left:auto;padding:.2rem .4rem;border-radius:4px;border:1px solid rgba(200,164,92,.08);transition:opacity .2s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.5">✕</span>':'';
-    return '<div class="msg-item" style="padding:1rem;background:var(--bg3);border:1px solid rgba(200,164,92,.08);border-radius:10px"><div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem"><span style="font-family:var(--font-d);font-weight:600;font-size:1rem;color:var(--cream)">'+esc(m.name)+'</span><span style="font-size:.7rem;color:var(--text-m)">'+m.date+'</span>'+delBtn+'</div><div style="font-size:.88rem;color:var(--cream-s);line-height:1.6">'+esc(m.text)+'</div></div>';
+async function hashPw(pw) {
+  var salt = "163d8d16404223042fdefa69545bcb5a";
+  var enc = new TextEncoder().encode(salt + pw);
+  var buf = await crypto.subtle.digest("SHA-256", enc);
+  return Array.from(new Uint8Array(buf)).map(function(b) { return b.toString(16).padStart(2,"0"); }).join("");
+}
+
+function renderMessages(msgs) {
+  var list = document.getElementById("msg-list");
+  if (!msgs.length) {
+    list.innerHTML = '<div style="text-align:center;color:var(--text-m);font-style:italic;padding:2rem 0">Aucun message pour le moment. Soyez le premier à écrire.</div>';
+    return;
+  }
+  var now = Date.now();
+  var h24 = 24 * 60 * 60 * 1000;
+  list.innerHTML = msgs.map(function(m) {
+    var canDelete = isAdmin || (myMsgIds.indexOf(m.id) !== -1 && (now - m.ts) < h24);
+    var delBtn = canDelete ? '<span onclick="deleteMsg(\'' + m.id + '\')" style="cursor:pointer;font-size:.75rem;color:var(--text-m);opacity:.5;margin-left:auto;padding:.2rem .4rem;border-radius:4px;border:1px solid rgba(200,164,92,.08);transition:opacity .2s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.5">✕</span>' : '';
+    return '<div style="padding:1rem;background:var(--bg3);border:1px solid rgba(200,164,92,.08);border-radius:10px"><div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem"><span style="font-family:var(--font-d);font-weight:600;font-size:1rem;color:var(--cream)">' + esc(m.name) + '</span><span style="font-size:.7rem;color:var(--text-m)">' + m.date + '</span>' + delBtn + '</div><div style="font-size:.88rem;color:var(--cream-s);line-height:1.6">' + esc(m.text) + '</div></div>';
   }).join("");
 }
 
-function loadMessages(){
-  db.collection("messages").orderBy("timestamp","desc").onSnapshot(function(snap){
-    var msgs=[];
-    snap.forEach(function(doc){
-      var d=doc.data();
-      msgs.push({id:doc.id,name:d.name,text:d.text,ts:d.timestamp?d.timestamp.toMillis():0,date:d.date||""});
+function loadMessages() {
+  db.collection("messages").orderBy("timestamp", "desc").onSnapshot(function(snap) {
+    var msgs = [];
+    snap.forEach(function(doc) {
+      var d = doc.data();
+      msgs.push({
+        id: doc.id,
+        name: d.name || "",
+        text: d.text || "",
+        ts: d.timestamp ? d.timestamp.toMillis() : 0,
+        date: d.date || ""
+      });
     });
     renderMessages(msgs);
+  }, function(err) {
+    document.getElementById("msg-list").innerHTML = '<div style="text-align:center;color:var(--text-m);padding:2rem 0">Erreur de chargement. Veuillez rafraîchir la page.</div>';
   });
 }
 
-function submitMessage(){
-  var ne=document.getElementById("msg-name"),te=document.getElementById("msg-text");
-  var n=ne.value.trim(),t=te.value.trim();
-  if(!n||!t)return;
-  var date=new Date().toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"});
+function submitMessage() {
+  var ne = document.getElementById("msg-name");
+  var te = document.getElementById("msg-text");
+  var n = ne.value.trim();
+  var t = te.value.trim();
+  if (!n || !t) return;
+  var date = new Date().toLocaleDateString("fr-FR", {day:"numeric", month:"long", year:"numeric"});
   db.collection("messages").add({
-    name:n,text:t,date:date,timestamp:firebase.firestore.FieldValue.serverTimestamp()
-  }).then(function(ref){
+    name: n,
+    text: t,
+    date: date,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  }).then(function(ref) {
     myMsgIds.push(ref.id);
-    localStorage.setItem("my_msgs",JSON.stringify(myMsgIds));
-    ne.value="";te.value="";
+    localStorage.setItem("my_msgs", JSON.stringify(myMsgIds));
+    ne.value = "";
+    te.value = "";
   });
 }
 
-function deleteMsg(id){
-  if(!confirm("Supprimer ce message ?"))return;
+function deleteMsg(id) {
+  if (!confirm("Supprimer ce message ?")) return;
   db.collection("messages").doc(id).delete();
 }
 
-function showAdmin(){document.getElementById("admin-panel").style.display="block"}
-function loginAdmin(){
-  var pw=document.getElementById("admin-pw").value;
-  if(pw==="JFTPM6<3!"){
-    isAdmin=true;
-    document.getElementById("admin-status").textContent="Connecté en tant qu'admin";
-    document.getElementById("admin-status").style.color="var(--gold)";
+function showAdmin() {
+  document.getElementById("admin-panel").style.display = "block";
+}
+
+async function loginAdmin() {
+  var pw = document.getElementById("admin-pw").value;
+  var h = await hashPw(pw);
+  if (h === "f5ad97c02ee60a2c78bb43eeb28819c63e04ef53841015a601fc9bc4e715713c") {
+    isAdmin = true;
+    document.getElementById("admin-status").textContent = "Connecté en tant qu'admin";
+    document.getElementById("admin-status").style.color = "var(--gold)";
     loadMessages();
-  }else{
-    document.getElementById("admin-status").textContent="Mot de passe incorrect";
-    document.getElementById("admin-status").style.color="#c55";
+  } else {
+    document.getElementById("admin-status").textContent = "Mot de passe incorrect";
+    document.getElementById("admin-status").style.color = "#c55";
   }
 }
 
 loadMessages();
 </script>
+
 <script src="/js/main.js"></script>
 </body>
 </html>

@@ -98,8 +98,8 @@
     </div>
     <div id="dons-admin" style="display:none;margin-top:1rem;padding:1rem;background:var(--bg3);border:1px solid rgba(200,164,92,.1);border-radius:10px">
       <input id="dons-pw" type="password" placeholder="Mot de passe admin" style="width:100%;padding:.5rem .7rem;margin-bottom:.5rem;background:var(--bg2);border:1px solid rgba(200,164,92,.1);border-radius:6px;color:var(--cream);font-size:.85rem;outline:none">
-      <input id="dons-amount" type="number" placeholder="Nouveau montant total en FCFA" style="width:100%;padding:.5rem .7rem;margin-bottom:.5rem;background:var(--bg2);border:1px solid rgba(200,164,92,.1);border-radius:6px;color:var(--cream);font-size:.85rem;outline:none">
-      <button onclick="updateDons()" style="padding:.5rem 1rem;background:rgba(200,164,92,.1);border:1px solid var(--gold-d);border-radius:6px;color:var(--cream-s);font-size:.8rem;cursor:pointer">Mettre à jour</button>
+      <input id="dons-amount" type="number" placeholder="Montant reçu en FCFA" style="width:100%;padding:.5rem .7rem;margin-bottom:.5rem;background:var(--bg2);border:1px solid rgba(200,164,92,.1);border-radius:6px;color:var(--cream);font-size:.85rem;outline:none">
+      <button onclick="updateDons()" style="padding:.5rem 1rem;background:rgba(200,164,92,.1);border:1px solid var(--gold-d);border-radius:6px;color:var(--cream-s);font-size:.8rem;cursor:pointer">Ajouter au total</button>
       <div id="dons-status" style="font-size:.75rem;color:var(--text-m);margin-top:.5rem"></div>
     </div>
 
@@ -131,31 +131,52 @@ firebase.initializeApp({
   messagingSenderId:"296174723200",
   appId:"1:296174723200:web:8e6b0129970da7e4d8c665"
 });
-var db=firebase.firestore();
-var TARGET=1000000;
+var db = firebase.firestore();
+var TARGET = 1000000;
+var currentAmount = 0;
 
-function formatCFA(n){return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g," ")}
+function formatCFA(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "); }
 
-function loadGauge(){
-  db.collection("config").doc("dons").onSnapshot(function(doc){
-    var amount=0;
-    if(doc.exists&&doc.data().amount)amount=doc.data().amount;
-    var pct=Math.min(100,Math.round(amount/TARGET*100));
-    document.getElementById("gauge-text").textContent=formatCFA(amount)+" / "+formatCFA(TARGET)+" FCFA";
-    document.getElementById("gauge-fill").style.width=pct+"%";
-    document.getElementById("gauge-percent").textContent=pct+"%";
+async function hashPw(pw) {
+  var salt = "163d8d16404223042fdefa69545bcb5a";
+  var enc = new TextEncoder().encode(salt + pw);
+  var buf = await crypto.subtle.digest("SHA-256", enc);
+  return Array.from(new Uint8Array(buf)).map(function(b) { return b.toString(16).padStart(2, "0"); }).join("");
+}
+
+function loadGauge() {
+  db.collection("config").doc("dons").onSnapshot(function(doc) {
+    var amount = 0;
+    if (doc.exists && doc.data().amount) amount = doc.data().amount;
+    currentAmount = amount;
+    var pct = Math.min(100, Math.round(amount / TARGET * 100));
+    document.getElementById("gauge-text").textContent = formatCFA(amount) + " / " + formatCFA(TARGET) + " FCFA";
+    document.getElementById("gauge-fill").style.width = pct + "%";
+    document.getElementById("gauge-percent").textContent = pct + "%";
   });
 }
 
-function showDonsAdmin(){document.getElementById("dons-admin").style.display="block"}
-function updateDons(){
-  var pw=document.getElementById("dons-pw").value;
-  if(pw!=="JFTPM6<3!"){document.getElementById("dons-status").textContent="Mot de passe incorrect";document.getElementById("dons-status").style.color="#c55";return}
-  var val=parseInt(document.getElementById("dons-amount").value);
-  if(isNaN(val)||val<0){document.getElementById("dons-status").textContent="Montant invalide";return}
-  db.collection("config").doc("dons").set({amount:val}).then(function(){
-    document.getElementById("dons-status").textContent="Jauge mise à jour !";
-    document.getElementById("dons-status").style.color="var(--gold)";
+function showDonsAdmin() { document.getElementById("dons-admin").style.display = "block"; }
+
+async function updateDons() {
+  var pw = document.getElementById("dons-pw").value;
+  var h = await hashPw(pw);
+  if (h !== "f5ad97c02ee60a2c78bb43eeb28819c63e04ef53841015a601fc9bc4e715713c") {
+    document.getElementById("dons-status").textContent = "Mot de passe incorrect";
+    document.getElementById("dons-status").style.color = "#c55";
+    return;
+  }
+  var val = parseInt(document.getElementById("dons-amount").value);
+  if (isNaN(val) || val <= 0) {
+    document.getElementById("dons-status").textContent = "Montant invalide";
+    document.getElementById("dons-status").style.color = "#c55";
+    return;
+  }
+  var newTotal = currentAmount + val;
+  db.collection("config").doc("dons").set({ amount: newTotal }).then(function() {
+    document.getElementById("dons-status").textContent = "+" + formatCFA(val) + " FCFA ajoutés ! Nouveau total : " + formatCFA(newTotal) + " FCFA";
+    document.getElementById("dons-status").style.color = "var(--gold)";
+    document.getElementById("dons-amount").value = "";
   });
 }
 
