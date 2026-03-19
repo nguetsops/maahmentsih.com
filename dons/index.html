@@ -45,7 +45,7 @@
   <div class="gauge-wrap">
     <div class="gauge-header">
       <span class="gauge-label">En mémoire de Maah</span>
-      <span class="gauge-amount">0 / 1 000 000 FCFA</span>
+      <span class="gauge-amount" id="gauge-text">0 / 1 000 000 FCFA</span>
     </div>
     <div class="gauge-bar">
       <div class="gauge-fill" id="gauge-fill" style="width:0%"></div>
@@ -91,6 +91,21 @@
   </div>
 </div>
 </section>
+
+    <!-- Admin jauge -->
+    <div style="margin-top:1.5rem;text-align:center">
+      <span onclick="showDonsAdmin()" style="font-size:.7rem;color:var(--text-m);cursor:pointer;opacity:.4;border-bottom:1px dotted var(--text-m)">Mettre à jour la jauge</span>
+    </div>
+    <div id="dons-admin" style="display:none;margin-top:1rem;padding:1rem;background:var(--bg3);border:1px solid rgba(200,164,92,.1);border-radius:10px">
+      <input id="dons-pw" type="password" placeholder="Mot de passe admin" style="width:100%;padding:.5rem .7rem;margin-bottom:.5rem;background:var(--bg2);border:1px solid rgba(200,164,92,.1);border-radius:6px;color:var(--cream);font-size:.85rem;outline:none">
+      <input id="dons-amount" type="number" placeholder="Nouveau montant total en FCFA" style="width:100%;padding:.5rem .7rem;margin-bottom:.5rem;background:var(--bg2);border:1px solid rgba(200,164,92,.1);border-radius:6px;color:var(--cream);font-size:.85rem;outline:none">
+      <button onclick="updateDons()" style="padding:.5rem 1rem;background:rgba(200,164,92,.1);border:1px solid var(--gold-d);border-radius:6px;color:var(--cream-s);font-size:.8rem;cursor:pointer">Mettre à jour</button>
+      <div id="dons-status" style="font-size:.75rem;color:var(--text-m);margin-top:.5rem"></div>
+    </div>
+
+</div>
+</section>
+
 <footer class="footer">
 <div class="f-orn"></div>
 <div class="f-name">Reine Mère Maah Mentsih Tsobgni Marie Claire</div>
@@ -103,6 +118,49 @@
 <div class="f-copy">© 2026 Famille Maah Mentsih — Tous droits réservés</div>
 </footer>
 
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({
+  apiKey:"AIzaSyDr8vf7KZmSYO5w0uuzokO-2Z5WC5RY7zY",
+  authDomain:"maahmentsih-5d5db.firebaseapp.com",
+  projectId:"maahmentsih-5d5db",
+  storageBucket:"maahmentsih-5d5db.firebasestorage.app",
+  messagingSenderId:"296174723200",
+  appId:"1:296174723200:web:8e6b0129970da7e4d8c665"
+});
+var db=firebase.firestore();
+var TARGET=1000000;
+
+function formatCFA(n){return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g," ")}
+
+function loadGauge(){
+  db.collection("config").doc("dons").onSnapshot(function(doc){
+    var amount=0;
+    if(doc.exists&&doc.data().amount)amount=doc.data().amount;
+    var pct=Math.min(100,Math.round(amount/TARGET*100));
+    document.getElementById("gauge-text").textContent=formatCFA(amount)+" / "+formatCFA(TARGET)+" FCFA";
+    document.getElementById("gauge-fill").style.width=pct+"%";
+    document.getElementById("gauge-percent").textContent=pct+"%";
+  });
+}
+
+function showDonsAdmin(){document.getElementById("dons-admin").style.display="block"}
+function updateDons(){
+  var pw=document.getElementById("dons-pw").value;
+  if(pw!=="JFTPM6<3!"){document.getElementById("dons-status").textContent="Mot de passe incorrect";document.getElementById("dons-status").style.color="#c55";return}
+  var val=parseInt(document.getElementById("dons-amount").value);
+  if(isNaN(val)||val<0){document.getElementById("dons-status").textContent="Montant invalide";return}
+  db.collection("config").doc("dons").set({amount:val}).then(function(){
+    document.getElementById("dons-status").textContent="Jauge mise à jour !";
+    document.getElementById("dons-status").style.color="var(--gold)";
+  });
+}
+
+loadGauge();
+</script>
 <script src="/js/main.js"></script>
 </body>
 </html>

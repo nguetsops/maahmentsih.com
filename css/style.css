@@ -166,7 +166,7 @@ body{font-family:var(--font-b);font-weight:300;color:var(--text);background:var(
 .itree-child-photo{width:50px;height:50px;border-radius:50%;background:rgba(200,164,92,.05);border:2px dashed rgba(200,164,92,.15);display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--gold-dd);transition:all .3s}
 .itree-child:hover .itree-child-photo{border-color:rgba(200,164,92,.35)}
 .itree-child.open .itree-child-photo{border-color:var(--gold);border-style:solid;background:rgba(200,164,92,.1);box-shadow:0 0 15px rgba(200,164,92,.15)}
-.itree-child.successor .itree-child-photo{border-color:var(--gold);border-style:solid;background:rgba(200,164,92,.04)}
+.itree-child.successor .itree-child-photo{border-color:var(--gold);border-style:solid;border-width:3px;background:rgba(200,164,92,.06);box-shadow:0 0 10px rgba(200,164,92,.12)}
 .itree-child.deceased .itree-child-photo{border-color:rgba(150,140,130,.3);opacity:.55;border-style:dashed}
 .itree-child.deceased.open .itree-child-photo{border-color:var(--gold);border-style:solid;opacity:.9;background:rgba(200,164,92,.1);box-shadow:0 0 15px rgba(200,164,92,.15)}
 
