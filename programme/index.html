@@ -102,111 +102,100 @@
   </div>
 
   <!-- Download -->
-  <a class="prog-dl" href="/programme/programme-obseques.pdf" download>
+  <a class="prog-dl" href="/programme/programme-obseques-maahmentsih.pdf" download>
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
     Télécharger le programme (PDF)
   </a>
 
   <!-- DIASPORA -->
   <div style="margin-top:3rem">
-    <h3 style="font-family:var(--font-d);font-size:1.15rem;font-weight:600;color:var(--cream);margin-bottom:.5rem;text-align:center">La diaspora en route vers Miatsuet</h3>
-    <p style="font-size:.85rem;color:var(--text-m);text-align:center;margin-bottom:1.5rem">Famille et proches accourent du monde entier pour lui rendre un ultime hommage</p>
+    <h3 style="font-family:var(--font-d);font-size:1.15rem;font-weight:600;color:var(--cream);margin-bottom:.5rem">La diaspora en route vers Miatsuet</h3>
+    <p style="font-size:.85rem;color:var(--text-m);margin-bottom:1.5rem;line-height:1.6">Famille et proches accourent du monde entier pour lui rendre un ultime hommage.</p>
     
     <div class="diaspora-wrap">
-      <svg class="diaspora-map" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-        <!-- Simplified world map background -->
-        <rect width="800" height="400" fill="none"/>
+      <svg class="diaspora-map" viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
+        <!-- World map simplified outlines -->
+        <rect width="800" height="420" fill="rgba(200,164,92,.03)" rx="8"/>
         
-        <!-- Cameroon (destination) -->
-        <circle cx="390" cy="235" r="6" fill="#c8a45c" opacity="1">
-          <animate attributeName="r" values="6;10;6" dur="2s" repeatCount="indefinite"/>
+        <!-- North America -->
+        <path d="M80,80 L120,60 L180,55 L220,70 L235,90 L230,120 L210,150 L195,170 L175,190 L160,195 L140,180 L120,200 L100,210 L80,200 L70,170 L60,140 L65,110 Z" fill="rgba(200,164,92,.08)" stroke="rgba(200,164,92,.15)" stroke-width=".5"/>
+        
+        <!-- South America -->
+        <path d="M160,230 L180,220 L200,230 L210,260 L215,290 L205,320 L190,350 L175,370 L160,360 L150,330 L145,300 L148,270 Z" fill="rgba(200,164,92,.08)" stroke="rgba(200,164,92,.15)" stroke-width=".5"/>
+        
+        <!-- Europe -->
+        <path d="M340,60 L380,55 L410,65 L420,80 L415,100 L405,120 L390,130 L370,135 L355,140 L340,135 L335,115 L330,90 Z" fill="rgba(200,164,92,.08)" stroke="rgba(200,164,92,.15)" stroke-width=".5"/>
+        
+        <!-- Africa -->
+        <path d="M350,150 L380,145 L410,155 L430,175 L440,210 L435,250 L425,280 L410,310 L390,330 L370,335 L355,320 L340,290 L335,255 L330,220 L335,190 L340,165 Z" fill="rgba(200,164,92,.1)" stroke="rgba(200,164,92,.2)" stroke-width=".8"/>
+        
+        <!-- Asia -->
+        <path d="M430,60 L500,50 L570,55 L630,70 L660,100 L650,140 L620,170 L580,180 L540,175 L500,160 L470,140 L450,120 L435,95 Z" fill="rgba(200,164,92,.08)" stroke="rgba(200,164,92,.15)" stroke-width=".5"/>
+        
+        <!-- Australia -->
+        <path d="M600,280 L640,270 L670,280 L680,300 L670,320 L640,330 L610,325 L595,310 Z" fill="rgba(200,164,92,.06)" stroke="rgba(200,164,92,.12)" stroke-width=".5"/>
+        
+        <!-- BAFOU destination - pulsing -->
+        <circle cx="383" cy="225" r="5" fill="#c8a45c">
+          <animate attributeName="r" values="5;9;5" dur="2s" repeatCount="indefinite"/>
         </circle>
-        <circle cx="390" cy="235" r="16" fill="none" stroke="#c8a45c" stroke-width=".5" opacity=".4">
-          <animate attributeName="r" values="16;24;16" dur="2s" repeatCount="indefinite"/>
+        <circle cx="383" cy="225" r="14" fill="none" stroke="#c8a45c" stroke-width=".6" opacity=".4">
+          <animate attributeName="r" values="14;22;14" dur="2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values=".4;.1;.4" dur="2s" repeatCount="indefinite"/>
         </circle>
-        <text x="390" y="258" text-anchor="middle" font-family="Outfit,sans-serif" font-size="9" fill="#c8a45c" font-weight="600">CAMEROUN</text>
+        <text x="383" y="248" text-anchor="middle" font-family="Outfit,sans-serif" font-size="8" fill="#c8a45c" font-weight="600">BAFOU</text>
         
         <!-- France -->
-        <circle cx="370" cy="145" r="3.5" fill="#e0c478"/>
-        <path d="M370,145 Q380,190 390,235" stroke="#c8a45c" stroke-width=".8" fill="none" opacity=".3" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="7;0" dur="2s" repeatCount="indefinite"/></path>
-        <text x="370" y="138" text-anchor="middle" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">France</text>
+        <circle cx="365" cy="110" r="3" fill="#e0c478"/>
+        <path d="M365,110 Q374,168 383,225" stroke="#c8a45c" stroke-width=".7" fill="none" opacity=".35" stroke-dasharray="3 3"><animate attributeName="stroke-dashoffset" values="6;0" dur="2s" repeatCount="indefinite"/></path>
+        <text x="365" y="103" text-anchor="middle" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">France</text>
         
         <!-- Allemagne -->
-        <circle cx="392" cy="135" r="3" fill="#e0c478"/>
-        <path d="M392,135 Q391,185 390,235" stroke="#c8a45c" stroke-width=".8" fill="none" opacity=".3" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="7;0" dur="2.3s" repeatCount="indefinite"/></path>
-        <text x="392" y="128" text-anchor="middle" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">Allemagne</text>
+        <circle cx="388" cy="98" r="2.5" fill="#e0c478"/>
+        <path d="M388,98 Q386,162 383,225" stroke="#c8a45c" stroke-width=".7" fill="none" opacity=".3" stroke-dasharray="3 3"><animate attributeName="stroke-dashoffset" values="6;0" dur="2.3s" repeatCount="indefinite"/></path>
+        <text x="388" y="91" text-anchor="middle" font-family="Outfit,sans-serif" font-size="6.5" fill="#d4c9b5">Allemagne</text>
         
         <!-- Angleterre -->
-        <circle cx="355" cy="127" r="3" fill="#e0c478"/>
-        <path d="M355,127 Q370,180 390,235" stroke="#c8a45c" stroke-width=".8" fill="none" opacity=".3" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="7;0" dur="1.8s" repeatCount="indefinite"/></path>
-        <text x="355" y="120" text-anchor="middle" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">Angleterre</text>
+        <circle cx="350" cy="92" r="2.5" fill="#e0c478"/>
+        <path d="M350,92 Q366,158 383,225" stroke="#c8a45c" stroke-width=".7" fill="none" opacity=".3" stroke-dasharray="3 3"><animate attributeName="stroke-dashoffset" values="6;0" dur="1.8s" repeatCount="indefinite"/></path>
+        <text x="340" y="86" text-anchor="middle" font-family="Outfit,sans-serif" font-size="6.5" fill="#d4c9b5">Angleterre</text>
         
         <!-- Italie -->
-        <circle cx="400" cy="155" r="3" fill="#e0c478"/>
-        <path d="M400,155 Q395,195 390,235" stroke="#c8a45c" stroke-width=".8" fill="none" opacity=".3" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="7;0" dur="2.1s" repeatCount="indefinite"/></path>
-        <text x="410" y="152" text-anchor="start" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">Italie</text>
+        <circle cx="395" cy="118" r="2.5" fill="#e0c478"/>
+        <path d="M395,118 Q389,172 383,225" stroke="#c8a45c" stroke-width=".7" fill="none" opacity=".3" stroke-dasharray="3 3"><animate attributeName="stroke-dashoffset" values="6;0" dur="2.1s" repeatCount="indefinite"/></path>
+        <text x="407" y="115" text-anchor="start" font-family="Outfit,sans-serif" font-size="6.5" fill="#d4c9b5">Italie</text>
         
         <!-- Suisse -->
-        <circle cx="383" cy="145" r="3" fill="#e0c478"/>
-        <path d="M383,145 Q386,190 390,235" stroke="#c8a45c" stroke-width=".8" fill="none" opacity=".3" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="7;0" dur="1.9s" repeatCount="indefinite"/></path>
-        <text x="383" y="139" text-anchor="middle" font-family="Outfit,sans-serif" font-size="6" fill="#d4c9b5">Suisse</text>
+        <circle cx="378" cy="105" r="2.5" fill="#e0c478"/>
+        <path d="M378,105 Q380,165 383,225" stroke="#c8a45c" stroke-width=".7" fill="none" opacity=".3" stroke-dasharray="3 3"><animate attributeName="stroke-dashoffset" values="6;0" dur="1.9s" repeatCount="indefinite"/></path>
+        <text x="378" y="99" text-anchor="middle" font-family="Outfit,sans-serif" font-size="6" fill="#d4c9b5">Suisse</text>
         
         <!-- États-Unis -->
-        <circle cx="170" cy="160" r="3.5" fill="#e0c478"/>
-        <path d="M170,160 Q280,200 390,235" stroke="#c8a45c" stroke-width=".8" fill="none" opacity=".3" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="7;0" dur="3s" repeatCount="indefinite"/></path>
-        <text x="170" y="153" text-anchor="middle" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">États-Unis</text>
+        <circle cx="155" cy="130" r="3" fill="#e0c478"/>
+        <path d="M155,130 Q270,178 383,225" stroke="#c8a45c" stroke-width=".7" fill="none" opacity=".3" stroke-dasharray="3 3"><animate attributeName="stroke-dashoffset" values="6;0" dur="3s" repeatCount="indefinite"/></path>
+        <text x="155" y="123" text-anchor="middle" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">États-Unis</text>
         
         <!-- Canada -->
-        <circle cx="175" cy="120" r="3" fill="#e0c478"/>
-        <path d="M175,120 Q280,180 390,235" stroke="#c8a45c" stroke-width=".8" fill="none" opacity=".3" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="7;0" dur="3.2s" repeatCount="indefinite"/></path>
-        <text x="175" y="113" text-anchor="middle" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">Canada</text>
+        <circle cx="160" cy="85" r="2.5" fill="#e0c478"/>
+        <path d="M160,85 Q272,155 383,225" stroke="#c8a45c" stroke-width=".7" fill="none" opacity=".3" stroke-dasharray="3 3"><animate attributeName="stroke-dashoffset" values="6;0" dur="3.2s" repeatCount="indefinite"/></path>
+        <text x="160" y="78" text-anchor="middle" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">Canada</text>
         
         <!-- Guadeloupe -->
-        <circle cx="215" cy="210" r="3" fill="#e0c478"/>
-        <path d="M215,210 Q300,225 390,235" stroke="#c8a45c" stroke-width=".8" fill="none" opacity=".3" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="7;0" dur="2.5s" repeatCount="indefinite"/></path>
-        <text x="205" y="205" text-anchor="end" font-family="Outfit,sans-serif" font-size="6" fill="#d4c9b5">Guadeloupe</text>
+        <circle cx="195" cy="198" r="2.5" fill="#e0c478"/>
+        <path d="M195,198 Q290,212 383,225" stroke="#c8a45c" stroke-width=".7" fill="none" opacity=".3" stroke-dasharray="3 3"><animate attributeName="stroke-dashoffset" values="6;0" dur="2.5s" repeatCount="indefinite"/></path>
+        <text x="182" y="193" text-anchor="end" font-family="Outfit,sans-serif" font-size="6" fill="#d4c9b5">Guadeloupe</text>
         
         <!-- Chine -->
-        <circle cx="620" cy="170" r="3" fill="#e0c478"/>
-        <path d="M620,170 Q510,200 390,235" stroke="#c8a45c" stroke-width=".8" fill="none" opacity=".3" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="7;0" dur="3.5s" repeatCount="indefinite"/></path>
-        <text x="620" y="163" text-anchor="middle" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">Chine</text>
+        <circle cx="580" cy="130" r="2.5" fill="#e0c478"/>
+        <path d="M580,130 Q482,178 383,225" stroke="#c8a45c" stroke-width=".7" fill="none" opacity=".3" stroke-dasharray="3 3"><animate attributeName="stroke-dashoffset" values="6;0" dur="3.5s" repeatCount="indefinite"/></path>
+        <text x="580" y="123" text-anchor="middle" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">Chine</text>
         
         <!-- Congo -->
-        <circle cx="405" cy="265" r="3" fill="#e0c478"/>
-        <path d="M405,265 Q398,250 390,235" stroke="#c8a45c" stroke-width=".8" fill="none" opacity=".3" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="7;0" dur="1.5s" repeatCount="indefinite"/></path>
-        <text x="415" y="275" text-anchor="start" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">Congo</text>
-        
-        <!-- Avion emoji au centre -->
-        <text x="390" y="220" text-anchor="middle" font-size="14">✈</text>
+        <circle cx="400" cy="265" r="2.5" fill="#e0c478"/>
+        <path d="M400,265 Q392,245 383,225" stroke="#c8a45c" stroke-width=".7" fill="none" opacity=".3" stroke-dasharray="3 3"><animate attributeName="stroke-dashoffset" values="6;0" dur="1.5s" repeatCount="indefinite"/></path>
+        <text x="412" y="275" text-anchor="start" font-family="Outfit,sans-serif" font-size="7" fill="#d4c9b5">Congo</text>
       </svg>
-      
-      </div>
-
-</div>
-</section>
-
-<script>
-function showDay(idx){
-  document.querySelectorAll('.prog-day').forEach(function(d,i){d.classList.toggle('active',i===idx)});
-  document.querySelectorAll('.prog-tab').forEach(function(t,i){t.classList.toggle('active',i===idx)});
-}
-</script>
-</div>
-</section>
-
-<section class="sec" style="background:linear-gradient(180deg,var(--bg2),var(--bg))">
-<div class="sec-in reveal">
-  <div class="sec-label">Informations pratiques</div>
-  <h2 class="sec-title">Lieu & Hébergement</h2>
-  <div class="sec-div"></div>
-  <div class="map-embed">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31802.8!2d10.0!3d5.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x105f41a2a4e0e3af%3A0x0!2sBafou!5e0!3m2!1sfr!2scm!4v1" allowfullscreen loading="lazy" title="Localisation Bafou Miatsuet"></iframe>
-  </div>
-  <div class="info-cards">
-    <div class="info-card"><div class="ic-icon">📍</div><div class="ic-title">Lieu des obsèques</div><div class="ic-text"><strong>Miatsuet</strong>, par Bafou<br>Arrondissement de Nkong-Ni, Département de la Menoua<br>Région de l'Ouest, Cameroun (Commune de Dschang)</div></div>
-    <div class="info-card"><div class="ic-icon">🏨</div><div class="ic-title">Hébergement à Dschang</div><div class="ic-text"><strong>Hôtel Le Centre Climatique</strong> — Dschang centre<br><strong>Hôtel Menoua Palace</strong> — Dschang<br><strong>Auberge de Foto</strong> — Quartier Foto, Dschang<br><em>D'autres options seront communiquées prochainement.</em></div></div>
-    <div class="info-card"><div class="ic-icon">🚗</div><div class="ic-title">Comment s'y rendre</div><div class="ic-text">Depuis <strong>Douala</strong> : environ 4h30 via Bafoussam puis Dschang.<br>Depuis <strong>Yaoundé</strong> : environ 5h via Bafoussam puis Dschang.<br>Depuis <strong>Dschang</strong> : route de Bafou (environ 20 min), direction Miatsuet.</div></div>
-    <div class="info-card"><div class="ic-icon">📞</div><div class="ic-title">Contact famille</div><div class="ic-text">Pour toute information :<br><a href="tel:+237XXXXXXXXX">+237 XXX XXX XXX</a></div></div>
+    </div>
   </div>
 </div>
 </section>
@@ -221,7 +210,7 @@ function showDay(idx){
   <a class="sh-btn" id="sh-sms" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>SMS</a>
   <a class="sh-btn" id="sh-copy" href="#" onclick="copyLink(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copier</a>
 </div>
-<div class="f-copy">© 2026 Famille Maah Mentsih — Tous droits réservés</div>
+<div class="f-copy" style="font-size:.8rem;opacity:.7">Contact famille : <a href="tel:+237XXXXXXXXX" style="color:var(--gold);text-decoration:none">+237 XXX XXX XXX</a></div>
 </footer>
 
 <script src="/js/main.js"></script>
