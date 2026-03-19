@@ -140,6 +140,60 @@ body{font-family:var(--font-b);font-weight:300;color:var(--text);background:var(
   .couple-row{gap:.3rem}
 }
 
+
+/* === INTERACTIVE TREE === */
+.itree{display:flex;flex-direction:column;align-items:center;max-width:700px;margin:0 auto}
+
+.itree-root{text-align:center;padding:1.2rem 1.5rem;background:rgba(200,164,92,.06);border:1.5px solid var(--gold);border-radius:12px}
+.itree-root-name{font-family:var(--font-d);font-size:1.2rem;font-weight:700;color:var(--gold-l)}
+.itree-root-title{font-size:.75rem;color:var(--gold);font-style:italic;margin-top:.15rem}
+.itree-root-spouse{margin-top:.6rem;padding-top:.6rem;border-top:1px solid rgba(200,164,92,.15);position:relative}
+.itree-ring{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:rgba(200,164,92,.06);border:1px solid rgba(200,164,92,.2);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:.7rem;color:var(--gold-d)}
+.itree-root-spouse-name{font-family:var(--font-d);font-size:.95rem;font-weight:600;color:var(--text-m)}
+.itree-root-spouse-sub{font-size:.7rem;color:var(--text-m);font-style:italic}
+.itree-death-tag{opacity:.6;font-size:.75rem;color:var(--text-m)}
+
+.itree-line{width:2px;height:24px;background:linear-gradient(180deg,var(--gold),var(--gold-d));margin:0 auto}
+.itree-spread{position:relative;width:100%;height:2px}
+.itree-spread::after{content:'';position:absolute;top:0;left:8%;right:8%;height:2px;background:linear-gradient(90deg,transparent,var(--gold-d) 10%,var(--gold-d) 90%,transparent)}
+
+.itree-children{display:flex;justify-content:center;gap:.15rem;flex-wrap:wrap;padding:.25rem 0}
+
+.itree-child{display:flex;flex-direction:column;align-items:center;width:74px;cursor:pointer;position:relative;padding-top:20px;transition:transform .2s}
+.itree-child::before{content:'';position:absolute;top:0;left:50%;width:2px;height:18px;background:var(--gold-d);transform:translateX(-50%)}
+.itree-child:hover{transform:translateY(-2px)}
+
+.itree-child-photo{width:50px;height:50px;border-radius:50%;background:rgba(200,164,92,.05);border:2px dashed rgba(200,164,92,.15);display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--gold-dd);transition:all .3s}
+.itree-child:hover .itree-child-photo{border-color:rgba(200,164,92,.35)}
+.itree-child.open .itree-child-photo{border-color:var(--gold);border-style:solid;background:rgba(200,164,92,.1);box-shadow:0 0 15px rgba(200,164,92,.15)}
+.itree-child.successor .itree-child-photo{border-color:var(--gold);border-style:solid;background:rgba(200,164,92,.04)}
+.itree-child.deceased .itree-child-photo{border-color:rgba(150,140,130,.3);opacity:.55;border-style:dashed}
+.itree-child.deceased.open .itree-child-photo{border-color:var(--gold);border-style:solid;opacity:.9;background:rgba(200,164,92,.1);box-shadow:0 0 15px rgba(200,164,92,.15)}
+
+.itree-child-name{font-family:var(--font-d);font-size:.7rem;font-weight:600;color:var(--cream-s);margin-top:.3rem;text-align:center;line-height:1.2}
+.itree-child-name em{color:var(--gold);font-style:italic;font-weight:600}
+.itree-child-htitle{font-size:.55rem;color:var(--gold);font-style:italic;margin-top:.1rem;text-align:center}
+.itree-child-note{font-size:.5rem;color:var(--text-m);margin-top:.1rem;text-align:center}
+.itree-child.deceased .itree-child-name{color:var(--text-m);opacity:.7}
+
+/* Subtree panel */
+.itree-sub{display:none;width:100%;max-width:620px;margin:.75rem auto 0;padding:1.2rem;background:var(--bg2);border:1px solid rgba(200,164,92,.15);border-radius:12px;animation:slideDown .3s ease}
+.itree-sub.show{display:block}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+
+.itree-sub-head{display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid rgba(200,164,92,.1)}
+.itree-sub-info{flex:1}
+.itree-sub-label{font-size:.6rem;color:var(--gold);text-transform:uppercase;letter-spacing:.12em}
+.itree-sub-parent{font-family:var(--font-d);font-size:1.05rem;font-weight:600;color:var(--cream)}
+.itree-sub-parent em{color:var(--gold);font-style:italic}
+.itree-sub-close{cursor:pointer;font-size:.9rem;color:var(--text-m);width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid rgba(200,164,92,.1);transition:all .2s;margin-left:auto}
+.itree-sub-close:hover{color:var(--cream);border-color:rgba(200,164,92,.3)}
+
+.itree-gc-grid{display:flex;flex-wrap:wrap;gap:.4rem}
+.itree-gc{display:flex;align-items:center;gap:.35rem;padding:.35rem .6rem;background:var(--bg3);border:1px solid rgba(200,164,92,.08);border-radius:8px}
+.itree-gc-photo{width:28px;height:28px;border-radius:50%;background:rgba(200,164,92,.05);border:1px dashed rgba(200,164,92,.1);display:flex;align-items:center;justify-content:center;font-size:.55rem;color:var(--gold-dd);flex-shrink:0}
+.itree-gc-name{font-size:.78rem;color:var(--cream-s)}
+
 /* === FAMILY TIMELINE === */
 .ftl{position:relative;padding:1rem 0 1rem 2rem;margin:1rem 0 2rem}
 .ftl::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--gold),var(--gold-d) 80%,transparent)}

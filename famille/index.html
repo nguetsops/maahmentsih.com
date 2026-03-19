@@ -37,141 +37,77 @@
   <h2 class="sec-title">Arbre généalogique</h2>
   <div class="sec-div"></div>
 
-  <!-- TIMELINE VERTICALE -->
-  <div class="ftl">
-
-    <!-- Parents -->
-    <div class="ftl-root" style="opacity:.6">
-      <div class="ftl-year" style="font-size:.9rem;color:var(--text-m)">Parents</div>
-      <div style="font-family:var(--font-d);font-size:.95rem;font-style:italic;color:var(--text-m)">À compléter</div>
-    </div>
-
-    <!-- La Reine Mère -->
-    <div class="ftl-root">
-      <div class="ftl-year" style="font-size:1rem;color:var(--gold-d);margin-bottom:.4rem">Vers 1938</div>
-      <div style="font-family:var(--font-d);font-size:1.2rem;font-weight:700;color:var(--gold-l);margin-bottom:.15rem">Maah Mentsih Tsobgni Marie Claire</div>
-      <div style="font-size:.75rem;color:var(--gold);font-style:italic;margin-bottom:.75rem">Reine Mère de Miatsuet</div>
-      <div style="font-size:.7rem;color:var(--text-m);letter-spacing:.05em">Épouse de</div>
-      <div style="font-family:var(--font-d);font-size:.95rem;font-weight:600;color:var(--cream-s);margin-top:.15rem">Foh Miatsuet Nguetsop Paul</div>
-      <div style="font-size:.7rem;color:var(--text-m);font-style:italic">Chef de Miatsuet <span style="color:var(--text-m);opacity:.7">· 🕊 1995</span></div>
-    </div>
-
-    <!-- Les 9 enfants -->
-    <div class="ftl-child deceased" data-fam="fam-clement">
-      <div class="ftl-year">1957</div>
-      <div class="ftl-info">
-        <div class="ftl-child-photo-ph">👤</div>
-        <div class="ftl-child-detail">
-          <div class="ftl-child-name">Wamba Clément</div>
-          <div class="ftl-child-title"><em>dit WamClé</em></div><div class="ftl-child-note">🕊 2011</div>
-        </div>
+  <div class="itree">
+    
+    <!-- ROOT -->
+    <div class="itree-root">
+      <div class="itree-root-name">Maah Mentsih Tsobgni Marie Claire</div>
+      <div class="itree-root-title">Reine Mère de Miatsuet</div>
+      <div class="itree-root-spouse">
+        <div class="itree-ring">⚭</div>
+        <div class="itree-root-spouse-name">Foh Miatsuet Nguetsop Paul <span class="itree-death-tag">🕊 1995</span></div>
+        <div class="itree-root-spouse-sub">Chef de Miatsuet</div>
       </div>
     </div>
+    
+    <div class="itree-line"></div>
+    <div class="itree-spread"></div>
+    
+    <!-- 9 CHILDREN -->
+    <div class="itree-children" id="itree-children">
 
-    <div class="ftl-child" data-fam="fam-michel">
-      <div class="ftl-year">1959</div>
-      <div class="ftl-info">
-        <div class="ftl-child-photo-ph">👤</div>
-        <div class="ftl-child-detail">
-          <div class="ftl-child-name"><em>Manfoh</em> Nguetsop Michel</div>
-          
-        </div>
+      <div class="itree-child deceased" onclick="toggleTree(0)">
+        <div class="itree-child-photo">👤</div>
+        <div class="itree-child-name">Wamba Clément</div>
+        <div class="itree-child-htitle">dit WamClé</div>
+        <div class="itree-child-note">🕊 2011</div>
       </div>
-    </div>
 
-    <div class="ftl-child successor" data-fam="fam-jeangallo">
-      <div class="ftl-year">1961</div>
-      <div class="ftl-info">
-        <div class="ftl-child-photo-ph">👤</div>
-        <div class="ftl-child-detail">
-          <div class="ftl-child-name"><em>Foh Miatsuet II</em> Jiotsa Jean Gallo</div>
-          <div class="ftl-child-title"><em>Successeur</em></div>
-        </div>
+      <div class="itree-child" onclick="toggleTree(1)">
+        <div class="itree-child-photo">👤</div>
+        <div class="itree-child-name"><em>Manfoh</em><br>Nguetsop Michel</div>
       </div>
-    </div>
 
-    <div class="ftl-child" data-fam="fam-robinson">
-      <div class="ftl-year">1963</div>
-      <div class="ftl-info">
-        <div class="ftl-child-photo-ph">👤</div>
-        <div class="ftl-child-detail">
-          <div class="ftl-child-name">Nguetsop Robinson</div>
-          
-        </div>
+      <div class="itree-child successor" onclick="toggleTree(2)">
+        <div class="itree-child-photo">👤</div>
+        <div class="itree-child-name"><em>Foh Miatsuet II</em><br>Jiotsa Jean Gallo</div>
+        <div class="itree-child-htitle">Successeur</div>
       </div>
-    </div>
 
-    <div class="ftl-child" data-fam="fam-salomon">
-      <div class="ftl-year">1966</div>
-      <div class="ftl-info">
-        <div class="ftl-child-photo-ph">👤</div>
-        <div class="ftl-child-detail">
-          <div class="ftl-child-name"><em>Foh Nleng</em> Nguetsop Salomon</div>
-          
-        </div>
+      <div class="itree-child" onclick="toggleTree(3)">
+        <div class="itree-child-photo">👤</div>
+        <div class="itree-child-name">Nguetsop<br>Robinson</div>
       </div>
-    </div>
 
-    <div class="ftl-child" data-fam="fam-serge">
-      <div class="ftl-year">1969</div>
-      <div class="ftl-info">
-        <div class="ftl-child-photo-ph">👤</div>
-        <div class="ftl-child-detail">
-          <div class="ftl-child-name">Nguetsop Serge</div>
-          
-        </div>
+      <div class="itree-child" onclick="toggleTree(4)">
+        <div class="itree-child-photo">👤</div>
+        <div class="itree-child-name"><em>Foh Nleng</em><br>Nguetsop Salomon</div>
       </div>
-    </div>
 
-    <div class="ftl-child" data-fam="fam-leopold">
-      <div class="ftl-year">1972</div>
-      <div class="ftl-info">
-        <div class="ftl-child-photo-ph">👤</div>
-        <div class="ftl-child-detail">
-          <div class="ftl-child-name">Nguetsop Léopold</div>
-          
-        </div>
+      <div class="itree-child" onclick="toggleTree(5)">
+        <div class="itree-child-photo">👤</div>
+        <div class="itree-child-name">Nguetsop<br>Serge</div>
       </div>
-    </div>
 
-    <div class="ftl-child" data-fam="fam-edouard">
-      <div class="ftl-year">1975</div>
-      <div class="ftl-info">
-        <div class="ftl-child-photo-ph">👤</div>
-        <div class="ftl-child-detail">
-          <div class="ftl-child-name"><em>Nkem Ngouh</em> Mezazeme Édouard</div>
-          
-        </div>
+      <div class="itree-child" onclick="toggleTree(6)">
+        <div class="itree-child-photo">👤</div>
+        <div class="itree-child-name">Nguetsop<br>Léopold</div>
       </div>
-    </div>
 
-    <div class="ftl-child" data-fam="fam-etienne">
-      <div class="ftl-year">1978</div>
-      <div class="ftl-info">
-        <div class="ftl-child-photo-ph">👤</div>
-        <div class="ftl-child-detail">
-          <div class="ftl-child-name">Vouffo Étienne</div>
-          
-        </div>
+      <div class="itree-child" onclick="toggleTree(7)">
+        <div class="itree-child-photo">👤</div>
+        <div class="itree-child-name"><em>Nkem Ngouh</em><br>Mezazeme Édouard</div>
       </div>
+
+      <div class="itree-child" onclick="toggleTree(8)">
+        <div class="itree-child-photo">👤</div>
+        <div class="itree-child-name">Vouffo<br>Étienne</div>
+      </div>
+
     </div>
 
-
-    <!-- Rappels à Dieu -->
-    <div class="ftl-death">
-      <div class="ftl-death-year">1995</div>
-      <div class="ftl-death-text">Rappel à Dieu de Foh Miatsuet Nguetsop Paul, Chef de Miatsuet</div>
-    </div>
-
-    <div class="ftl-death">
-      <div class="ftl-death-year">2011</div>
-      <div class="ftl-death-text">Rappel à Dieu de Wamba Clément, fils aîné de la fratrie</div>
-    </div>
-
-    <div class="ftl-death">
-      <div class="ftl-death-year">2026</div>
-      <div class="ftl-death-text">Rappel à Dieu de la Reine Mère Maah Mentsih Tsobgni Marie Claire</div>
-    </div>
+    <!-- Subtree opens here -->
+    <div id="itree-sub"></div>
 
   </div>
 
@@ -180,84 +116,6 @@
     <div class="tree-stat"><div class="tree-stat-num">9</div><div class="tree-stat-label">Enfants</div></div>
     <div class="tree-stat"><div class="tree-stat-num">52</div><div class="tree-stat-label">Petits-enfants</div></div>
     <div class="tree-stat"><div class="tree-stat-num">~20</div><div class="tree-stat-label">Arr.-petits-enfants</div></div>
-  </div>
-
-  <!-- Petits-enfants par famille -->
-  <h3 style="font-family:var(--font-d);font-size:1.15rem;font-weight:600;color:var(--cream);margin-bottom:1rem"><svg class="cowrie" viewBox="0 0 16 24" width="10" height="15"><ellipse cx="8" cy="12" rx="6" ry="10" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="3" x2="8" y2="21" stroke="currentColor" stroke-width="1" opacity=".5"/></svg> Petits-enfants par famille</h3>
-  <div class="fam-grid">
-    <div class="fam-card" id="fam-clement" onclick="this.classList.toggle('open')">
-      <div class="fam-head">
-        <div class="fam-photo-placeholder">👤</div>
-        <div class="fam-info"><div class="fam-name">Famille Wamba Clément</div></div>
-        <span class="fam-arrow">›</span>
-      </div>
-      <div class="fam-children"><span class="fam-child"><span class="fam-child-placeholder">👤</span> Lucrèce</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Yannick</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Martial</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Tony</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Arthur</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Ostian</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Fortune</span></div>
-    </div>
-    <div class="fam-card" id="fam-michel" onclick="this.classList.toggle('open')">
-      <div class="fam-head">
-        <div class="fam-photo-placeholder">👤</div>
-        <div class="fam-info"><div class="fam-name">Famille <em>Manfoh</em> Nguetsop Michel</div></div>
-        <span class="fam-arrow">›</span>
-      </div>
-      <div class="fam-children"><span class="fam-child"><span class="fam-child-placeholder">👤</span> Lafric</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Mandela</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Michèle</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Richelle</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Alexandra</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Élysée</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Estelle</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Maddy</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Serge</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Sonia</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Genny</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Dongwa</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Djeff</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Angela</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Ange</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Dave</span></div>
-    </div>
-    <div class="fam-card successor" id="fam-jeangallo" onclick="this.classList.toggle('open')">
-      <div class="fam-head">
-        <div class="fam-photo-placeholder">👤</div>
-        <div class="fam-info"><div class="fam-name">Famille <em>Foh Miatsuet II</em> Jiotsa Jean Gallo</div></div>
-        <span class="fam-arrow">›</span>
-      </div>
-      <div class="fam-children"><span class="fam-child"><span class="fam-child-placeholder">👤</span> Jessica</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Barbara</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Aurélie</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Samira</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Lindsay</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Malaïka</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Satia</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Nathan</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Reina</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Myriam</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Paul</span></div>
-    </div>
-    <div class="fam-card" id="fam-robinson" onclick="this.classList.toggle('open')">
-      <div class="fam-head">
-        <div class="fam-photo-placeholder">👤</div>
-        <div class="fam-info"><div class="fam-name">Famille Nguetsop Robinson</div></div>
-        <span class="fam-arrow">›</span>
-      </div>
-      <div class="fam-children"><span class="fam-child"><span class="fam-child-placeholder">👤</span> Maria</span></div>
-    </div>
-    <div class="fam-card" id="fam-salomon" onclick="this.classList.toggle('open')">
-      <div class="fam-head">
-        <div class="fam-photo-placeholder">👤</div>
-        <div class="fam-info"><div class="fam-name">Famille <em>Foh Nleng</em> Nguetsop Salomon</div></div>
-        <span class="fam-arrow">›</span>
-      </div>
-      <div class="fam-children"><span class="fam-child"><span class="fam-child-placeholder">👤</span> Patricia</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Franck</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Anakiya</span></div>
-    </div>
-    <div class="fam-card" id="fam-serge" onclick="this.classList.toggle('open')">
-      <div class="fam-head">
-        <div class="fam-photo-placeholder">👤</div>
-        <div class="fam-info"><div class="fam-name">Famille Nguetsop Serge</div></div>
-        <span class="fam-arrow">›</span>
-      </div>
-      <div class="fam-children"><span class="fam-child"><span class="fam-child-placeholder">👤</span> Habisha</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Egla</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Harry</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Clara</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Michael</span></div>
-    </div>
-    <div class="fam-card" id="fam-leopold" onclick="this.classList.toggle('open')">
-      <div class="fam-head">
-        <div class="fam-photo-placeholder">👤</div>
-        <div class="fam-info"><div class="fam-name">Famille Nguetsop Léopold</div></div>
-        <span class="fam-arrow">›</span>
-      </div>
-      <div class="fam-children"><span class="fam-child"><span class="fam-child-placeholder">👤</span> Christ</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Franck</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Mathilda</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Naomie</span></div>
-    </div>
-    <div class="fam-card" id="fam-edouard" onclick="this.classList.toggle('open')">
-      <div class="fam-head">
-        <div class="fam-photo-placeholder">👤</div>
-        <div class="fam-info"><div class="fam-name">Famille <em>Nkem Ngouh</em> Mezazeme Édouard</div></div>
-        <span class="fam-arrow">›</span>
-      </div>
-      <div class="fam-children"><span class="fam-child"><span class="fam-child-placeholder">👤</span> Denzel</span></div>
-    </div>
-    <div class="fam-card" id="fam-etienne" onclick="this.classList.toggle('open')">
-      <div class="fam-head">
-        <div class="fam-photo-placeholder">👤</div>
-        <div class="fam-info"><div class="fam-name">Famille Vouffo Étienne</div></div>
-        <span class="fam-arrow">›</span>
-      </div>
-      <div class="fam-children"><span class="fam-child"><span class="fam-child-placeholder">👤</span> Ashley</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Juidy</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Marie-Carla</span><span class="fam-child"><span class="fam-child-placeholder">👤</span> Chavy</span></div>
-    </div>
-
   </div>
 
   <!-- Arrière-petits-enfants -->
@@ -281,6 +139,32 @@
 </div>
 <div class="f-copy">© 2026 Famille Maah Mentsih — Tous droits réservés</div>
 </footer>
+
+<script>
+var treeFams = [
+  {name:"Famille Wamba Clément",kids:["Lucrèce","Yannick","Martial","Tony","Arthur","Ostian","Fortune"]},
+  {name:"Famille <em>Manfoh</em> Nguetsop Michel",kids:["Lafric","Mandela","Michèle","Richelle","Alexandra","Élysée","Estelle","Maddy","Serge","Sonia","Genny","Dongwa","Djeff","Angela","Ange","Dave"]},
+  {name:"Famille <em>Foh Miatsuet II</em> Jiotsa Jean Gallo",kids:["Jessica","Barbara","Aurélie","Samira","Lindsay","Malaïka","Satia","Nathan","Reina","Myriam","Paul"]},
+  {name:"Famille Nguetsop Robinson",kids:["Maria"]},
+  {name:"Famille <em>Foh Nleng</em> Nguetsop Salomon",kids:["Patricia","Franck","Anakiya"]},
+  {name:"Famille Nguetsop Serge",kids:["Habisha","Egla","Harry","Clara","Michael"]},
+  {name:"Famille Nguetsop Léopold",kids:["Christ","Franck","Mathilda","Naomie"]},
+  {name:"Famille <em>Nkem Ngouh</em> Mezazeme Édouard",kids:["Denzel"]},
+  {name:"Famille Vouffo Étienne",kids:["Ashley","Juidy","Marie-Carla","Chavy"]}
+];
+var treeCur=-1;
+function toggleTree(id){
+  var box=document.getElementById("itree-sub");
+  var nodes=document.querySelectorAll(".itree-child");
+  if(treeCur===id){box.innerHTML="";nodes[id].classList.remove("open");treeCur=-1;return}
+  if(treeCur>=0)nodes[treeCur].classList.remove("open");
+  nodes[id].classList.add("open");treeCur=id;
+  var f=treeFams[id];
+  var h=f.kids.map(function(k){return'<div class="itree-gc"><div class="itree-gc-photo">👤</div><div class="itree-gc-name">'+k+"</div></div>"}).join("");
+  box.innerHTML='<div class="itree-sub show"><div class="itree-sub-head"><div class="itree-sub-info"><div class="itree-sub-label">Petits-enfants</div><div class="itree-sub-parent">'+f.name+'</div></div><div class="itree-sub-close" onclick="toggleTree('+id+')">✕</div></div><div class="itree-gc-grid">'+h+"</div></div>";
+  setTimeout(function(){box.scrollIntoView({behavior:"smooth",block:"nearest"})},150);
+}
+</script>
 <script src="/js/main.js"></script>
 </body>
 </html>
