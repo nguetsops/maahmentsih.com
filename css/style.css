@@ -166,7 +166,10 @@ body{font-family:var(--font-b);font-weight:300;color:var(--text);background:var(
 .itree-child-photo{width:50px;height:50px;border-radius:50%;background:rgba(200,164,92,.05);border:2px dashed rgba(200,164,92,.15);display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--gold-dd);transition:all .3s}
 .itree-child:hover .itree-child-photo{border-color:rgba(200,164,92,.35)}
 .itree-child.open .itree-child-photo{border-color:var(--gold);border-style:solid;background:rgba(200,164,92,.1);box-shadow:0 0 15px rgba(200,164,92,.15)}
-.itree-child.successor .itree-child-photo{border-color:var(--gold);border-style:solid;border-width:3px;background:rgba(200,164,92,.06);box-shadow:0 0 10px rgba(200,164,92,.12)}
+.itree-child.successor .itree-child-photo{border-color:var(--gold);border-style:double;border-width:4px;background:rgba(200,164,92,.06);box-shadow:0 0 15px rgba(200,164,92,.15)}
+/* Crown for successor */
+.itree-child-crown{font-size:.9rem;color:var(--gold);text-align:center;margin-bottom:-2px;position:relative;z-index:1;text-shadow:0 0 8px rgba(200,164,92,.3)}
+
 .itree-child.deceased .itree-child-photo{border-color:rgba(150,140,130,.3);opacity:.55;border-style:dashed}
 .itree-child.deceased.open .itree-child-photo{border-color:var(--gold);border-style:solid;opacity:.9;background:rgba(200,164,92,.1);box-shadow:0 0 15px rgba(200,164,92,.15)}
 
@@ -206,7 +209,7 @@ body{font-family:var(--font-b);font-weight:300;color:var(--text);background:var(
 .itree-ggc-head{margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid rgba(200,164,92,.08)}
 .itree-ggc-grid{display:flex;flex-wrap:wrap;gap:.4rem}
 .itree-ggc{display:flex;align-items:center;gap:.35rem;padding:.3rem .5rem;background:rgba(200,164,92,.04);border:1px solid rgba(200,164,92,.06);border-radius:6px}
-.itree-ggc-photo{width:22px;height:22px;border-radius:50%;background:rgba(200,164,92,.05);border:1px dashed rgba(200,164,92,.1);display:flex;align-items:center;justify-content:center;font-size:.45rem;color:var(--gold-dd);flex-shrink:0}
+.itree-ggc-photo{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
 .itree-ggc-name{font-size:.75rem;color:var(--cream-s)}
 .itree-ggc-year{font-size:.6rem;color:var(--gold-d);margin-left:.2rem}
 
