@@ -194,6 +194,22 @@ body{font-family:var(--font-b);font-weight:300;color:var(--text);background:var(
 .itree-gc-photo{width:28px;height:28px;border-radius:50%;background:rgba(200,164,92,.05);border:1px dashed rgba(200,164,92,.1);display:flex;align-items:center;justify-content:center;font-size:.55rem;color:var(--gold-dd);flex-shrink:0}
 .itree-gc-name{font-size:.78rem;color:var(--cream-s)}
 
+
+/* === LEVEL 3: Great-grandchildren === */
+.itree-gc-parent{cursor:pointer;position:relative}
+.itree-gc-parent:hover{background:rgba(200,164,92,.06)}
+.itree-gc-badge{position:absolute;top:-4px;right:-4px;width:18px;height:18px;border-radius:50%;background:var(--gold-d);color:var(--bg);font-size:.55rem;font-weight:600;display:flex;align-items:center;justify-content:center;line-height:1}
+.itree-gc{position:relative;transition:background .2s}
+
+.itree-ggc-panel{padding:1rem;margin-top:.75rem;background:var(--bg3);border:1px solid rgba(200,164,92,.12);border-radius:10px;animation:slideDown .3s ease}
+.itree-ggc-panel.show{display:block}
+.itree-ggc-head{margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid rgba(200,164,92,.08)}
+.itree-ggc-grid{display:flex;flex-wrap:wrap;gap:.4rem}
+.itree-ggc{display:flex;align-items:center;gap:.35rem;padding:.3rem .5rem;background:rgba(200,164,92,.04);border:1px solid rgba(200,164,92,.06);border-radius:6px}
+.itree-ggc-photo{width:22px;height:22px;border-radius:50%;background:rgba(200,164,92,.05);border:1px dashed rgba(200,164,92,.1);display:flex;align-items:center;justify-content:center;font-size:.45rem;color:var(--gold-dd);flex-shrink:0}
+.itree-ggc-name{font-size:.75rem;color:var(--cream-s)}
+.itree-ggc-year{font-size:.6rem;color:var(--gold-d);margin-left:.2rem}
+
 /* === FAMILY TIMELINE === */
 .ftl{position:relative;padding:1rem 0 1rem 2rem;margin:1rem 0 2rem}
 .ftl::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--gold),var(--gold-d) 80%,transparent)}

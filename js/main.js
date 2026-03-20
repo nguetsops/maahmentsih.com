@@ -48,6 +48,14 @@ document.querySelectorAll(".nav-links a").forEach(function(a){a.addEventListener
   if(nl)nl.classList.remove("open");
   if(toggle)toggle.textContent="☰";
 })});
+// Close menu on scroll
+window.addEventListener("scroll",function(){
+  var nl=document.getElementById("nav-links");
+  if(nl&&nl.classList.contains("open")){
+    nl.classList.remove("open");
+    if(toggle)toggle.textContent="☰";
+  }
+},{passive:true});
 
 // === Nav active state ===
 !function(){

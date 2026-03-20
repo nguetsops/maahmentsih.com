@@ -36,10 +36,9 @@
   <div class="sec-label"><svg class="cowrie" viewBox="0 0 16 24" width="10" height="15"><ellipse cx="8" cy="12" rx="6" ry="10" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="3" x2="8" y2="21" stroke="currentColor" stroke-width="1" opacity=".5"/></svg> Lignée familiale <svg class="cowrie" viewBox="0 0 16 24" width="10" height="15"><ellipse cx="8" cy="12" rx="6" ry="10" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="3" x2="8" y2="21" stroke="currentColor" stroke-width="1" opacity=".5"/></svg></div>
   <h2 class="sec-title">Arbre généalogique</h2>
   <div class="sec-div"></div>
+  <p style="font-size:.85rem;color:var(--cream-s);text-align:center;margin-bottom:2rem">Cliquez sur un enfant pour voir ses descendants</p>
 
   <div class="itree">
-    
-    <!-- ROOT -->
     <div class="itree-root">
       <div class="itree-root-name">Maah Mentsih Tsobgni Marie Claire</div>
       <div class="itree-root-title">Reine Mère de Miatsuet</div>
@@ -49,80 +48,56 @@
         <div class="itree-root-spouse-sub">Chef de Miatsuet</div>
       </div>
     </div>
-    
     <div class="itree-line"></div>
     <div class="itree-spread"></div>
-    
-    <!-- 9 CHILDREN -->
     <div class="itree-children" id="itree-children">
-
       <div class="itree-child deceased" onclick="toggleTree(0)">
         <div class="itree-child-photo">👤</div>
         <div class="itree-child-name">Wamba Clément</div>
         <div class="itree-child-htitle">dit WamClé</div>
         <div class="itree-child-note">🕊 2011</div>
       </div>
-
       <div class="itree-child" onclick="toggleTree(1)">
         <div class="itree-child-photo">👤</div>
         <div class="itree-child-name"><em>Manfoh</em><br>Nguetsop Michel</div>
       </div>
-
       <div class="itree-child successor" onclick="toggleTree(2)">
         <div class="itree-child-photo">👤</div>
         <div class="itree-child-name"><em>Foh Miatsuet II</em><br>Jiotsa Jean Gallo</div>
         <div class="itree-child-htitle">Successeur</div>
       </div>
-
       <div class="itree-child" onclick="toggleTree(3)">
         <div class="itree-child-photo">👤</div>
         <div class="itree-child-name">Nguetsop<br>Robinson</div>
       </div>
-
       <div class="itree-child" onclick="toggleTree(4)">
         <div class="itree-child-photo">👤</div>
         <div class="itree-child-name"><em>Foh Nleng</em><br>Nguetsop Salomon</div>
       </div>
-
       <div class="itree-child" onclick="toggleTree(5)">
         <div class="itree-child-photo">👤</div>
         <div class="itree-child-name">Nguetsop<br>Serge</div>
       </div>
-
       <div class="itree-child" onclick="toggleTree(6)">
         <div class="itree-child-photo">👤</div>
         <div class="itree-child-name">Nguetsop<br>Léopold</div>
       </div>
-
       <div class="itree-child" onclick="toggleTree(7)">
         <div class="itree-child-photo">👤</div>
         <div class="itree-child-name"><em>Nkem Ngouh</em><br>Mezazeme Édouard</div>
       </div>
-
       <div class="itree-child" onclick="toggleTree(8)">
         <div class="itree-child-photo">👤</div>
         <div class="itree-child-name">Vouffo<br>Étienne</div>
       </div>
-
     </div>
-
-    <!-- Subtree opens here -->
     <div id="itree-sub"></div>
-
   </div>
 
-  <!-- Stats -->
   <div class="tree-stats">
     <div class="tree-stat"><div class="tree-stat-num">9</div><div class="tree-stat-label">Enfants</div></div>
     <div class="tree-stat"><div class="tree-stat-num">52</div><div class="tree-stat-label">Petits-enfants</div></div>
-    <div class="tree-stat"><div class="tree-stat-num">~20</div><div class="tree-stat-label">Arr.-petits-enfants</div></div>
-  </div>
-
-  <!-- Arrière-petits-enfants -->
-  <div style="margin-top:1.5rem;padding:1.25rem;background:var(--bg3);border:1px solid rgba(200,164,92,.08);border-radius:10px;display:flex;align-items:center;gap:.7rem">
-    <span style="font-size:1.2rem">🌱</span>
-    <div style="flex:1"><div style="font-family:var(--font-d);font-size:1rem;font-weight:600;color:var(--cream)">Arrière-petits-enfants</div><div style="font-size:.8rem;color:var(--text-m);font-style:italic;margin-top:.15rem">La liste sera ajoutée prochainement.</div></div>
-    <span style="font-family:var(--font-d);font-size:1.4rem;font-weight:700;color:var(--gold-d)">~20</span>
+    <div class="tree-stat"><div class="tree-stat-num">20</div><div class="tree-stat-label">Arr.-petits-enfants</div></div>
   </div>
 
 </div>
@@ -141,29 +116,98 @@
 </footer>
 
 <script>
+
 var treeFams = [
-  {name:"Famille Wamba Clément",kids:["Lucrèce","Yannick","Martial","Tony","Arthur","Ostian","Fortune"]},
-  {name:"Famille <em>Manfoh</em> Nguetsop Michel",kids:["Lafric","Mandela","Michèle","Richelle","Alexandra","Élysée","Estelle","Maddy","Serge","Sonia","Genny","Dongwa","Djeff","Angela","Ange","Dave"]},
-  {name:"Famille <em>Foh Miatsuet II</em> Jiotsa Jean Gallo",kids:["Jessica","Barbara","Aurélie","Samira","Lindsay","Malaïka","Satia","Nathan","Reina","Myriam","Paul"]},
-  {name:"Famille Nguetsop Robinson",kids:["Maria"]},
-  {name:"Famille <em>Foh Nleng</em> Nguetsop Salomon",kids:["Patricia","Franck","Anakiya"]},
-  {name:"Famille Nguetsop Serge",kids:["Habisha","Egla","Harry","Clara","Michael"]},
-  {name:"Famille Nguetsop Léopold",kids:["Christ","Franck","Mathilda","Naomie"]},
-  {name:"Famille <em>Nkem Ngouh</em> Mezazeme Édouard",kids:["Denzel"]},
-  {name:"Famille Vouffo Étienne",kids:["Ashley","Juidy","Marie-Carla","Chavy"]}
+  {name:"Famille Wamba Clément",kids:[
+    {n:"Lucrèce",gc:[]},{n:"Yannick",gc:[]},{n:"Martial",gc:[]},
+    {n:"Tony",gc:[{n:"Ivy"},{n:"Nora",y:2024}]},
+    {n:"Arthur",gc:[{n:"King Alexander",y:2021},{n:"Juliette",y:2025}]},
+    {n:"Ostian",gc:[{n:"Simeyah",y:2024},{n:"Aaron",y:2026}]},
+    {n:"Fortune",gc:[]}
+  ]},
+  {name:"Famille <em>Manfoh</em> Nguetsop Michel",kids:[
+    {n:"Lafric",gc:[{n:"Daisy"},{n:"Jordan"},{n:"Ashley"},{n:"Kaila",y:2024}]},
+    {n:"Mandela",gc:[{n:"Jamal",y:2019},{n:"Zendaya",y:2025}]},
+    {n:"Michèle",gc:[{n:"Berakah",y:2021},{n:"Ange Shalom",y:2023}]},
+    {n:"Richelle",gc:[]},{n:"Alexandra",gc:[{n:"Maylon",y:2023}]},
+    {n:"Élysée",gc:[{n:"Nathanaël",y:2024}]},
+    {n:"Estelle",gc:[]},{n:"Maddy",gc:[]},{n:"Serge",gc:[]},
+    {n:"Sonia",gc:[{n:"Leroi",y:2014}]},
+    {n:"Genny",gc:[]},{n:"Dongwa",gc:[]},{n:"Djeff",gc:[]},
+    {n:"Angela",gc:[]},{n:"Ange",gc:[]},{n:"Dave",gc:[]}
+  ]},
+  {name:"Famille <em>Foh Miatsuet II</em> Jiotsa Jean Gallo",kids:[
+    {n:"Jessica",gc:[{n:"Léon",y:2023}]},
+    {n:"Barbara",gc:[]},{n:"Aurélie",gc:[]},{n:"Samira",gc:[]},
+    {n:"Lindsay",gc:[]},{n:"Malaïka",gc:[]},{n:"Satia",gc:[]},
+    {n:"Nathan",gc:[]},{n:"Reina",gc:[]},{n:"Myriam",gc:[]},{n:"Paul",gc:[]}
+  ]},
+  {name:"Famille Nguetsop Robinson",kids:[{n:"Maria",gc:[]}]},
+  {name:"Famille <em>Foh Nleng</em> Nguetsop Salomon",kids:[
+    {n:"Patricia",gc:[{n:"Inaya",y:2022},{n:"Kehphren",y:2024}]},
+    {n:"Franck",gc:[]},{n:"Anakiya",gc:[]}
+  ]},
+  {name:"Famille Nguetsop Serge",kids:[
+    {n:"Habisha",gc:[]},{n:"Egla",gc:[]},{n:"Harry",gc:[]},{n:"Clara",gc:[]},{n:"Michael",gc:[]}
+  ]},
+  {name:"Famille Nguetsop Léopold",kids:[
+    {n:"Christ",gc:[]},{n:"Franck",gc:[]},{n:"Mathilda",gc:[]},{n:"Naomie",gc:[]}
+  ]},
+  {name:"Famille <em>Nkem Ngouh</em> Mezazeme Édouard",kids:[{n:"Denzel",gc:[]}]},
+  {name:"Famille Vouffo Étienne",kids:[
+    {n:"Ashley",gc:[]},{n:"Juidy",gc:[]},{n:"Marie-Carla",gc:[]},{n:"Chavy",gc:[]}
+  ]}
 ];
-var treeCur=-1;
-function toggleTree(id){
-  var box=document.getElementById("itree-sub");
-  var nodes=document.querySelectorAll(".itree-child");
-  if(treeCur===id){box.innerHTML="";nodes[id].classList.remove("open");treeCur=-1;return}
-  if(treeCur>=0)nodes[treeCur].classList.remove("open");
-  nodes[id].classList.add("open");treeCur=id;
-  var f=treeFams[id];
-  var h=f.kids.map(function(k){return'<div class="itree-gc"><div class="itree-gc-photo">👤</div><div class="itree-gc-name">'+k+"</div></div>"}).join("");
-  box.innerHTML='<div class="itree-sub show"><div class="itree-sub-head"><div class="itree-sub-info"><div class="itree-sub-label">Petits-enfants</div><div class="itree-sub-parent">'+f.name+'</div></div><div class="itree-sub-close" onclick="toggleTree('+id+')">✕</div></div><div class="itree-gc-grid">'+h+"</div></div>";
-  setTimeout(function(){box.scrollIntoView({behavior:"smooth",block:"nearest"})},150);
+
+var treeCur = -1;
+var gcOpen = -1;
+
+function toggleTree(id) {
+  var box = document.getElementById("itree-sub");
+  var nodes = document.querySelectorAll(".itree-child");
+  if (treeCur === id) { box.innerHTML = ""; nodes[id].classList.remove("open"); treeCur = -1; gcOpen = -1; return; }
+  if (treeCur >= 0) nodes[treeCur].classList.remove("open");
+  nodes[id].classList.add("open"); treeCur = id; gcOpen = -1;
+  renderGC(id);
+  setTimeout(function() { box.scrollIntoView({behavior:"smooth",block:"nearest"}); }, 150);
 }
+
+function renderGC(famIdx) {
+  var box = document.getElementById("itree-sub");
+  var f = treeFams[famIdx];
+  var h = f.kids.map(function(k, i) {
+    var hasKids = k.gc && k.gc.length > 0;
+    var cls = "itree-gc" + (hasKids ? " itree-gc-parent" : "");
+    var click = hasKids ? ' onclick="toggleGC(' + famIdx + ',' + i + ')"' : '';
+    var badge = hasKids ? '<span class="itree-gc-badge">' + k.gc.length + '</span>' : '';
+    return '<div class="' + cls + '"' + click + '><div class="itree-gc-photo">👤</div><div class="itree-gc-name">' + k.n + '</div>' + badge + '</div>';
+  }).join("");
+
+  box.innerHTML = '<div class="itree-sub show">' +
+    '<div class="itree-sub-head"><div class="itree-sub-info"><div class="itree-sub-label">Petits-enfants</div><div class="itree-sub-parent">' + f.name + '</div></div>' +
+    '<div class="itree-sub-close" onclick="toggleTree(' + famIdx + ')">✕</div></div>' +
+    '<div class="itree-gc-grid">' + h + '</div>' +
+    '<div id="itree-ggc"></div>' +
+  '</div>';
+}
+
+function toggleGC(famIdx, kidIdx) {
+  var ggcBox = document.getElementById("itree-ggc");
+  if (gcOpen === kidIdx) { ggcBox.innerHTML = ""; gcOpen = -1; return; }
+  gcOpen = kidIdx;
+  var k = treeFams[famIdx].kids[kidIdx];
+  var h = k.gc.map(function(c) {
+    var yearHtml = c.y ? '<span class="itree-ggc-year">' + c.y + '</span>' : '';
+    return '<div class="itree-ggc"><div class="itree-ggc-photo">👤</div><div class="itree-ggc-name">' + c.n + '</div>' + yearHtml + '</div>';
+  }).join("");
+
+  ggcBox.innerHTML = '<div class="itree-ggc-panel show">' +
+    '<div class="itree-ggc-head"><div class="itree-sub-label">Arrière-petits-enfants</div><div style="font-family:var(--font-d);font-size:.95rem;font-weight:600;color:var(--cream)">Enfants de ' + k.n + '</div></div>' +
+    '<div class="itree-ggc-grid">' + h + '</div>' +
+  '</div>';
+  setTimeout(function() { ggcBox.scrollIntoView({behavior:"smooth",block:"nearest"}); }, 150);
+}
+
 </script>
 <script src="/js/main.js"></script>
 </body>
