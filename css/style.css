@@ -412,7 +412,7 @@ body{font-family:var(--font-b);font-weight:300;color:var(--text);background:var(
 /* === ANIMATIONS === */
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+.reveal{opacity:.4;transform:translateY(10px);transition:opacity .4s ease,transform .4s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
 /* === RESPONSIVE === */
