@@ -32,99 +32,70 @@
 </div>
 </nav>
 
-
 <section class="sec" style="padding-top:5rem">
 <div class="sec-in reveal">
   <div class="sec-label">Souvenirs</div>
-  <h2 class="sec-title">Moments de vie</h2>
+  <h2 class="sec-title">Galerie photos</h2>
   <div class="sec-div"></div>
+  <p style="font-size:.9rem;color:var(--cream-s);margin-bottom:2rem;line-height:1.7;text-align:center">
+    Des moments de vie, de joie et d'amour partagés avec la Reine Mère.
+  </p>
 
-  <!-- CARROUSEL -->
-  <div class="carousel-wrap">
-    <div class="carousel" id="carousel">
-      <div class="carousel-slide" data-index="0" onclick="openLightbox(this)">
-        <img src="/images/youth2.jpg" alt="Une reine en devenir" loading="eager">
-        <div class="carousel-slide-overlay"></div>
-        <div class="carousel-slide-caption">
-          <div class="carousel-slide-title">Une reine en devenir</div>
-          <div class="carousel-slide-desc">Jeune femme, elle portait déjà avec élégance les tenues traditionnelles et les parures de la culture Bamiléké.</div>
-        </div>
-      </div>
-      <div class="carousel-slide" data-index="1" onclick="openLightbox(this)">
-        <img src="/images/ndop.jpg" alt="La Reine Mère en tenue ndop" loading="lazy">
-        <div class="carousel-slide-overlay"></div>
-        <div class="carousel-slide-caption">
-          <div class="carousel-slide-title">La Reine Mère en tenue ndop</div>
-          <div class="carousel-slide-desc">Vêtue du prestigieux tissu ndop bleu et blanc, symbole de royauté et de pouvoir dans la culture Bamiléké.</div>
-        </div>
-      </div>
-      <div class="carousel-slide" data-index="2" onclick="openLightbox(this)">
-        <img src="/images/ceremony.jpg" alt="Au cœur des cérémonies" loading="lazy">
-        <div class="carousel-slide-overlay"></div>
-        <div class="carousel-slide-caption">
-          <div class="carousel-slide-title">Au cœur des cérémonies</div>
-          <div class="carousel-slide-desc">Aux côtés des notables lors des grandes cérémonies traditionnelles, incarnant le lien entre les générations.</div>
-        </div>
-      </div>
-      <div class="carousel-slide" data-index="3" onclick="openLightbox(this)">
-        <img src="/images/hero-orange.jpg" alt="La joie de vivre incarnée" loading="lazy">
-        <div class="carousel-slide-overlay"></div>
-        <div class="carousel-slide-caption">
-          <div class="carousel-slide-title">La joie de vivre incarnée</div>
-          <div class="carousel-slide-desc">Son sourire lumineux et sa bienveillance naturelle réchauffaient le cœur de tous.</div>
-        </div>
-      </div>
-      <div class="carousel-slide" data-index="4" onclick="openLightbox(this)">
-        <img src="/images/youth1.jpg" alt="Portrait de jeunesse" loading="lazy">
-        <div class="carousel-slide-overlay"></div>
-        <div class="carousel-slide-caption">
-          <div class="carousel-slide-title">Portrait de jeunesse</div>
-          <div class="carousel-slide-desc">Dans sa jeunesse, en tenue traditionnelle, devant les tentures tissées de l'Ouest Cameroun.</div>
-        </div>
-      </div>
+  <!-- Carousel -->
+  <div class="carousel" id="carousel">
+    <div class="carousel-track" id="carousel-track">
+        <div class="carousel-slide"><img src="/images/gallery/grande-royale.jpg" alt="La grande royale" loading="lazy"><div class="carousel-caption">La grande royale</div></div>
+        <div class="carousel-slide"><img src="/images/gallery/foh-maah-manfoh.jpg" alt="Foh, Maah et Manfoh" loading="lazy"><div class="carousel-caption">Foh, Maah et Manfoh</div></div>
+        <div class="carousel-slide"><img src="/images/gallery/celebration-retablissement.jpg" alt="Célébration du rétablissement de Maah Mentsih — Douala" loading="lazy"><div class="carousel-caption">Célébration du rétablissement de Maah Mentsih — Douala</div></div>
+        <div class="carousel-slide"><img src="/images/gallery/genny-sonia-michele.jpg" alt="Avec Genny et Sonia, au mariage de Michèle — Yaoundé" loading="lazy"><div class="carousel-caption">Avec Genny et Sonia, au mariage de Michèle — Yaoundé</div></div>
+        <div class="carousel-slide"><img src="/images/gallery/galon-etienne.jpg" alt="Cérémonie de galon de son fils Étienne — Yaoundé" loading="lazy"><div class="carousel-caption">Cérémonie de galon de son fils Étienne — Yaoundé</div></div>
+        <div class="carousel-slide"><img src="/images/gallery/mariage-francis.jpg" alt="Au mariage de Francis, avec sa complice Maah Djukem — Yaoundé" loading="lazy"><div class="carousel-caption">Au mariage de Francis, avec sa complice Maah Djukem — Yaoundé</div></div>
+        <div class="carousel-slide"><img src="/images/gallery/guadeloupe.jpg" alt="Mère et fils, lors d'un séjour exceptionnel en Guadeloupe" loading="lazy"><div class="carousel-caption">Mère et fils, lors d'un séjour exceptionnel en Guadeloupe</div></div>
+        <div class="carousel-slide"><img src="/images/gallery/petit-fils-franck.jpg" alt="Avec son petit-fils Franck" loading="lazy"><div class="carousel-caption">Avec son petit-fils Franck</div></div>
+        <div class="carousel-slide"><img src="/images/gallery/selfie-foh.jpg" alt="En mode selfie avec Foh — Douala" loading="lazy"><div class="carousel-caption">En mode selfie avec Foh — Douala</div></div>
+        <div class="carousel-slide"><img src="/images/gallery/mamie-washington.jpg" alt="Mamie Washington — Yaoundé" loading="lazy"><div class="carousel-caption">Mamie Washington — Yaoundé</div></div>
+        <div class="carousel-slide"><img src="/images/gallery/toque-patricia.jpg" alt="Au toqué, portée de sa petite-fille Patricia — Yaoundé" loading="lazy"><div class="carousel-caption">Au toqué, portée de sa petite-fille Patricia — Yaoundé</div></div>
+        <div class="carousel-slide"><img src="/images/gallery/chez-maah.jpg" alt="Chez Maah" loading="lazy"><div class="carousel-caption">Chez Maah</div></div>
+        <div class="carousel-slide"><img src="/images/gallery/maah-ses-femmes.jpg" alt="Maah et ses femmes" loading="lazy"><div class="carousel-caption">Maah et ses femmes</div></div>
+        <div class="carousel-slide"><img src="/images/gallery/reunion-2019-fils.jpg" alt="Réunion familiale — Yaoundé, 2019" loading="lazy"><div class="carousel-caption">Réunion familiale — Yaoundé, 2019</div></div>
+        <div class="carousel-slide"><img src="/images/gallery/reunion-2019.jpg" alt="Réunion familiale — Yaoundé, 2019" loading="lazy"><div class="carousel-caption">Réunion familiale — Yaoundé, 2019</div></div>
+        <div class="carousel-slide"><img src="/images/gallery/reunion-petits-enfants.jpg" alt="Réunion familiale avec les petits-enfants — Yaoundé" loading="lazy"><div class="carousel-caption">Réunion familiale avec les petits-enfants — Yaoundé</div></div>
+        <div class="carousel-slide"><img src="/images/gallery/dernier-nouvel-an.jpg" alt="Le dernier Nouvel An de Maah, au village chez Manfoh — Janvier 2026" loading="lazy"><div class="carousel-caption">Le dernier Nouvel An de Maah, au village chez Manfoh — Janvier 2026</div></div>
+        <div class="carousel-slide"><img src="/images/gallery/nouvel-an-2026.jpg" alt="Nouvel An 2026" loading="lazy"><div class="carousel-caption">Nouvel An 2026</div></div>
+        <div class="carousel-slide"><img src="/images/gallery/douala.jpg" alt="Douala" loading="lazy"><div class="carousel-caption">Douala</div></div>
+        <div class="carousel-slide"><img src="/images/gallery/mamie-dab.jpg" alt="Mamie qui fait le dab" loading="lazy"><div class="carousel-caption">Mamie qui fait le dab</div></div>
     </div>
-    <div class="carousel-arrows">
-      <button class="carousel-arrow" onclick="prevSlide()" aria-label="Précédent">‹</button>
-      <button class="carousel-arrow" onclick="nextSlide()" aria-label="Suivant">›</button>
-    </div>
-    <div class="carousel-dots" id="carousel-dots">
-      <button class="carousel-dot active" data-index="0" aria-label="Photo 1"></button><button class="carousel-dot" data-index="1" aria-label="Photo 2"></button><button class="carousel-dot" data-index="2" aria-label="Photo 3"></button><button class="carousel-dot" data-index="3" aria-label="Photo 4"></button><button class="carousel-dot" data-index="4" aria-label="Photo 5"></button>
-    </div>
+    <button class="carousel-btn carousel-prev" onclick="prevSlide()">‹</button>
+    <button class="carousel-btn carousel-next" onclick="nextSlide()">›</button>
+    <div class="carousel-counter" id="carousel-counter">1 / 20</div>
   </div>
 
-  <!-- GRILLE MINIATURES -->
-  <h3 style="font-family:var(--font-d);font-size:1.1rem;font-weight:600;color:var(--cream);margin-bottom:1rem">Toutes les photos</h3>
-  <div class="gallery-grid" id="gallery-grid">
-      <div class="gallery-thumb active" data-index="0" onclick="goToSlide(0)">
-        <img src="/images/youth2.jpg" alt="Une reine en devenir" loading="lazy">
-        <div class="gallery-thumb-overlay"></div>
-      </div>
-      <div class="gallery-thumb" data-index="1" onclick="goToSlide(1)">
-        <img src="/images/ndop.jpg" alt="La Reine Mère en tenue ndop" loading="lazy">
-        <div class="gallery-thumb-overlay"></div>
-      </div>
-      <div class="gallery-thumb" data-index="2" onclick="goToSlide(2)">
-        <img src="/images/ceremony.jpg" alt="Au cœur des cérémonies" loading="lazy">
-        <div class="gallery-thumb-overlay"></div>
-      </div>
-      <div class="gallery-thumb" data-index="3" onclick="goToSlide(3)">
-        <img src="/images/hero-orange.jpg" alt="La joie de vivre incarnée" loading="lazy">
-        <div class="gallery-thumb-overlay"></div>
-      </div>
-      <div class="gallery-thumb" data-index="4" onclick="goToSlide(4)">
-        <img src="/images/youth1.jpg" alt="Portrait de jeunesse" loading="lazy">
-        <div class="gallery-thumb-overlay"></div>
-      </div>
+  <!-- Thumbnail grid -->
+  <div class="gallery-grid" style="margin-top:1.5rem">
+        <div class="gallery-thumb" onclick="goSlide(0)"><img src="/images/gallery/grande-royale.jpg" alt="La grande royale" loading="lazy"></div>
+        <div class="gallery-thumb" onclick="goSlide(1)"><img src="/images/gallery/foh-maah-manfoh.jpg" alt="Foh, Maah et Manfoh" loading="lazy"></div>
+        <div class="gallery-thumb" onclick="goSlide(2)"><img src="/images/gallery/celebration-retablissement.jpg" alt="Célébration du rétablissement de Maah Mentsih — Douala" loading="lazy"></div>
+        <div class="gallery-thumb" onclick="goSlide(3)"><img src="/images/gallery/genny-sonia-michele.jpg" alt="Avec Genny et Sonia, au mariage de Michèle — Yaoundé" loading="lazy"></div>
+        <div class="gallery-thumb" onclick="goSlide(4)"><img src="/images/gallery/galon-etienne.jpg" alt="Cérémonie de galon de son fils Étienne — Yaoundé" loading="lazy"></div>
+        <div class="gallery-thumb" onclick="goSlide(5)"><img src="/images/gallery/mariage-francis.jpg" alt="Au mariage de Francis, avec sa complice Maah Djukem — Yaoundé" loading="lazy"></div>
+        <div class="gallery-thumb" onclick="goSlide(6)"><img src="/images/gallery/guadeloupe.jpg" alt="Mère et fils, lors d'un séjour exceptionnel en Guadeloupe" loading="lazy"></div>
+        <div class="gallery-thumb" onclick="goSlide(7)"><img src="/images/gallery/petit-fils-franck.jpg" alt="Avec son petit-fils Franck" loading="lazy"></div>
+        <div class="gallery-thumb" onclick="goSlide(8)"><img src="/images/gallery/selfie-foh.jpg" alt="En mode selfie avec Foh — Douala" loading="lazy"></div>
+        <div class="gallery-thumb" onclick="goSlide(9)"><img src="/images/gallery/mamie-washington.jpg" alt="Mamie Washington — Yaoundé" loading="lazy"></div>
+        <div class="gallery-thumb" onclick="goSlide(10)"><img src="/images/gallery/toque-patricia.jpg" alt="Au toqué, portée de sa petite-fille Patricia — Yaoundé" loading="lazy"></div>
+        <div class="gallery-thumb" onclick="goSlide(11)"><img src="/images/gallery/chez-maah.jpg" alt="Chez Maah" loading="lazy"></div>
+        <div class="gallery-thumb" onclick="goSlide(12)"><img src="/images/gallery/maah-ses-femmes.jpg" alt="Maah et ses femmes" loading="lazy"></div>
+        <div class="gallery-thumb" onclick="goSlide(13)"><img src="/images/gallery/reunion-2019-fils.jpg" alt="Réunion familiale — Yaoundé, 2019" loading="lazy"></div>
+        <div class="gallery-thumb" onclick="goSlide(14)"><img src="/images/gallery/reunion-2019.jpg" alt="Réunion familiale — Yaoundé, 2019" loading="lazy"></div>
+        <div class="gallery-thumb" onclick="goSlide(15)"><img src="/images/gallery/reunion-petits-enfants.jpg" alt="Réunion familiale avec les petits-enfants — Yaoundé" loading="lazy"></div>
+        <div class="gallery-thumb" onclick="goSlide(16)"><img src="/images/gallery/dernier-nouvel-an.jpg" alt="Le dernier Nouvel An de Maah, au village chez Manfoh — Janvier 2026" loading="lazy"></div>
+        <div class="gallery-thumb" onclick="goSlide(17)"><img src="/images/gallery/nouvel-an-2026.jpg" alt="Nouvel An 2026" loading="lazy"></div>
+        <div class="gallery-thumb" onclick="goSlide(18)"><img src="/images/gallery/douala.jpg" alt="Douala" loading="lazy"></div>
+        <div class="gallery-thumb" onclick="goSlide(19)"><img src="/images/gallery/mamie-dab.jpg" alt="Mamie qui fait le dab" loading="lazy"></div>
   </div>
 
 </div>
 </section>
-
-<!-- LIGHTBOX -->
-<div class="lb" id="lightbox" onclick="closeLightbox()">
-<button class="lb-close" aria-label="Fermer">✕</button>
-<img id="lb-img" src="" alt="">
-</div>
 
 <footer class="footer">
 <div class="f-orn"></div>
@@ -138,57 +109,37 @@
 <div class="f-copy">© 2026 Famille Maah Mentsih — Tous droits réservés</div>
 </footer>
 
-
-
-<script src="/js/main.js"></script>
 <script>
-// === CAROUSEL LOGIC ===
+var curSlide = 0;
+var total = 20;
+var track = document.getElementById("carousel-track");
+
+function goSlide(n) {
+  curSlide = n;
+  track.style.transform = "translateX(-" + (n * 100) + "%)";
+  document.getElementById("carousel-counter").textContent = (n + 1) + " / " + total;
+  // Highlight active thumb
+  document.querySelectorAll(".gallery-thumb").forEach(function(t, i) {
+    t.style.opacity = i === n ? "1" : ".5";
+    t.style.borderColor = i === n ? "var(--gold)" : "rgba(200,164,92,.1)";
+  });
+}
+function nextSlide() { goSlide((curSlide + 1) % total); }
+function prevSlide() { goSlide((curSlide - 1 + total) % total); }
+
+// Init
+goSlide(0);
+
+// Swipe support
+var startX = 0;
 var carousel = document.getElementById("carousel");
-var dots = document.querySelectorAll(".carousel-dot");
-var thumbs = document.querySelectorAll(".gallery-thumb");
-var currentSlide = 0;
-var totalSlides = 5;
-
-function updateIndicators(idx) {
-  currentSlide = idx;
-  dots.forEach(function(d,i){ d.classList.toggle("active", i===idx) });
-  thumbs.forEach(function(t,i){ t.classList.toggle("active", i===idx) });
-}
-
-function goToSlide(idx) {
-  var slides = carousel.querySelectorAll(".carousel-slide");
-  if(slides[idx]) {
-    carousel.scrollTo({ left: slides[idx].offsetLeft, behavior: "smooth" });
-    updateIndicators(idx);
-  }
-}
-
-function nextSlide() { goToSlide((currentSlide + 1) % totalSlides) }
-function prevSlide() { goToSlide((currentSlide - 1 + totalSlides) % totalSlides) }
-
-// Dot clicks
-dots.forEach(function(d) {
-  d.addEventListener("click", function() { goToSlide(parseInt(this.dataset.index)) });
-});
-
-// Detect scroll snap position
-var scrollTimer;
-carousel.addEventListener("scroll", function() {
-  clearTimeout(scrollTimer);
-  scrollTimer = setTimeout(function() {
-    var slides = carousel.querySelectorAll(".carousel-slide");
-    var scrollLeft = carousel.scrollLeft;
-    var closest = 0;
-    var minDist = Infinity;
-    slides.forEach(function(s, i) {
-      var dist = Math.abs(s.offsetLeft - scrollLeft);
-      if(dist < minDist) { minDist = dist; closest = i; }
-    });
-    updateIndicators(closest);
-  }, 80);
-});
-
-// Swipe support is native via scroll-snap
+carousel.addEventListener("touchstart", function(e) { startX = e.touches[0].clientX; }, {passive:true});
+carousel.addEventListener("touchend", function(e) {
+  var diff = startX - e.changedTouches[0].clientX;
+  if (diff > 50) nextSlide();
+  else if (diff < -50) prevSlide();
+}, {passive:true});
 </script>
+<script src="/js/main.js"></script>
 </body>
 </html>

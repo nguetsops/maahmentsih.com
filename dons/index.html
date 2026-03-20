@@ -149,9 +149,9 @@ function loadGauge() {
     var amount = 0;
     if (doc.exists && doc.data().amount) amount = doc.data().amount;
     currentAmount = amount;
-    var pct = Math.min(100, Math.round(amount / TARGET * 100));
+    var pct = Math.round(amount / TARGET * 100);
     document.getElementById("gauge-text").textContent = formatCFA(amount) + " / " + formatCFA(TARGET) + " FCFA";
-    document.getElementById("gauge-fill").style.width = pct + "%";
+    document.getElementById("gauge-fill").style.width = Math.min(100, pct) + "%";
     document.getElementById("gauge-percent").textContent = pct + "%";
   });
 }

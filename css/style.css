@@ -317,35 +317,26 @@ body{font-family:var(--font-b);font-weight:300;color:var(--text);background:var(
 .map-embed iframe{width:100%;height:100%;border:none;filter:grayscale(.3) contrast(1.1)}
 
 /* === GALLERY === */
-/* Carousel */
-.carousel-wrap{position:relative;margin:0 calc(var(--g) * -1) 2rem}
-.carousel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:0}
-.carousel::-webkit-scrollbar{display:none}
-.carousel-slide{flex:0 0 100%;scroll-snap-align:center;position:relative;aspect-ratio:4/5;overflow:hidden;cursor:pointer;background:var(--bg3)}
-.carousel-slide img{width:100%;height:100%;object-fit:contain;transition:transform .4s}
-.carousel-slide-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,14,12,.7) 0%,transparent 40%);pointer-events:none}
-.carousel-slide-caption{position:absolute;bottom:1.25rem;left:var(--g);right:var(--g);pointer-events:none}
-.carousel-slide-title{font-family:var(--font-d);font-size:1.15rem;font-weight:600;color:var(--cream);margin-bottom:.2rem}
-.carousel-slide-desc{font-size:.8rem;color:var(--cream-s);line-height:1.4}
+.carousel{position:relative;overflow:hidden;border-radius:12px;margin:0 calc(var(--g) * -1);background:var(--bg3)}
+.carousel-track{display:flex;transition:transform .4s ease}
+.carousel-slide{flex:0 0 100%;position:relative;aspect-ratio:4/5;overflow:hidden}
+.carousel-slide img{width:100%;height:100%;object-fit:contain;background:var(--bg3)}
+.carousel-caption{position:absolute;bottom:0;left:0;right:0;padding:.75rem 1rem;background:linear-gradient(to top,rgba(14,21,16,.85),transparent);font-size:.82rem;color:var(--cream-s);line-height:1.5;font-style:italic}
+.carousel-btn{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;background:rgba(19,28,22,.7);border:1px solid rgba(200,164,92,.2);color:var(--cream);font-size:1.2rem;cursor:pointer;z-index:2;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.carousel-btn:hover{background:rgba(200,164,92,.2)}
+.carousel-prev{left:.75rem}
+.carousel-next{right:.75rem}
+.carousel-counter{position:absolute;top:.75rem;right:.75rem;padding:.25rem .6rem;border-radius:4px;background:rgba(14,21,16,.6);font-size:.7rem;color:var(--cream-s);z-index:2}
 
-/* Carousel dots */
-.carousel-dots{display:flex;justify-content:center;gap:.5rem;margin-top:1rem;padding:0 var(--g)}
-.carousel-dot{width:8px;height:8px;border-radius:50%;background:rgba(200,164,92,.2);border:none;cursor:pointer;padding:0;transition:background .3s,transform .3s}
-.carousel-dot.active{background:var(--gold);transform:scale(1.3)}
-
-/* Carousel arrows */
-.carousel-arrows{position:absolute;top:50%;left:0;right:0;display:flex;justify-content:space-between;padding:0 .5rem;transform:translateY(-50%);pointer-events:none;z-index:2}
-.carousel-arrow{pointer-events:auto;width:36px;height:36px;border-radius:50%;background:rgba(19,28,22,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(200,164,92,.15);color:var(--cream);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.9rem;transition:background .2s}
-.carousel-arrow:hover{background:rgba(200,164,92,.2)}
-
-/* Grid thumbnails */
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
-.gallery-thumb{position:relative;border-radius:6px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;border:2px solid transparent;transition:border-color .2s,transform .2s}
-.gallery-thumb.active{border-color:var(--gold)}
-.gallery-thumb:hover{transform:scale(1.03)}
+.gallery-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.4rem}
+.gallery-thumb{aspect-ratio:1;overflow:hidden;border-radius:6px;cursor:pointer;border:2px solid rgba(200,164,92,.1);transition:opacity .2s,border-color .2s;opacity:.5}
 .gallery-thumb img{width:100%;height:100%;object-fit:cover}
-.gallery-thumb-overlay{position:absolute;inset:0;background:rgba(15,14,12,.15);transition:background .2s;pointer-events:none}
-.gallery-thumb:hover .gallery-thumb-overlay,.gallery-thumb.active .gallery-thumb-overlay{background:transparent}
+.gallery-thumb:hover{opacity:.8}
+
+@media(max-width:599px){
+  .gallery-grid{grid-template-columns:repeat(4,1fr);gap:.3rem}
+  .carousel-slide{aspect-ratio:3/4}
+}
 
 /* === MOMENTS === */
 .moments-grid{display:flex;flex-direction:column;gap:2rem}
