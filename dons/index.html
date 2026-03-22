@@ -99,7 +99,7 @@
     <div id="dons-admin" style="display:none;margin-top:1rem;padding:1rem;background:var(--bg3);border:1px solid rgba(200,164,92,.1);border-radius:10px">
       <input id="dons-pw" type="password" placeholder="Mot de passe admin" style="width:100%;padding:.5rem .7rem;margin-bottom:.5rem;background:var(--bg2);border:1px solid rgba(200,164,92,.1);border-radius:6px;color:var(--cream);font-size:.85rem;outline:none">
       <input id="dons-amount" type="number" placeholder="Montant reçu en FCFA" style="width:100%;padding:.5rem .7rem;margin-bottom:.5rem;background:var(--bg2);border:1px solid rgba(200,164,92,.1);border-radius:6px;color:var(--cream);font-size:.85rem;outline:none">
-      <button id="dons-submit-btn" onclick="loginDons()" style="padding:.5rem 1rem;background:rgba(200,164,92,.1);border:1px solid var(--gold-d);border-radius:6px;color:var(--cream-s);font-size:.8rem;cursor:pointer">Ajouter au total</button>
+      <button id="dons-submit-btn" onclick="updateDons()" style="padding:.5rem 1rem;background:rgba(200,164,92,.1);border:1px solid var(--gold-d);border-radius:6px;color:var(--cream-s);font-size:.8rem;cursor:pointer">Connexion</button>
       <div id="dons-status" style="font-size:.75rem;color:var(--text-m);margin-top:.5rem"></div>
     </div>
 
@@ -160,6 +160,8 @@ function showDonsAdmin() { document.getElementById("dons-admin").style.display =
 
 var donsAdmin = false;
 
+function showDonsAdmin() { document.getElementById("dons-admin").style.display = "block"; }
+
 async function updateDons() {
   if (!donsAdmin) {
     var pw = document.getElementById("dons-pw").value;
@@ -170,7 +172,7 @@ async function updateDons() {
       return;
     }
     donsAdmin = true;
-    sessionStorage.setItem("dons_auth", "1");
+    sessionStorage.setItem("admin_auth", "1");
     showDonsConnected();
   }
   var val = parseInt(document.getElementById("dons-amount").value);
@@ -188,21 +190,21 @@ async function updateDons() {
 
 function showDonsConnected() {
   document.getElementById("dons-pw").style.display = "none";
-  var btn = document.getElementById("dons-submit-btn");
-  if (btn) btn.textContent = "Ajouter au total";
+  document.getElementById("dons-submit-btn").textContent = "Ajouter au total";
   document.getElementById("dons-status").innerHTML = '<span style="color:var(--gold)">Connecté</span> <span onclick="logoutDons()" style="cursor:pointer;font-size:.7rem;color:var(--text-m);margin-left:.5rem;padding:.2rem .5rem;border:1px solid rgba(200,164,92,.15);border-radius:4px">Se déconnecter</span>';
 }
 
 function logoutDons() {
   donsAdmin = false;
-  sessionStorage.removeItem("dons_auth");
+  sessionStorage.removeItem("admin_auth");
   document.getElementById("dons-pw").style.display = "";
   document.getElementById("dons-pw").value = "";
+  document.getElementById("dons-submit-btn").textContent = "Connexion";
   document.getElementById("dons-status").textContent = "";
 }
 
-// Restore dons session
-if (sessionStorage.getItem("dons_auth") === "1") {
+// Restore shared admin session
+if (sessionStorage.getItem("admin_auth") === "1") {
   donsAdmin = true;
   document.getElementById("dons-admin").style.display = "block";
   showDonsConnected();
