@@ -58,7 +58,7 @@
   </div>
   <div id="admin-panel" style="display:none;margin-top:1rem;padding:1rem;background:var(--bg3);border:1px solid rgba(200,164,92,.1);border-radius:10px">
     <input id="admin-pw" type="password" placeholder="Mot de passe admin" style="width:100%;padding:.5rem .7rem;margin-bottom:.5rem;background:var(--bg2);border:1px solid rgba(200,164,92,.1);border-radius:6px;color:var(--cream);font-size:.85rem;outline:none">
-    <button onclick="loginAdmin()" style="padding:.5rem 1rem;background:rgba(200,164,92,.1);border:1px solid var(--gold-d);border-radius:6px;color:var(--cream-s);font-size:.8rem;cursor:pointer">Connexion</button>
+    <button id="admin-login-btn" onclick="loginAdmin()" style="padding:.5rem 1rem;background:rgba(200,164,92,.1);border:1px solid var(--gold-d);border-radius:6px;color:var(--cream-s);font-size:.8rem;cursor:pointer">Connexion</button>
     <div id="admin-status" style="font-size:.75rem;color:var(--text-m);margin-top:.5rem"></div>
   </div>
 
@@ -174,13 +174,37 @@ async function loginAdmin() {
   var h = await hashPw(pw);
   if (h === "f5ad97c02ee60a2c78bb43eeb28819c63e04ef53841015a601fc9bc4e715713c") {
     isAdmin = true;
-    document.getElementById("admin-status").textContent = "Connecté en tant qu'admin";
-    document.getElementById("admin-status").style.color = "var(--gold)";
+    sessionStorage.setItem("admin_auth", "1");
+    showAdminConnected();
     loadMessages();
   } else {
     document.getElementById("admin-status").textContent = "Mot de passe incorrect";
     document.getElementById("admin-status").style.color = "#c55";
   }
+}
+
+function showAdminConnected() {
+  document.getElementById("admin-pw").style.display = "none";
+  document.getElementById("admin-login-btn").style.display = "none";
+  document.getElementById("admin-status").innerHTML = '<span style="color:var(--gold)">Connecté en tant qu\'admin</span> <span onclick="logoutAdmin()" style="cursor:pointer;font-size:.7rem;color:var(--text-m);margin-left:.5rem;padding:.2rem .5rem;border:1px solid rgba(200,164,92,.15);border-radius:4px">Se déconnecter</span>';
+}
+
+function logoutAdmin() {
+  isAdmin = false;
+  sessionStorage.removeItem("admin_auth");
+  document.getElementById("admin-pw").style.display = "";
+  document.getElementById("admin-pw").value = "";
+  document.getElementById("admin-login-btn").style.display = "";
+  document.getElementById("admin-status").textContent = "Déconnecté";
+  document.getElementById("admin-status").style.color = "var(--text-m)";
+  loadMessages();
+}
+
+// Restore session
+if (sessionStorage.getItem("admin_auth") === "1") {
+  isAdmin = true;
+  document.getElementById("admin-panel").style.display = "block";
+  showAdminConnected();
 }
 
 loadMessages();
