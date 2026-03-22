@@ -149,7 +149,7 @@ body{font-family:var(--font-b);font-weight:300;color:var(--text);background:var(
 .itree-root-title{font-size:.75rem;color:var(--gold);font-style:italic;margin-top:.15rem}
 .itree-root-spouse{margin-top:.6rem;padding-top:.6rem;border-top:1px solid rgba(200,164,92,.15);position:relative}
 .itree-ring{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:rgba(200,164,92,.06);border:1px solid rgba(200,164,92,.2);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:.7rem;color:var(--gold-d)}
-.itree-root-spouse-name{font-family:var(--font-d);font-size:.95rem;font-weight:600;color:var(--text-m)}
+.itree-root-spouse-name{font-family:var(--font-d);font-size:.95rem;font-weight:600;color:var(--text-m);opacity:.7}
 .itree-root-spouse-sub{font-size:.7rem;color:var(--text-m);font-style:italic}
 .itree-death-tag{opacity:.6;font-size:.75rem;color:var(--text-m)}
 
