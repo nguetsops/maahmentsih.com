@@ -45,17 +45,17 @@
   <div class="gauge-wrap">
     <div class="gauge-header">
       <span class="gauge-label">En mémoire de Maah</span>
-      <span class="gauge-amount" id="gauge-text">0 / 1 000 000 FCFA</span>
+      <span class="gauge-amount" id="gauge-text">0 / 1OM FCFA</span>
     </div>
     <div class="gauge-bar">
       <div class="gauge-fill" id="gauge-fill" style="width:0%"></div>
     </div>
     <div class="gauge-percent" id="gauge-percent">0%</div>
-    <div class="gauge-target">Objectif : 1 000 000 FCFA</div>
+    <div class="gauge-target">Objectif : 10M FCFA</div>
   </div>
 
   <p style="font-size:.95rem;color:var(--text-m);margin-bottom:2rem;line-height:1.7">
-    La famille vous remercie pour votre soutien.
+    La famille vous remercie grandement pour votre soutien.
   </p>
 
   <div class="don-card">
@@ -132,7 +132,7 @@ firebase.initializeApp({
   appId:"1:296174723200:web:8e6b0129970da7e4d8c665"
 });
 var db = firebase.firestore();
-var TARGET = 1000000;
+var TARGET = 10000000;
 var currentAmount = 0;
 
 function formatCFA(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "); }
@@ -149,10 +149,10 @@ function loadGauge() {
     var amount = 0;
     if (doc.exists && doc.data().amount) amount = doc.data().amount;
     currentAmount = amount;
-    var pct = Math.round(amount / TARGET * 100);
+    var pct = (amount / TARGET * 100);
     document.getElementById("gauge-text").textContent = formatCFA(amount) + " / " + formatCFA(TARGET) + " FCFA";
     document.getElementById("gauge-fill").style.width = Math.min(100, pct) + "%";
-    document.getElementById("gauge-percent").textContent = pct + "%";
+    document.getElementById("gauge-percent").textContent = pct.toLocaleString("fr-FR", { maximumFractionDigits: 1 }) + "%";
   });
 }
 
