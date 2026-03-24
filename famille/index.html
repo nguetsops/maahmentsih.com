@@ -53,12 +53,12 @@
     <div class="itree-children" id="itree-children">
       <div class="itree-child deceased" onclick="toggleTree(0)">
         <div class="itree-child-photo">👤</div>
-        <div class="itree-child-name">Wamba Clément<br>dit <em>WamClé</em>
-          <br><span class="itree-death-tag">🕊 2011</span>
-        </div>
+        <div class="itree-child-name">Wamba Clément</div>
+        <div class="itree-child-htitle" style="color:var(--cream-s)">dit WamClé</div>
+        <div class="itree-child-note">🕊 2011</div>
       </div>
       <div class="itree-child" onclick="toggleTree(1)">
-        <div class="itree-child-photo">👤</div>
+        <div class="itree-child-photo"><img src="/images/michel.jpg" alt="Manfoh Nguetsop Michel" style="width:100%;height:100%;object-fit:cover;border-radius:50%"></div>
         <div class="itree-child-name"><em>Manfoh</em><br>Nguetsop Michel</div>
       </div>
       <div class="itree-child successor" onclick="toggleTree(2)">
@@ -98,7 +98,7 @@
   <div class="tree-stats">
     <div class="tree-stat"><div class="tree-stat-num">9</div><div class="tree-stat-label">Enfants</div></div>
     <div class="tree-stat"><div class="tree-stat-num">52</div><div class="tree-stat-label">Petits-enfants</div></div>
-    <div class="tree-stat"><div class="tree-stat-num">21</div><div class="tree-stat-label">Arr.-petits-enfants</div></div>
+    <div class="tree-stat"><div class="tree-stat-num">25</div><div class="tree-stat-label">Arr.-petits-enfants</div></div>
   </div>
 
 </div>
@@ -120,7 +120,7 @@
 
 var treeFams = [
   {name:"Famille Wamba Clément",kids:[
-    {n:"Lucrèce",gc:[]},{n:"Yannick",gc:[]},{n:"Martial",gc:[]},
+    {n:"Lucrèce",gc:[{n:"Julien-Eymard",y:2011,e:"👦🏾"},{n:"Jémima",y:2015,e:"👧🏾"}]},{n:"Yannick",gc:[{n:"Francesca",y:2011,e:"👧🏾"},{n:"Yann",y:2017,e:"👦🏾"}]},{n:"Martial",gc:[]},
     {n:"Tony",gc:[{n:"Ivy",y:2015,e:"👧🏾"},{n:"Nora",y:2024,e:"👧🏾"}]},
     {n:"Arthur",gc:[{n:"King Alexander",y:2021,e:"👦🏾"},{n:"Juliette",y:2025,e:"👧🏾"},{n:"Lovelyne",e:"👧🏾"}]},
     {n:"Ostian",gc:[{n:"Simeyah",y:2024,e:"👧🏾"},{n:"Aaron",y:2026,e:"👦🏾"}]},
@@ -156,7 +156,7 @@ var treeFams = [
   ]},
   {name:"Famille <em>Nkem Ngouh</em> Mezazeme Édouard",kids:[{n:"Denzel",gc:[]}]},
   {name:"Famille Vouffo Étienne",kids:[
-    {n:"Ashley",gc:[]},{n:"Judy",gc:[]},{n:"Marie-Carla",gc:[]},{n:"Chavy",gc:[]}
+    {n:"Ashley",gc:[]},{n:"Juidy",gc:[]},{n:"Marie-Carla",gc:[]},{n:"Chavy",gc:[]}
   ]}
 ];
 
@@ -181,7 +181,8 @@ function renderGC(famIdx) {
     var cls = "itree-gc" + (hasKids ? " itree-gc-parent" : "");
     var click = hasKids ? ' onclick="toggleGC(' + famIdx + ',' + i + ')"' : '';
     var badge = hasKids ? '<span class="itree-gc-badge">' + k.gc.length + '</span>' : '';
-    return '<div class="' + cls + '"' + click + '><div class="itree-gc-photo">👤</div><div class="itree-gc-name">' + k.n + '</div>' + badge + '</div>';
+    var photoHtml = (famIdx === 1) ? '<img src="/images/enfant-placeholder.jpg" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%">' : '👤';
+    return '<div class="' + cls + '"' + click + '><div class="itree-gc-photo">' + photoHtml + '</div><div class="itree-gc-name">' + k.n + '</div>' + badge + '</div>';
   }).join("");
 
   box.innerHTML = '<div class="itree-sub show">' +
