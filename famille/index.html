@@ -144,7 +144,7 @@
       </div>
       <div class="itree-child" onclick="toggleTree(4)">
         <div class="itree-child-photo">👤</div>
-        <div class="itree-child-name"><em>Foh Nleng</em><br>Nguetsop Salomon</div>
+        <div class="itree-child-name"><em>Fohleng</em><br>Nguetsop Salomon</div>
       </div>
       <div class="itree-child" onclick="toggleTree(5)">
         <div class="itree-child-photo">👤</div>
@@ -200,7 +200,7 @@
 
 <script>
 var treeFams = [
-  {name:"Wamba Clément",kids:[
+  {name:"Wamba Clément",htitle:"dit WamClé",deceased:true,kids:[
     {n:"Lucrèce",gc:[{n:"Julien-Eymard",y:2011,e:"\ud83d\udc66\ud83c\udffe"},{n:"Jémima",y:2015,e:"\ud83d\udc67\ud83c\udffe"}]},
     {n:"Yannick",gc:[{n:"Francesca",y:2011,e:"\ud83d\udc67\ud83c\udffe"},{n:"Yann",y:2017,e:"\ud83d\udc66\ud83c\udffe"}]},
     {n:"Martial",gc:[]},
@@ -227,7 +227,7 @@ var treeFams = [
     {n:"Nathan",gc:[]},{n:"Reina",gc:[]},{n:"Myriam",gc:[]},{n:"Paul",gc:[]}
   ]},
   {name:"Nguetsop Robinson",kids:[{n:"Maria",gc:[]}]},
-  {name:"<em>Foh Nleng</em> Nguetsop Salomon",kids:[
+  {name:"<em>Fohleng</em> Nguetsop Salomon",kids:[
     {n:"Patricia",gc:[{n:"Inaya",y:2022,e:"\ud83d\udc67\ud83c\udffe"},{n:"Kehphren",y:2024,e:"\ud83d\udc66\ud83c\udffe"}]},
     {n:"Franck",gc:[]},{n:"Anakiya",gc:[]}
   ]},
@@ -275,8 +275,7 @@ function renderSubtree(famIdx){
     '<div class="subtree-root">'+
       '<div class="subtree-root-photo">'+photoHtml+'</div>'+
       '<div class="subtree-root-name">Famille '+f.name+'</div>'+
-      (f.htitle?'<div class="subtree-root-note">'+f.htitle+'</div>':'')+
-      (f.deceased?'<div class="subtree-root-note">\ud83d\udd4a 2011</div>':'')+
+      
     '</div>'+
     
     spread+
