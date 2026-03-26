@@ -190,9 +190,44 @@
         </circle>
         <text x="475" y="244" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="13" fill="#c8a45c" font-weight="700">BAFOU</text>
         <rect x="0" y="432" width="900" height="28" fill="rgba(200,164,92,.05)"/>
-        <text x="450" y="450" text-anchor="middle" font-family="Outfit,sans-serif" font-size="9" fill="#c8a45c" opacity=".7">10 pays · Une seule destination · Juin 2026</text>
+        <text x="450" y="449" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="14" fill="#c8a45c" opacity=".9" font-weight="600">10 pays · Une seule destination · Juin 2026</text>
       </svg>
     </div>
+
+
+  <!-- Compte à rebours -->
+  <div style="text-align:center;margin-top:2rem;padding:1.5rem;background:rgba(200,164,92,.04);border:1px solid rgba(200,164,92,.1);border-radius:12px">
+    <div style="font-family:var(--font-d);font-size:.85rem;color:var(--gold-d);margin-bottom:.75rem;letter-spacing:.05em">Rendez-vous dans</div>
+    <div id="countdown" style="display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap">
+      <div style="text-align:center"><div id="cd-days" style="font-family:var(--font-d);font-size:2rem;font-weight:700;color:var(--gold-l);line-height:1">--</div><div style="font-size:.65rem;color:var(--text-m);text-transform:uppercase;letter-spacing:.08em;margin-top:.2rem">Jours</div></div>
+      <div style="color:var(--gold-d);font-size:1.5rem;line-height:2.2">:</div>
+      <div style="text-align:center"><div id="cd-hours" style="font-family:var(--font-d);font-size:2rem;font-weight:700;color:var(--gold-l);line-height:1">--</div><div style="font-size:.65rem;color:var(--text-m);text-transform:uppercase;letter-spacing:.08em;margin-top:.2rem">Heures</div></div>
+      <div style="color:var(--gold-d);font-size:1.5rem;line-height:2.2">:</div>
+      <div style="text-align:center"><div id="cd-mins" style="font-family:var(--font-d);font-size:2rem;font-weight:700;color:var(--gold-l);line-height:1">--</div><div style="font-size:.65rem;color:var(--text-m);text-transform:uppercase;letter-spacing:.08em;margin-top:.2rem">Minutes</div></div>
+      <div style="color:var(--gold-d);font-size:1.5rem;line-height:2.2">:</div>
+      <div style="text-align:center"><div id="cd-secs" style="font-family:var(--font-d);font-size:2rem;font-weight:700;color:var(--gold-l);line-height:1">--</div><div style="font-size:.65rem;color:var(--text-m);text-transform:uppercase;letter-spacing:.08em;margin-top:.2rem">Secondes</div></div>
+    </div>
+    <div style="font-family:var(--font-d);font-size:.9rem;color:var(--cream-s);margin-top:.75rem;font-style:italic">24 juin 2026 — Miatsuet, Bafou</div>
+  </div>
+
+<script>
+function updateCountdown(){
+  var target=new Date("2026-06-24T08:00:00+01:00").getTime();
+  var now=Date.now();
+  var diff=target-now;
+  if(diff<=0){document.getElementById("countdown").innerHTML='<div style="font-family:var(--font-d);font-size:1.2rem;color:var(--gold)">Les obsèques ont commencé</div>';return}
+  var d=Math.floor(diff/86400000);
+  var h=Math.floor((diff%86400000)/3600000);
+  var m=Math.floor((diff%3600000)/60000);
+  var s=Math.floor((diff%60000)/1000);
+  document.getElementById("cd-days").textContent=d;
+  document.getElementById("cd-hours").textContent=h<10?"0"+h:h;
+  document.getElementById("cd-mins").textContent=m<10?"0"+m:m;
+  document.getElementById("cd-secs").textContent=s<10?"0"+s:s;
+}
+updateCountdown();
+setInterval(updateCountdown,1000);
+</script>
 
 </div>
 </section>

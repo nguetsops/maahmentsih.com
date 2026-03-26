@@ -60,7 +60,7 @@
   <div class="sec-label">Famille</div>
   <h2 class="sec-title">Informations pour le site de Maah</h2>
   <div class="sec-div"></div>
-  <p style="font-size:.88rem;color:var(--cream-s);margin-bottom:1.5rem;line-height:1.7;text-align:center">Dans le cadre de la mise en place du site web dédié à la mémoire de notre Reine Mère Maah Mentsih Tsobgni Marie Claire, nous aimerions recueillir les informations et photos de chaque membre de la famille. Merci de remplir ce formulaire avec soin.</p>
+  <p style="font-size:.88rem;color:var(--cream-s);margin-bottom:1.5rem;line-height:1.7;text-align:center">Dans le cadre de la mise en place du site web dédié à la mémoire de Maah Mentsih, nous aimerions recueillir les informations et photos de chaque membre de la famille. Merci de remplir ce formulaire avec soin.</p>
 
   <div class="card" style="padding:1.5rem">
     <div class="f-progress" id="progress"><div class="f-progress-dot now"></div><div class="f-progress-dot"></div><div class="f-progress-dot"></div></div>
@@ -71,7 +71,8 @@
       <div class="f-group">
         <label class="f-label">Quel est ton rang dans la famille ?<span class="req">*</span></label>
         <div class="f-radio-group" id="rg">
-          <label class="f-radio" onclick="pickRang(this,'fils')"><input type="radio" name="rang" value="fils">Fils / Fille de Maah</label>
+          <label class="f-radio" onclick="pickRang(this,'fils')"><input type="radio" name="rang" value="fils">Fils de Maah</label>
+          <label class="f-radio" onclick="pickRang(this,'adoptif')"><input type="radio" name="rang" value="adoptif">Fils / Fille adoptive de Maah</label>
           <label class="f-radio" onclick="pickRang(this,'petit')"><input type="radio" name="rang" value="petit">Petit-fils / Petite-fille de Maah</label>
         </div>
       </div>
@@ -80,7 +81,7 @@
 
     <!-- STEP 2A: Fils/Fille -->
     <div class="f-section" id="step2a">
-      <div class="f-group"><label class="f-label">Ton nom et prénom<span class="req">*</span></label><div class="f-hint">Avec titre honorifique si applicable (ex: Manfoh Nguetsop Michel)</div><input class="f-input" type="text" id="f-nom" placeholder="Ex: Nguetsop Michel"></div>
+      <div class="f-group"><label class="f-label">Ton nom et prénom<span class="req">*</span></label><div class="f-hint">Avec titre honorifique si applicable (ex: Manfoh Nguetsop Michel)</div><input class="f-input" type="text" id="f-nom" placeholder=""></div>
       <div class="f-group"><label class="f-label">Ta photo<span class="req">*</span></label><div class="f-file"><input type="file" accept="image/*" id="f-photo" onchange="prev1(this,'fp1')"><div class="f-file-label">📷 Appuie ici pour choisir ta photo</div></div><div class="f-preview" id="fp1"></div></div>
       <div class="f-group"><label class="f-label">Numéro Mobile Money (pour les dons)</label><div class="f-hint">Facultatif — sera affiché sur le site pour recevoir les contributions</div><input class="f-input" type="tel" id="f-momo" placeholder="Ex: 6XX XXX XXX"></div>
       <div class="f-group"><label class="f-label">Combien d'enfants as-tu ?<span class="req">*</span></label><input class="f-input f-number" type="number" id="f-nb" min="1" max="30" placeholder="0" onchange="genA()" oninput="genA()"></div>
@@ -91,9 +92,9 @@
 
     <!-- STEP 2B: Petit-fils -->
     <div class="f-section" id="step2b">
-      <div class="f-group"><label class="f-label">Prénom de ton père (fils de Maah)<span class="req">*</span></label>
-        <select class="f-select" id="f-pere"><option value="">— Choisis —</option><option>Wamba Clément</option><option>Nguetsop Michel</option><option>Jiotsa Jean Gallo</option><option>Nguetsop Robinson</option><option>Nguetsop Salomon</option><option>Nguetsop Serge</option><option>Nguetsop Léopold</option><option>Mezazeme Édouard</option><option>Vouffo Étienne</option></select></div>
-      <div class="f-group"><label class="f-label">Ton prénom<span class="req">*</span></label><input class="f-input" type="text" id="f-prenom" placeholder="Ex: Sonia"></div>
+      <div class="f-group"><label class="f-label">Nom du père (fils de Maah)<span class="req">*</span></label>
+        <select class="f-select" id="f-pere"><option value="">— Choisis —</option><option>Wamba Clément</option><option>Manfoh Nguetsop Michel</option><option>Foh Miatsuet II Jiotsa Jean Gallo</option><option>Nguetsop Robinson</option><option>Foh Nleng Nguetsop Salomon</option><option>Nguetsop Serge</option><option>Nguetsop Léopold</option><option>Nkem Ngouh Mezazeme Édouard</option><option>Vouffo Étienne</option></select></div>
+      <div class="f-group"><label class="f-label">Ton prénom<span class="req">*</span></label><input class="f-input" type="text" id="f-prenom" placeholder=""></div>
       <div class="f-group"><label class="f-label">Ta photo<span class="req">*</span></label><div class="f-file"><input type="file" accept="image/*" id="f-photo-b" onchange="prev1(this,'fp2')"><div class="f-file-label">📷 Appuie ici pour choisir ta photo</div></div><div class="f-preview" id="fp2"></div></div>
       <div class="f-group"><label class="f-label">As-tu des enfants ?<span class="req">*</span></label><div class="f-radio-group"><label class="f-radio" onclick="pickK(this,'oui')"><input type="radio" name="hk" value="oui">Oui</label><label class="f-radio" onclick="pickK(this,'non')"><input type="radio" name="hk" value="non">Non</label></div></div>
       <div id="f-kids-sec-b" style="display:none">
@@ -102,6 +103,16 @@
       </div>
       <div class="f-group" style="margin-top:1rem"><label class="f-label">Photos avec Maah</label><div class="f-hint">Facultatif — souvenirs pour la galerie du site</div><div class="f-file"><input type="file" accept="image/*" multiple id="f-maah-b" onchange="prevN(this,'fmb')"><div class="f-file-label">📷 Ajouter des photos souvenirs</div></div><div class="f-preview" id="fmb"></div></div>
       <div class="f-nav"><button class="f-btn" onclick="back()">← Retour</button><button class="f-btn f-btn-primary" id="btn-b" onclick="send()">Envoyer ✓</button></div>
+    </div>
+
+
+    <!-- STEP 2C: Fils/Fille adoptive -->
+    <div class="f-section" id="step2c">
+      <div class="f-group"><label class="f-label">Ton nom et prénom<span class="req">*</span></label><div class="f-hint">Avec titre honorifique si applicable</div><input class="f-input" type="text" id="f-nom-c" placeholder=""></div>
+      <div class="f-group"><label class="f-label">Ta photo<span class="req">*</span></label><div class="f-file"><input type="file" accept="image/*" id="f-photo-c" onchange="prev1(this,'fp3')"><div class="f-file-label">📷 Appuie ici pour choisir ta photo</div></div><div class="f-preview" id="fp3"></div></div>
+      <div class="f-group"><label class="f-label">Numéro Mobile Money (pour les dons)</label><div class="f-hint">Facultatif — sera affiché sur le site pour recevoir les contributions</div><input class="f-input" type="tel" id="f-momo-c" placeholder="Ex: 6XX XXX XXX"></div>
+      <div class="f-group" style="margin-top:1rem"><label class="f-label">Photos avec Maah</label><div class="f-hint">Facultatif — souvenirs pour la galerie du site</div><div class="f-file"><input type="file" accept="image/*" multiple id="f-maah-c" onchange="prevN(this,'fmc')"><div class="f-file-label">📷 Ajouter des photos souvenirs</div></div><div class="f-preview" id="fmc"></div></div>
+      <div class="f-nav"><button class="f-btn" onclick="back()">← Retour</button><button class="f-btn f-btn-primary" id="btn-c" onclick="send()">Envoyer ✓</button></div>
     </div>
 
     <!-- MERCI -->
@@ -138,8 +149,8 @@ function prog(s){document.querySelectorAll(".f-progress-dot").forEach(function(d
 function pickRang(el,v){rang=v;document.querySelectorAll("#rg .f-radio").forEach(function(r){r.classList.remove("on")});el.classList.add("on")}
 function pickK(el,v){hasK=v;el.parentElement.querySelectorAll(".f-radio").forEach(function(r){r.classList.remove("on")});el.classList.add("on");document.getElementById("f-kids-sec-b").style.display=v==="oui"?"block":"none";if(v==="oui"&&lastB===0){document.getElementById("f-nb-b").value=1;genB()}}
 
-function go(from){noErr();if(from===1){if(!rang){err("Choisis ton rang dans la famille.");return}document.getElementById("step1").classList.remove("active");if(rang==="fils"){document.getElementById("step2a").classList.add("active");if(lastA===0){document.getElementById("f-nb").value=1;genA()}}else{document.getElementById("step2b").classList.add("active")}prog(2);window.scrollTo({top:0,behavior:"smooth"})}}
-function back(){noErr();document.getElementById("step2a").classList.remove("active");document.getElementById("step2b").classList.remove("active");document.getElementById("step1").classList.add("active");prog(1);window.scrollTo({top:0,behavior:"smooth"})}
+function go(from){noErr();if(from===1){if(!rang){err("Choisis ton rang dans la famille.");return}document.getElementById("step1").classList.remove("active");if(rang==="fils"){document.getElementById("step2a").classList.add("active");if(lastA===0){document.getElementById("f-nb").value=1;genA()}}else if(rang==="adoptif"){document.getElementById("step2c").classList.add("active")}else{document.getElementById("step2b").classList.add("active")}prog(2);window.scrollTo({top:0,behavior:"smooth"})}}
+function back(){noErr();document.getElementById("step2a").classList.remove("active");document.getElementById("step2b").classList.remove("active");document.getElementById("step2c").classList.remove("active");document.getElementById("step1").classList.add("active");prog(1);window.scrollTo({top:0,behavior:"smooth"})}
 
 function genA(){var n=parseInt(document.getElementById("f-nb").value)||0;if(n<0)n=0;if(n>30)n=30;if(n===lastA)return;lastA=n;var h="";for(var i=1;i<=n;i++){h+='<div class="f-child"><div class="f-child-title">Enfant '+i+'</div><div class="f-group"><label class="f-label" style="font-size:.85rem">Prénom<span class="req">*</span></label><input class="f-input" type="text" id="ka-n-'+i+'" placeholder="Prénom"></div><div class="f-group"><label class="f-label" style="font-size:.85rem">Photo<span class="req">*</span></label><div class="f-file"><input type="file" accept="image/*" id="ka-p-'+i+'" onchange="prev1(this,\'kav-'+i+'\')"><div class="f-file-label">📷 Photo</div></div><div class="f-preview" id="kav-'+i+'"></div></div></div>'}document.getElementById("f-kids-a").innerHTML=h}
 
@@ -151,7 +162,7 @@ function prevN(inp,pid){var pv=document.getElementById(pid);pv.innerHTML="";if(i
 async function up(file,path){var ref=storage.ref(path);await ref.put(file);return await ref.getDownloadURL()}
 
 async function send(){
-  noErr();var btn=rang==="fils"?document.getElementById("btn-a"):document.getElementById("btn-b");
+  noErr();var btn=rang==="fils"?document.getElementById("btn-a"):rang==="adoptif"?document.getElementById("btn-c"):document.getElementById("btn-b");
   btn.disabled=true;btn.textContent="Envoi en cours...";
   try{
     var data={rang:rang,date:new Date().toISOString()},ts=Date.now();
@@ -165,6 +176,14 @@ async function send(){
       var enfants=[];for(var i=1;i<=nb;i++){var cn=document.getElementById("ka-n-"+i).value.trim(),cp=document.getElementById("ka-p-"+i).files[0];var eUrl=await up(cp,"formulaire/"+ts+"/enfant-"+i+"."+cp.name.split(".").pop());enfants.push({nom:cn,photoUrl:eUrl});btn.textContent="Upload "+i+"/"+nb+"..."}
       var maahUrls=[],mp=document.getElementById("f-maah-a").files;for(var k=0;k<mp.length;k++){var mUrl=await up(mp[k],"formulaire/"+ts+"/maah-"+k+"."+mp[k].name.split(".").pop());maahUrls.push(mUrl)}
       data.nom=nom;data.photoUrl=pUrl;data.momo=momo;data.enfants=enfants;data.photosMaah=maahUrls;
+    
+    }else if(rang==="adoptif"){
+      var nom=document.getElementById("f-nom-c").value.trim(),photo=document.getElementById("f-photo-c").files[0],momo=document.getElementById("f-momo-c").value.trim();
+      if(!nom){err("Ton nom est obligatoire.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
+      if(!photo){err("Ta photo est obligatoire.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
+      btn.textContent="Upload des photos...";var pUrl=await up(photo,"formulaire/"+ts+"/photo."+photo.name.split(".").pop());
+      var maahUrls=[],mp=document.getElementById("f-maah-c").files;for(var k=0;k<mp.length;k++){var mUrl=await up(mp[k],"formulaire/"+ts+"/maah-"+k+"."+mp[k].name.split(".").pop());maahUrls.push(mUrl)}
+      data.nom=nom;data.photoUrl=pUrl;data.momo=momo;data.photosMaah=maahUrls;
     }else{
       var pere=document.getElementById("f-pere").value,prenom=document.getElementById("f-prenom").value.trim(),photo=document.getElementById("f-photo-b").files[0];
       if(!pere){err("Choisis le prénom de ton père.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
@@ -177,7 +196,7 @@ async function send(){
       data.pere=pere;data.prenom=prenom;data.photoUrl=pUrl;data.hasKids=hasK;data.enfants=enfants;data.photosMaah=maahUrls;
     }
     btn.textContent="Enregistrement...";await db.collection("formulaire").add(data);
-    document.getElementById("step2a").classList.remove("active");document.getElementById("step2b").classList.remove("active");document.getElementById("step-ok").classList.add("active");prog(3);window.scrollTo({top:0,behavior:"smooth"});
+    document.getElementById("step2a").classList.remove("active");document.getElementById("step2b").classList.remove("active");document.getElementById("step2c").classList.remove("active");document.getElementById("step-ok").classList.add("active");prog(3);window.scrollTo({top:0,behavior:"smooth"});
   }catch(e){console.error(e);err("Erreur lors de l'envoi : "+e.message);btn.disabled=false;btn.textContent="Envoyer ✓"}
 }
 </script>
