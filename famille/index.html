@@ -110,8 +110,10 @@
         <div class="tree-person-title">Reine Mère de Miatsuet</div>
       </div>
       <div style="font-family:var(--font-d);font-size:1rem;color:var(--gold-d)">⚭</div>
-      <div style="text-align:center">
-        <div class="tree-photo tree-photo-husband" style="margin:0 auto">👤</div>
+      <div style="text-align:center;cursor:pointer" onclick="openChefModal()">
+        <div class="tree-photo tree-photo-husband" style="margin:0 auto;position:relative">👤
+          <div style="position:absolute;bottom:-2px;right:-2px;width:16px;height:16px;border-radius:50%;background:var(--gold-d);color:var(--bg);font-size:.6rem;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--bg2)">i</div>
+        </div>
         <div style="font-family:var(--font-d);font-size:.8rem;font-weight:600;color:var(--text-m);margin-top:.3rem">Foh Miatsuet<br>Nguetsop Paul</div>
         <div class="tree-person-title">Chef du village Miatsuet</div>
         <div class="tree-person-note">🕊 1995</div>
@@ -314,5 +316,28 @@ function toggleGC(famIdx,kidIdx){
 }
 </script>
 <script src="/js/main.js"></script>
+
+<!-- Modal Chef -->
+<div id="chef-modal" style="display:none;position:fixed;inset:0;background:rgba(10,15,12,.92);z-index:9999;overflow-y:auto;padding:1rem" onclick="if(event.target===this)closeChefModal()">
+  <div style="max-width:440px;margin:3rem auto;background:var(--bg2);border:1px solid rgba(200,164,92,.2);border-radius:14px;padding:1.75rem;position:relative">
+    <button onclick="closeChefModal()" style="position:absolute;top:.75rem;right:.75rem;background:none;border:none;color:var(--cream);font-size:1.2rem;cursor:pointer">✕</button>
+    <div style="text-align:center;margin-bottom:1rem">
+      <div class="tree-photo tree-photo-husband" style="width:80px;height:80px;margin:0 auto;border-width:2.5px">👤</div>
+      <div style="font-family:var(--font-d);font-size:1.15rem;font-weight:700;color:var(--gold-l);margin-top:.6rem">Foh Miatsuet Nguetsop Paul</div>
+      <div style="font-size:.75rem;color:var(--gold);font-style:italic">Chef du village Miatsuet · 🕊 1995</div>
+    </div>
+    <div style="font-size:.85rem;color:var(--cream-s);line-height:1.8">
+      <p>Foh Miatsuet Nguetsop Paul fut un homme d'envergure exceptionnelle. Chef traditionnel du village Miatsuet et ancien maire de Dschang, il a marqué l'histoire de sa communauté par son leadership et son dévouement.</p>
+      <p style="margin-top:.6rem">Père d'une descendance remarquable — près de 135 enfants issus de ses 25 épouses — il a bâti une lignée dont l'héritage se perpétue à travers le Cameroun et la diaspora. Maah Mentsih, sa 9<sup>e</sup> épouse, fut l'une de ses plus fidèles compagnes.</p>
+      <p style="margin-top:.6rem;font-style:italic;color:var(--gold-d);font-size:.8rem;text-align:center;padding-top:.6rem;border-top:1px solid rgba(200,164,92,.1)">Un site dédié à la mémoire de Foh Miatsuet Nguetsop Paul verra bientôt le jour.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+function openChefModal(){document.getElementById("chef-modal").style.display="block";document.body.style.overflow="hidden"}
+function closeChefModal(){document.getElementById("chef-modal").style.display="none";document.body.style.overflow=""}
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeChefModal()});
+</script>
 </body>
 </html>
