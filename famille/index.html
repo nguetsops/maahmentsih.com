@@ -103,21 +103,18 @@
 
   <div class="itree">
     <!-- COUPLE ROOT WITH PHOTOS -->
-    <div style="display:flex;flex-direction:column;align-items:center">
-      <!-- Maah centered -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:1rem">
       <div style="text-align:center">
-        <div class="tree-photo" style="width:110px;height:110px;margin:0 auto"><img src="/images/maah-circle.jpg" alt="Maah Mentsih"></div>
-        <div class="tree-person-name" style="font-size:1.1rem;margin-top:.5rem">Maah Mentsih<br>Tsobgni Marie Claire</div>
+        <div class="tree-photo" style="width:100px;height:100px;margin:0 auto"><img src="/images/maah-circle.jpg" alt="Maah Mentsih"></div>
+        <div class="tree-person-name" style="font-size:1rem;margin-top:.4rem">Maah Mentsih<br>Tsobgni Marie Claire</div>
         <div class="tree-person-title">Reine Mère de Miatsuet</div>
       </div>
-      <!-- Mari à côté en bas -->
-      <div style="display:flex;align-items:center;gap:.6rem;margin-top:.6rem;padding:.5rem .8rem;background:rgba(200,164,92,.04);border:1px solid rgba(200,164,92,.1);border-radius:8px">
-        <div style="font-family:var(--font-d);font-size:.8rem;color:var(--gold-d)">⚭</div>
-        <div class="tree-photo tree-photo-husband">👤</div>
-        <div>
-          <div style="font-family:var(--font-d);font-size:.8rem;font-weight:600;color:var(--text-m)">Foh Miatsuet Nguetsop Paul</div>
-          <div style="font-size:.65rem;color:var(--text-m);font-style:italic">Chef du village Miatsuet · 🕊 1995</div>
-        </div>
+      <div style="font-family:var(--font-d);font-size:1rem;color:var(--gold-d)">⚭</div>
+      <div style="text-align:center">
+        <div class="tree-photo tree-photo-husband" style="margin:0 auto">👤</div>
+        <div style="font-family:var(--font-d);font-size:.8rem;font-weight:600;color:var(--text-m);margin-top:.3rem">Foh Miatsuet<br>Nguetsop Paul</div>
+        <div class="tree-person-title">Chef du village Miatsuet</div>
+        <div class="tree-person-note">🕊 1995</div>
       </div>
     </div>
 
@@ -293,12 +290,27 @@ function toggleGC(famIdx,kidIdx){
   if(gcOpen===kidIdx){ggcBox.innerHTML="";gcOpen=-1;return}
   gcOpen=kidIdx;
   var k=treeFams[famIdx].kids[kidIdx];
-  var h=k.gc.map(function(c){
-    var yearHtml=c.y?'<span class="ggc-year" style="display:none">'+c.y+'</span>':'';
+  // Get photo of this grandchild
+  var gcPhotos=document.querySelectorAll(".subtree-kid-photo");
+  var gcPhotoHtml=gcPhotos[kidIdx]?gcPhotos[kidIdx].innerHTML:'\ud83d\udc64';
+
+  var kidsHtml=k.gc.map(function(c){
     var emoji=c.e||'\ud83d\udc64';
-    return '<div class="subtree-kid" onclick="if(this.querySelector(\'.ggc-year\')){var y=this.querySelector(\'.ggc-year\');y.style.display=y.style.display===\'none\'?\'block\':\'none\'}"><div class="subtree-kid-photo" style="font-size:1.1rem">'+emoji+'</div><div class="subtree-kid-name">'+c.n+'</div>'+yearHtml+'</div>';
+    var yearHtml=c.y?'<div style="font-size:.55rem;color:var(--gold-d);text-align:center">'+c.y+'</div>':'';
+    return '<div class="subtree-kid"><div class="subtree-kid-photo" style="font-size:1.1rem">'+emoji+'</div><div class="subtree-kid-name">'+c.n+'</div>'+yearHtml+'</div>';
   }).join("");
-  ggcBox.innerHTML='<div class="ggc-panel"><div class="ggc-head"><div class="ggc-head-label">Arrière-petits-enfants</div><div class="ggc-head-name">Enfants de '+k.n+'</div></div><div class="subtree-kids" style="padding-top:0">'+h+'</div></div>';
+
+  var spread=k.gc.length>1?'<div class="subtree-line"></div><div class="subtree-spread"></div>':'<div class="subtree-line"></div>';
+
+  ggcBox.innerHTML='<div class="ggc-panel">'+
+    '<div class="subtree-root">'+
+      '<div class="subtree-root-photo">'+gcPhotoHtml+'</div>'+
+      '<div class="subtree-root-name">'+k.n+'</div>'+
+      '<div style="font-size:.55rem;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-top:.3rem;text-align:center">Arrière-petits-enfants</div>'+
+    '</div>'+
+    spread+
+    '<div class="subtree-kids">'+kidsHtml+'</div>'+
+  '</div>';
   setTimeout(function(){ggcBox.scrollIntoView({behavior:"smooth",block:"nearest"})},150);
 }
 </script>

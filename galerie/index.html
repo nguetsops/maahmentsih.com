@@ -133,8 +133,9 @@ var total = 24;
 var track = document.getElementById("carousel-track");
 var photos = [('hero-orange', 'Un sourire qui nous manque énormément'), ('grande-royale', 'La grande royale'), ('ceremony', 'Avec son père, lui remettant le titre de Maah Mentsih'), ('youth1', 'Une jeune reine'), ('youth2', 'Une jeune reine'), ('foh-maah-manfoh', 'Foh, Maah et Manfoh'), ('celebration-retablissement', 'Célébration du rétablissement de Maah Mentsih — Douala'), ('genny-sonia-michele', 'Avec Genny et Sonia, au mariage de Michèle — Yaoundé'), ('galon-etienne', 'Cérémonie de galon de son fils Étienne — Yaoundé'), ('mariage-francis', 'Au mariage de Francis, avec sa complice Maah Djukem — Yaoundé'), ('guadeloupe', "Mère et fils, lors d'un séjour exceptionnel en Guadeloupe"), ('petit-fils-franck', 'Avec son petit-fils Franck'), ('selfie-foh', 'En mode selfie avec Foh — Douala'), ('mamie-washington', 'Mamie Washington — Yaoundé'), ('toque-patricia', 'Au toqué, portée de sa petite-fille Patricia — Yaoundé'), ('chez-maah', 'Chez Maah'), ('maah-ses-femmes', 'Maah et ses femmes'), ('reunion-2019-fils', 'Réunion familiale — Yaoundé, 2019'), ('reunion-2019', 'Réunion familiale — Yaoundé, 2019'), ('reunion-petits-enfants', 'Réunion familiale avec les petits-enfants — Yaoundé'), ('dernier-nouvel-an', 'Le dernier Nouvel An de Maah, au village chez Manfoh — Janvier 2026'), ('nouvel-an-2026', 'Nouvel An 2026'), ('douala', 'Douala'), ('mamie-dab', 'Mamie qui fait le dab')];
 
+var initDone=false;
 function goSlide(n) {
-  document.getElementById("carousel").scrollIntoView({behavior:"smooth",block:"nearest"});
+  if(initDone)document.getElementById("carousel").scrollIntoView({behavior:"smooth",block:"nearest"});
   curSlide = n;
   track.style.transform = "translateX(-" + (n * 100) + "%)";
   document.getElementById("carousel-counter").textContent = (n + 1) + " / " + total;
@@ -198,6 +199,7 @@ lb.addEventListener("touchend", function(e) {
 }, {passive:true});
 
 goSlide(0);
+initDone=true;
 </script>
 <script src="/js/main.js"></script>
 </body>
