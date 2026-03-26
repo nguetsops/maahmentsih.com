@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Formulaire famille — Reine Mère Maah Mentsih</title>
+<meta name="description" content="Formulaire de collecte d'informations pour le site de Maah Mentsih.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<style>
+.form-section{display:none}
+.form-section.active{display:block}
+.form-group{margin-bottom:1.25rem}
+.form-label{display:block;font-family:var(--font-d);font-size:.95rem;font-weight:600;color:var(--cream);margin-bottom:.4rem}
+.form-label .req{color:#c55;margin-left:.2rem}
+.form-hint{font-size:.75rem;color:var(--text-m);margin-bottom:.4rem;line-height:1.4}
+.form-input,.form-select,.form-textarea{width:100%;padding:.6rem .8rem;background:var(--bg3);border:1px solid rgba(200,164,92,.15);border-radius:8px;color:var(--cream);font-family:var(--font-b);font-size:.88rem;outline:none;transition:border-color .2s}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--gold)}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c8a45c' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .8rem center}
+.form-select option{background:var(--bg2);color:var(--cream)}
+.form-textarea{resize:vertical;min-height:80px}
+.form-file{position:relative}
+.form-file input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;z-index:2}
+.form-file-label{display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.8rem 1rem;background:rgba(200,164,92,.06);border:1.5px dashed rgba(200,164,92,.2);border-radius:8px;color:var(--cream-s);font-size:.82rem;cursor:pointer;transition:background .2s,border-color .2s;text-align:center;min-height:60px}
+.form-file-label:hover{background:rgba(200,164,92,.1);border-color:var(--gold-d)}
+.form-file-label.has-files{border-style:solid;border-color:var(--gold-d);background:rgba(200,164,92,.08)}
+.form-file-preview{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem}
+.form-file-thumb{width:48px;height:48px;border-radius:6px;overflow:hidden;border:1px solid rgba(200,164,92,.15)}
+.form-file-thumb img{width:100%;height:100%;object-fit:cover}
+.form-radio-group{display:flex;gap:1rem;flex-wrap:wrap}
+.form-radio{display:flex;align-items:center;gap:.4rem;cursor:pointer;padding:.4rem .8rem;background:rgba(200,164,92,.04);border:1px solid rgba(200,164,92,.1);border-radius:6px;transition:all .2s;font-size:.85rem;color:var(--cream-s)}
+.form-radio:hover{border-color:var(--gold-d)}
+.form-radio.selected{border-color:var(--gold);background:rgba(200,164,92,.1);color:var(--cream)}
+.form-radio input{display:none}
+
+.form-child-entry{padding:.75rem;background:rgba(200,164,92,.03);border:1px solid rgba(200,164,92,.08);border-radius:8px;margin-bottom:.5rem}
+.form-child-entry .form-group{margin-bottom:.6rem}
+.form-child-row{display:grid;grid-template-columns:1fr 80px;gap:.5rem;align-items:end}
+
+.form-btn{padding:.7rem 1.8rem;background:rgba(200,164,92,.15);border:1.5px solid var(--gold-d);border-radius:8px;color:var(--cream);font-family:var(--font-b);font-size:.88rem;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem}
+.form-btn:hover{background:rgba(200,164,92,.25)}
+.form-btn:disabled{opacity:.4;cursor:not-allowed}
+.form-btn-primary{background:rgba(200,164,92,.2);border-color:var(--gold)}
+.form-btn-add{font-size:.8rem;padding:.4rem .8rem;background:rgba(200,164,92,.06);border:1px dashed rgba(200,164,92,.15);border-radius:6px;color:var(--gold-d);cursor:pointer}
+.form-btn-add:hover{background:rgba(200,164,92,.12)}
+
+.form-progress{display:flex;gap:.3rem;margin-bottom:2rem}
+.form-progress-step{flex:1;height:3px;border-radius:2px;background:rgba(200,164,92,.1);transition:background .3s}
+.form-progress-step.done{background:var(--gold)}
+.form-progress-step.current{background:var(--gold-d)}
+
+.form-success{text-align:center;padding:3rem 1rem}
+.form-success-icon{font-size:3rem;margin-bottom:1rem}
+.form-success-title{font-family:var(--font-d);font-size:1.5rem;font-weight:600;color:var(--cream);margin-bottom:.5rem}
+.form-success-text{font-size:.88rem;color:var(--cream-s);line-height:1.7}
+
+.form-error{padding:.5rem .75rem;background:rgba(200,80,80,.1);border:1px solid rgba(200,80,80,.2);border-radius:6px;color:#e88;font-size:.8rem;margin-bottom:1rem;display:none}
+</style>
+</head>
+<body>
+<div class="watermark" aria-hidden="true"></div>
+<div class="ndop" aria-hidden="true"></div>
+
+<nav class="nav" id="nav">
+<div class="nav-inner">
+  <a class="nav-brand" href="/">In Memoriam</a>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Menu">☰</button>
+  <div class="nav-links" id="nav-links">
+    <a href="/">Accueil</a>
+    <a href="/biographie">Biographie</a>
+    <a href="/famille">Famille</a>
+    <a href="/programme">Programme</a>
+    <a href="/galerie">Galerie</a>
+    <a href="/temoignages">Hommages</a>
+    <a href="/livre-dor">Livre d'or</a>
+    <a href="/dons">Dons</a>
+  </div>
+</div>
+</nav>
+
+<section class="sec" style="padding-top:5rem">
+<div class="sec-in reveal">
+  <div class="sec-label">Famille</div>
+  <h2 class="sec-title">Informations pour le site de Maah</h2>
+  <div class="sec-div"></div>
+  <p style="font-size:.88rem;color:var(--cream-s);margin-bottom:1.5rem;line-height:1.7;text-align:center">
+    Dans le cadre de la mise en place du site web dédié à la mémoire de notre Reine Mère Maah Mentsih Tsobgni Marie Claire, nous aimerions recueillir les informations et photos de chaque membre de la famille. Merci de remplir ce formulaire avec soin.
+  </p>
+
+  <div class="card" style="padding:1.5rem">
+    <!-- Progress bar -->
+    <div class="form-progress" id="progress">
+      <div class="form-progress-step current" id="prog-1"></div>
+      <div class="form-progress-step" id="prog-2"></div>
+      <div class="form-progress-step" id="prog-3"></div>
+    </div>
+
+    <div id="form-error" class="form-error"></div>
+
+    <!-- STEP 1: Rang -->
+    <div class="form-section active" id="step-1">
+      <div class="form-group">
+        <label class="form-label">Quel est ton rang dans la famille ?<span class="req">*</span></label>
+        <div class="form-radio-group" id="rang-group">
+          <label class="form-radio" onclick="selectRang(this,'fils')">
+            <input type="radio" name="rang" value="fils">
+            Fils / Fille de Maah
+          </label>
+          <label class="form-radio" onclick="selectRang(this,'petit')">
+            <input type="radio" name="rang" value="petit">
+            Petit-fils / Petite-fille de Maah
+          </label>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-top:1.5rem">
+        <button class="form-btn form-btn-primary" onclick="nextStep(1)">Suivant →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2A: Fils/Fille -->
+    <div class="form-section" id="step-2a">
+      <div class="form-group">
+        <label class="form-label">Ton nom et prénom<span class="req">*</span></label>
+        <div class="form-hint">Avec titre honorifique si applicable (ex: Manfoh Nguetsop Michel)</div>
+        <input class="form-input" type="text" id="fils-nom" placeholder="Ex: Nguetsop Michel">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Ta photo<span class="req">*</span></label>
+        <div class="form-file">
+          <input type="file" accept="image/*" id="fils-photo" onchange="previewFile(this,'fils-photo-preview')">
+          <div class="form-file-label" id="fils-photo-label">📷 Appuie ici pour choisir ta photo</div>
+        </div>
+        <div class="form-file-preview" id="fils-photo-preview"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Numéro Mobile Money (pour les dons)</label>
+        <div class="form-hint">Facultatif — ce numéro sera affiché sur le site pour recevoir les contributions</div>
+        <input class="form-input" type="tel" id="fils-momo" placeholder="Ex: 6XX XXX XXX">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tes enfants<span class="req">*</span></label>
+        <div class="form-hint">Ajoute chaque enfant avec son prénom et sa photo</div>
+        <div id="fils-enfants-list"></div>
+        <button class="form-btn-add" onclick="addEnfantFils()" style="margin-top:.5rem">+ Ajouter un enfant</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Photos avec Maah</label>
+        <div class="form-hint">Facultatif — souvenirs, moments en famille pour la galerie du site</div>
+        <div class="form-file">
+          <input type="file" accept="image/*" multiple id="fils-maah-photos" onchange="previewFiles(this,'fils-maah-preview')">
+          <div class="form-file-label">📷 Ajouter des photos souvenirs avec Maah</div>
+        </div>
+        <div class="form-file-preview" id="fils-maah-preview"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:1.5rem">
+        <button class="form-btn" onclick="prevStep(2)">← Retour</button>
+        <button class="form-btn form-btn-primary" onclick="submitForm()" id="btn-submit-fils">Envoyer ✓</button>
+      </div>
+    </div>
+
+    <!-- STEP 2B: Petit-fils/Petite-fille -->
+    <div class="form-section" id="step-2b">
+      <div class="form-group">
+        <label class="form-label">Prénom de ton père (fils de Maah)<span class="req">*</span></label>
+        <select class="form-select" id="petit-pere">
+          <option value="">— Choisis —</option>
+          <option value="Wamba Clément">Wamba Clément</option>
+          <option value="Nguetsop Michel">Nguetsop Michel</option>
+          <option value="Jiotsa Jean Gallo">Jiotsa Jean Gallo</option>
+          <option value="Nguetsop Robinson">Nguetsop Robinson</option>
+          <option value="Nguetsop Salomon">Nguetsop Salomon</option>
+          <option value="Nguetsop Serge">Nguetsop Serge</option>
+          <option value="Nguetsop Léopold">Nguetsop Léopold</option>
+          <option value="Mezazeme Édouard">Mezazeme Édouard</option>
+          <option value="Vouffo Étienne">Vouffo Étienne</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Ton prénom<span class="req">*</span></label>
+        <input class="form-input" type="text" id="petit-prenom" placeholder="Ex: Sonia">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Ta photo<span class="req">*</span></label>
+        <div class="form-file">
+          <input type="file" accept="image/*" id="petit-photo" onchange="previewFile(this,'petit-photo-preview')">
+          <div class="form-file-label">📷 Appuie ici pour choisir ta photo</div>
+        </div>
+        <div class="form-file-preview" id="petit-photo-preview"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">As-tu des enfants ?<span class="req">*</span></label>
+        <div class="form-radio-group" id="has-kids-group">
+          <label class="form-radio" onclick="selectHasKids(this,'oui')">
+            <input type="radio" name="has_kids" value="oui"> Oui
+          </label>
+          <label class="form-radio" onclick="selectHasKids(this,'non')">
+            <input type="radio" name="has_kids" value="non"> Non
+          </label>
+        </div>
+      </div>
+      <div id="petit-enfants-section" style="display:none">
+        <div class="form-group">
+          <label class="form-label">Tes enfants<span class="req">*</span></label>
+          <div class="form-hint">Prénom et année de naissance pour chaque enfant</div>
+          <div id="petit-enfants-list"></div>
+          <button class="form-btn-add" onclick="addEnfantPetit()" style="margin-top:.5rem">+ Ajouter un enfant</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Photos avec Maah</label>
+        <div class="form-hint">Facultatif — souvenirs, moments en famille pour la galerie du site</div>
+        <div class="form-file">
+          <input type="file" accept="image/*" multiple id="petit-maah-photos" onchange="previewFiles(this,'petit-maah-preview')">
+          <div class="form-file-label">📷 Ajouter des photos souvenirs avec Maah</div>
+        </div>
+        <div class="form-file-preview" id="petit-maah-preview"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:1.5rem">
+        <button class="form-btn" onclick="prevStep(2)">← Retour</button>
+        <button class="form-btn form-btn-primary" onclick="submitForm()" id="btn-submit-petit">Envoyer ✓</button>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="form-section" id="step-success">
+      <div class="form-success">
+        <div class="form-success-icon">✓</div>
+        <div class="form-success-title">Merci pour ta participation !</div>
+        <div class="form-success-text">
+          Tes informations ont bien été enregistrées. Elles nous aideront à rendre le site de Maah encore plus beau.<br><br>
+          Si tu as des questions, contacte Sonia.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<footer class="footer">
+<div class="f-orn"></div>
+<div class="f-name">Reine Mère Maah Mentsih Tsobgni Marie Claire</div>
+<div class="f-dates">Vers 1938 — 17 février 2026</div>
+<div class="f-copy">© 2026 Famille Maah Mentsih — Tous droits réservés</div>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+<script>
+firebase.initializeApp({
+  apiKey:"AIzaSyDr8vf7KZmSYO5w0uuzokO-2Z5WC5RY7zY",
+  authDomain:"maahmentsih-5d5db.firebaseapp.com",
+  projectId:"maahmentsih-5d5db",
+  storageBucket:"maahmentsih-5d5db.firebasestorage.app",
+  messagingSenderId:"296174723200",
+  appId:"1:296174723200:web:8e6b0129970da7e4d8c665"
+});
+var db = firebase.firestore();
+var storage = firebase.storage();
+
+var rang = "";
+var hasKids = "";
+var filsEnfantCount = 0;
+var petitEnfantCount = 0;
+
+function showError(msg) {
+  var el = document.getElementById("form-error");
+  el.textContent = msg;
+  el.style.display = "block";
+  el.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function hideError() {
+  document.getElementById("form-error").style.display = "none";
+}
+
+function selectRang(el, val) {
+  rang = val;
+  document.querySelectorAll("#rang-group .form-radio").forEach(function(r) { r.classList.remove("selected"); });
+  el.classList.add("selected");
+}
+
+function selectHasKids(el, val) {
+  hasKids = val;
+  document.querySelectorAll("#has-kids-group .form-radio").forEach(function(r) { r.classList.remove("selected"); });
+  el.classList.add("selected");
+  document.getElementById("petit-enfants-section").style.display = val === "oui" ? "block" : "none";
+  if (val === "oui" && petitEnfantCount === 0) addEnfantPetit();
+}
+
+function updateProgress(step) {
+  for (var i = 1; i <= 3; i++) {
+    var el = document.getElementById("prog-" + i);
+    el.className = "form-progress-step";
+    if (i < step) el.classList.add("done");
+    if (i === step) el.classList.add("current");
+  }
+}
+
+function nextStep(from) {
+  hideError();
+  if (from === 1) {
+    if (!rang) { showError("Choisis ton rang dans la famille."); return; }
+    document.getElementById("step-1").classList.remove("active");
+    if (rang === "fils") {
+      document.getElementById("step-2a").classList.add("active");
+      if (filsEnfantCount === 0) addEnfantFils();
+    } else {
+      document.getElementById("step-2b").classList.add("active");
+    }
+    updateProgress(2);
+  }
+}
+
+function prevStep(to) {
+  hideError();
+  document.getElementById("step-2a").classList.remove("active");
+  document.getElementById("step-2b").classList.remove("active");
+  document.getElementById("step-1").classList.add("active");
+  updateProgress(1);
+}
+
+function addEnfantFils() {
+  filsEnfantCount++;
+  var i = filsEnfantCount;
+  var html = '<div class="form-child-entry" id="fils-enfant-' + i + '">' +
+    '<div class="form-group"><label class="form-label" style="font-size:.85rem">Prénom de l\'enfant ' + i + '<span class="req">*</span></label>' +
+    '<input class="form-input" type="text" id="fils-enfant-nom-' + i + '" placeholder="Prénom"></div>' +
+    '<div class="form-group"><label class="form-label" style="font-size:.85rem">Photo de l\'enfant ' + i + '<span class="req">*</span></label>' +
+    '<div class="form-file"><input type="file" accept="image/*" id="fils-enfant-photo-' + i + '" onchange="previewFile(this,\'fils-enfant-preview-' + i + '\')"><div class="form-file-label">📷 Photo</div></div>' +
+    '<div class="form-file-preview" id="fils-enfant-preview-' + i + '"></div></div></div>';
+  document.getElementById("fils-enfants-list").insertAdjacentHTML("beforeend", html);
+}
+
+function addEnfantPetit() {
+  petitEnfantCount++;
+  var i = petitEnfantCount;
+  var html = '<div class="form-child-entry" id="petit-enfant-' + i + '">' +
+    '<div class="form-child-row"><div class="form-group"><label class="form-label" style="font-size:.85rem">Prénom<span class="req">*</span></label>' +
+    '<input class="form-input" type="text" id="petit-enfant-nom-' + i + '" placeholder="Prénom"></div>' +
+    '<div class="form-group"><label class="form-label" style="font-size:.85rem">Année<span class="req">*</span></label>' +
+    '<input class="form-input" type="number" id="petit-enfant-annee-' + i + '" placeholder="2020" min="1980" max="2026"></div></div></div>';
+  document.getElementById("petit-enfants-list").insertAdjacentHTML("beforeend", html);
+}
+
+function previewFile(input, previewId) {
+  var preview = document.getElementById(previewId);
+  preview.innerHTML = "";
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      preview.innerHTML = '<div class="form-file-thumb"><img src="' + e.target.result + '"></div>';
+    };
+    reader.readAsDataURL(input.files[0]);
+    input.parentElement.querySelector(".form-file-label").classList.add("has-files");
+    input.parentElement.querySelector(".form-file-label").textContent = "✓ Photo sélectionnée";
+  }
+}
+
+function previewFiles(input, previewId) {
+  var preview = document.getElementById(previewId);
+  preview.innerHTML = "";
+  if (input.files) {
+    for (var i = 0; i < input.files.length; i++) {
+      (function(file) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          preview.innerHTML += '<div class="form-file-thumb"><img src="' + e.target.result + '"></div>';
+        };
+        reader.readAsDataURL(file);
+      })(input.files[i]);
+    }
+    if (input.files.length > 0) {
+      input.parentElement.querySelector(".form-file-label").classList.add("has-files");
+      input.parentElement.querySelector(".form-file-label").textContent = "✓ " + input.files.length + " photo(s) sélectionnée(s)";
+    }
+  }
+}
+
+async function uploadFile(file, path) {
+  var ref = storage.ref(path);
+  await ref.put(file);
+  return await ref.getDownloadURL();
+}
+
+async function submitForm() {
+  hideError();
+  var btn = rang === "fils" ? document.getElementById("btn-submit-fils") : document.getElementById("btn-submit-petit");
+  btn.disabled = true;
+  btn.textContent = "Envoi en cours...";
+
+  try {
+    var data = { rang: rang, date: new Date().toISOString() };
+    var ts = Date.now();
+
+    if (rang === "fils") {
+      var nom = document.getElementById("fils-nom").value.trim();
+      var photo = document.getElementById("fils-photo").files[0];
+      var momo = document.getElementById("fils-momo").value.trim();
+
+      if (!nom) { showError("Ton nom est obligatoire."); btn.disabled = false; btn.textContent = "Envoyer ✓"; return; }
+      if (!photo) { showError("Ta photo est obligatoire."); btn.disabled = false; btn.textContent = "Envoyer ✓"; return; }
+
+      // Check at least one child
+      if (filsEnfantCount === 0) { showError("Ajoute au moins un enfant."); btn.disabled = false; btn.textContent = "Envoyer ✓"; return; }
+
+      // Validate children
+      var enfants = [];
+      for (var i = 1; i <= filsEnfantCount; i++) {
+        var cnom = document.getElementById("fils-enfant-nom-" + i).value.trim();
+        var cphoto = document.getElementById("fils-enfant-photo-" + i).files[0];
+        if (!cnom) { showError("Le prénom de l'enfant " + i + " est obligatoire."); btn.disabled = false; btn.textContent = "Envoyer ✓"; return; }
+        if (!cphoto) { showError("La photo de l'enfant " + i + " est obligatoire."); btn.disabled = false; btn.textContent = "Envoyer ✓"; return; }
+        enfants.push({nom: cnom, photo: cphoto});
+      }
+
+      // Upload
+      btn.textContent = "Upload des photos...";
+      var photoUrl = await uploadFile(photo, "formulaire/" + ts + "/photo." + photo.name.split(".").pop());
+
+      var enfantsData = [];
+      for (var j = 0; j < enfants.length; j++) {
+        var eUrl = await uploadFile(enfants[j].photo, "formulaire/" + ts + "/enfant-" + j + "." + enfants[j].photo.name.split(".").pop());
+        enfantsData.push({nom: enfants[j].nom, photoUrl: eUrl});
+      }
+
+      // Upload photos maah
+      var maahUrls = [];
+      var maahPhotos = document.getElementById("fils-maah-photos").files;
+      for (var k = 0; k < maahPhotos.length; k++) {
+        var mUrl = await uploadFile(maahPhotos[k], "formulaire/" + ts + "/maah-" + k + "." + maahPhotos[k].name.split(".").pop());
+        maahUrls.push(mUrl);
+      }
+
+      data.nom = nom;
+      data.photoUrl = photoUrl;
+      data.momo = momo;
+      data.enfants = enfantsData;
+      data.photosMaah = maahUrls;
+
+    } else {
+      var pere = document.getElementById("petit-pere").value;
+      var prenom = document.getElementById("petit-prenom").value.trim();
+      var photo = document.getElementById("petit-photo").files[0];
+
+      if (!pere) { showError("Choisis le prénom de ton père."); btn.disabled = false; btn.textContent = "Envoyer ✓"; return; }
+      if (!prenom) { showError("Ton prénom est obligatoire."); btn.disabled = false; btn.textContent = "Envoyer ✓"; return; }
+      if (!photo) { showError("Ta photo est obligatoire."); btn.disabled = false; btn.textContent = "Envoyer ✓"; return; }
+      if (!hasKids) { showError("Indique si tu as des enfants."); btn.disabled = false; btn.textContent = "Envoyer ✓"; return; }
+
+      btn.textContent = "Upload des photos...";
+      var photoUrl = await uploadFile(photo, "formulaire/" + ts + "/photo." + photo.name.split(".").pop());
+
+      var enfantsData = [];
+      if (hasKids === "oui") {
+        for (var i = 1; i <= petitEnfantCount; i++) {
+          var cnom = document.getElementById("petit-enfant-nom-" + i).value.trim();
+          var cannee = document.getElementById("petit-enfant-annee-" + i).value.trim();
+          if (!cnom || !cannee) { showError("Le prénom et l'année de l'enfant " + i + " sont obligatoires."); btn.disabled = false; btn.textContent = "Envoyer ✓"; return; }
+          enfantsData.push({nom: cnom, annee: parseInt(cannee)});
+        }
+      }
+
+      // Upload photos maah
+      var maahUrls = [];
+      var maahPhotos = document.getElementById("petit-maah-photos").files;
+      for (var k = 0; k < maahPhotos.length; k++) {
+        var mUrl = await uploadFile(maahPhotos[k], "formulaire/" + ts + "/maah-" + k + "." + maahPhotos[k].name.split(".").pop());
+        maahUrls.push(mUrl);
+      }
+
+      data.pere = pere;
+      data.prenom = prenom;
+      data.photoUrl = photoUrl;
+      data.hasKids = hasKids;
+      data.enfants = enfantsData;
+      data.photosMaah = maahUrls;
+    }
+
+    btn.textContent = "Enregistrement...";
+    await db.collection("formulaire").add(data);
+
+    // Show success
+    document.getElementById("step-2a").classList.remove("active");
+    document.getElementById("step-2b").classList.remove("active");
+    document.getElementById("step-success").classList.add("active");
+    updateProgress(3);
+
+  } catch(err) {
+    console.error(err);
+    showError("Erreur lors de l'envoi. Vérifie ta connexion et réessaie. (" + err.message + ")");
+    btn.disabled = false;
+    btn.textContent = "Envoyer ✓";
+  }
+}
+</script>
+<script src="/js/main.js"></script>
+</body>
+</html>
