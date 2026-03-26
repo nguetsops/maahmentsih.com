@@ -9,6 +9,69 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/style.css">
+<style>
+/* ROOT WITH PHOTOS */
+.tree-couple{display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap}
+.tree-person{display:flex;flex-direction:column;align-items:center}
+.tree-photo{border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;border:3px solid var(--gold);box-shadow:0 0 20px rgba(200,164,92,.15)}
+.tree-photo img{width:100%;height:100%;object-fit:cover}
+.tree-photo-maah{width:90px;height:90px}
+.tree-photo-husband{width:60px;height:60px;border-width:2px;border-color:var(--gold-d);box-shadow:none}
+.tree-person-name{font-family:var(--font-d);font-weight:700;color:var(--gold-l);margin-top:.4rem;text-align:center;font-size:1rem}
+.tree-person-title{font-size:.7rem;color:var(--gold);font-style:italic;text-align:center}
+.tree-person-note{font-size:.65rem;color:var(--text-m);text-align:center}
+.tree-marriage{font-family:var(--font-d);font-size:1.2rem;color:var(--gold-d);display:flex;align-items:center}
+
+/* SUB-TREE when clicking a child */
+.subtree{width:100%;max-width:640px;margin:.75rem auto 0;padding:1.5rem 1rem;background:var(--bg2);border:1px solid rgba(200,164,92,.15);border-radius:12px;animation:slideDown .3s ease}
+.subtree-close{position:absolute;top:.75rem;right:.75rem;cursor:pointer;font-size:.85rem;color:var(--text-m);width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid rgba(200,164,92,.1);transition:all .2s}
+.subtree-close:hover{color:var(--cream);border-color:rgba(200,164,92,.3)}
+.subtree-root{display:flex;flex-direction:column;align-items:center;position:relative}
+.subtree-root-photo{width:60px;height:60px;border-radius:50%;overflow:hidden;border:2px solid rgba(200,164,92,.3);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+.subtree-root-photo img{width:100%;height:100%;object-fit:cover}
+.subtree-root-name{font-family:var(--font-d);font-size:.9rem;font-weight:600;color:var(--cream);margin-top:.3rem;text-align:center}
+.subtree-root-name em{color:var(--gold);font-style:italic}
+.subtree-root-note{font-size:.6rem;color:var(--text-m);text-align:center}
+.subtree-label{font-size:.6rem;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;text-align:center;margin-top:.75rem}
+.subtree-line{width:2px;height:18px;background:linear-gradient(180deg,var(--gold-d),rgba(200,164,92,.2));margin:0 auto}
+.subtree-spread{position:relative;width:80%;height:1px;margin:0 auto}
+.subtree-spread::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold-d) 15%,var(--gold-d) 85%,transparent)}
+
+/* Grandchildren circles in subtree */
+.subtree-kids{display:flex;justify-content:center;gap:.25rem;flex-wrap:wrap;padding:.25rem 0}
+.subtree-kid{display:flex;flex-direction:column;align-items:center;width:65px;cursor:default;padding-top:14px;position:relative}
+.subtree-kid::before{content:'';position:absolute;top:0;left:50%;width:1px;height:12px;background:var(--gold-d);transform:translateX(-50%)}
+.subtree-kid-photo{width:38px;height:38px;border-radius:50%;overflow:hidden;border:1.5px solid rgba(200,164,92,.15);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--gold-dd);background:rgba(200,164,92,.03);transition:all .2s}
+.subtree-kid-photo img{width:100%;height:100%;object-fit:cover}
+.subtree-kid-name{font-family:var(--font-d);font-size:.65rem;font-weight:600;color:var(--cream-s);margin-top:.2rem;text-align:center;line-height:1.2}
+.subtree-kid-badge{position:absolute;top:10px;right:8px;width:16px;height:16px;border-radius:50%;background:var(--gold-d);color:var(--bg);font-size:.5rem;font-weight:600;display:flex;align-items:center;justify-content:center;z-index:1}
+.subtree-kid.clickable{cursor:pointer}
+.subtree-kid.clickable:hover .subtree-kid-photo{border-color:var(--gold);box-shadow:0 0 8px rgba(200,164,92,.15)}
+
+/* Great-grandchildren panel */
+.ggc-panel{padding:.75rem;margin-top:.75rem;background:var(--bg3);border:1px solid rgba(200,164,92,.1);border-radius:10px;animation:slideDown .3s ease}
+.ggc-head{margin-bottom:.5rem;padding-bottom:.4rem;border-bottom:1px solid rgba(200,164,92,.08)}
+.ggc-head-label{font-size:.55rem;color:var(--gold);text-transform:uppercase;letter-spacing:.1em}
+.ggc-head-name{font-family:var(--font-d);font-size:.85rem;font-weight:600;color:var(--cream)}
+.ggc-list{display:flex;flex-wrap:wrap;gap:.35rem}
+.ggc-item{display:flex;align-items:center;gap:.3rem;padding:.25rem .45rem;background:rgba(200,164,92,.04);border:1px solid rgba(200,164,92,.06);border-radius:6px}
+.ggc-emoji{font-size:1rem;flex-shrink:0}
+.ggc-name{font-size:.72rem;color:var(--cream-s)}
+.ggc-year{font-size:.58rem;color:var(--gold-d);margin-left:.15rem}
+
+/* Manfoh distinction */
+.itree-child.manfoh .itree-child-photo{border:2.5px solid var(--gold);box-shadow:0 0 10px rgba(200,164,92,.1)}
+
+/* Adoptive children section */
+.adoptifs{margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(200,164,92,.1)}
+.adoptifs-title{font-family:var(--font-d);font-size:1.1rem;font-weight:600;color:var(--cream);text-align:center;margin-bottom:.3rem}
+.adoptifs-subtitle{font-size:.75rem;color:var(--text-m);text-align:center;margin-bottom:1rem;font-style:italic}
+.adoptifs-grid{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+.adoptif-card{display:flex;flex-direction:column;align-items:center;width:80px}
+.adoptif-photo{width:50px;height:50px;border-radius:50%;overflow:hidden;border:1.5px dashed rgba(200,164,92,.2);display:flex;align-items:center;justify-content:center;font-size:1rem;background:rgba(200,164,92,.03)}
+.adoptif-photo img{width:100%;height:100%;object-fit:cover}
+.adoptif-name{font-family:var(--font-d);font-size:.7rem;font-weight:600;color:var(--cream-s);margin-top:.3rem;text-align:center;line-height:1.2}
+</style>
 </head>
 <body>
 <div class="watermark" aria-hidden="true"></div>
@@ -39,17 +102,26 @@
   <p style="font-size:.85rem;color:var(--cream-s);text-align:center;margin-bottom:2rem">Cliquez sur un enfant pour voir ses descendants</p>
 
   <div class="itree">
-    <div class="itree-root">
-      <div class="itree-root-name">Maah Mentsih Tsobgni Marie Claire</div>
-      <div class="itree-root-title">Reine Mère de Miatsuet</div>
-      <div class="itree-root-spouse">
-        <div class="itree-ring">⚭</div>
-        <div class="itree-root-spouse-name">Foh Miatsuet Nguetsop Paul <span class="itree-death-tag">🕊 1995</span></div>
-        <div class="itree-root-spouse-sub">Chef du village Miatsuet</div>
+    <!-- COUPLE ROOT WITH PHOTOS -->
+    <div class="tree-couple">
+      <div class="tree-person">
+        <div class="tree-photo tree-photo-maah"><img src="/images/maah-circle.jpg" alt="Maah Mentsih"></div>
+        <div class="tree-person-name">Maah Mentsih<br>Tsobgni Marie Claire</div>
+        <div class="tree-person-title">Reine Mère de Miatsuet</div>
+      </div>
+      <div class="tree-marriage">⚭</div>
+      <div class="tree-person">
+        <div class="tree-photo tree-photo-husband">👤</div>
+        <div class="tree-person-name" style="font-size:.85rem;color:var(--text-m)">Foh Miatsuet<br>Nguetsop Paul</div>
+        <div class="tree-person-title">Chef du village Miatsuet</div>
+        <div class="tree-person-note">🕊 1995</div>
       </div>
     </div>
+
     <div class="itree-line"></div>
     <div class="itree-spread"></div>
+
+    <!-- CHILDREN -->
     <div class="itree-children" id="itree-children">
       <div class="itree-child deceased" onclick="toggleTree(0)">
         <div class="itree-child-photo">👤</div>
@@ -57,7 +129,7 @@
         <div class="itree-child-htitle" style="color:var(--cream-s)">dit WamClé</div>
         <div class="itree-child-note">🕊 2011</div>
       </div>
-      <div class="itree-child" onclick="toggleTree(1)">
+      <div class="itree-child manfoh" onclick="toggleTree(1)">
         <div class="itree-child-photo"><img src="/images/michel.jpg" alt="Manfoh Nguetsop Michel" style="width:100%;height:100%;object-fit:cover;border-radius:50%"></div>
         <div class="itree-child-name"><em>Manfoh</em><br>Nguetsop Michel</div>
       </div>
@@ -65,7 +137,6 @@
         <div class="itree-child-crown">♛</div>
         <div class="itree-child-photo">👤</div>
         <div class="itree-child-name"><em>Foh Miatsuet II</em><br>Jiotsa Jean Gallo</div>
-        
       </div>
       <div class="itree-child" onclick="toggleTree(3)">
         <div class="itree-child-photo">👤</div>
@@ -92,6 +163,7 @@
         <div class="itree-child-name">Vouffo<br>Étienne</div>
       </div>
     </div>
+
     <div id="itree-sub"></div>
   </div>
 
@@ -99,6 +171,16 @@
     <div class="tree-stat"><div class="tree-stat-num">9</div><div class="tree-stat-label">Enfants</div></div>
     <div class="tree-stat"><div class="tree-stat-num">52</div><div class="tree-stat-label">Petits-enfants</div></div>
     <div class="tree-stat"><div class="tree-stat-num">25</div><div class="tree-stat-label">Arr.-petits-enfants</div></div>
+  </div>
+
+  <!-- ENFANTS ADOPTIFS -->
+  <div class="adoptifs" id="adoptifs">
+    <div class="adoptifs-title">Enfants adoptifs de Maah</div>
+    <div class="adoptifs-subtitle">Accueillis et aimés comme ses propres enfants</div>
+    <div class="adoptifs-grid" id="adoptifs-grid">
+      <!-- Filled dynamically or manually later -->
+      <div class="adoptif-card"><div class="adoptif-photo">👤</div><div class="adoptif-name">À venir</div></div>
+    </div>
   </div>
 
 </div>
@@ -117,100 +199,105 @@
 </footer>
 
 <script>
-
 var treeFams = [
-  {name:"Famille Wamba Clément",kids:[
-    {n:"Lucrèce",gc:[{n:"Julien-Eymard",y:2011,e:"👦🏾"},{n:"Jémima",y:2015,e:"👧🏾"}]},{n:"Yannick",gc:[{n:"Francesca",y:2011,e:"👧🏾"},{n:"Yann",y:2017,e:"👦🏾"}]},{n:"Martial",gc:[]},
-    {n:"Tony",gc:[{n:"Ivy",y:2015,e:"👧🏾"},{n:"Nora",y:2024,e:"👧🏾"}]},
-    {n:"Arthur",gc:[{n:"King Alexander",y:2021,e:"👦🏾"},{n:"Juliette",y:2025,e:"👧🏾"},{n:"Lovelyne",e:"👧🏾"}]},
-    {n:"Ostian",gc:[{n:"Simeyah",y:2024,e:"👧🏾"},{n:"Aaron",y:2026,e:"👦🏾"}]},
+  {name:"Wamba Clément",htitle:"dit WamClé",deceased:true,kids:[
+    {n:"Lucrèce",gc:[{n:"Julien-Eymard",y:2011,e:"\ud83d\udc66\ud83c\udffe"},{n:"Jémima",y:2015,e:"\ud83d\udc67\ud83c\udffe"}]},
+    {n:"Yannick",gc:[{n:"Francesca",y:2011,e:"\ud83d\udc67\ud83c\udffe"},{n:"Yann",y:2017,e:"\ud83d\udc66\ud83c\udffe"}]},
+    {n:"Martial",gc:[]},
+    {n:"Tony",gc:[{n:"Ivy",y:2015,e:"\ud83d\udc67\ud83c\udffe"},{n:"Nora",y:2024,e:"\ud83d\udc67\ud83c\udffe"}]},
+    {n:"Arthur",gc:[{n:"King Alexander",y:2021,e:"\ud83d\udc66\ud83c\udffe"},{n:"Juliette",y:2025,e:"\ud83d\udc67\ud83c\udffe"},{n:"Lovelyne",e:"\ud83d\udc67\ud83c\udffe"}]},
+    {n:"Ostian",gc:[{n:"Simeyah",y:2024,e:"\ud83d\udc67\ud83c\udffe"},{n:"Aaron",y:2026,e:"\ud83d\udc66\ud83c\udffe"}]},
     {n:"Fortune",gc:[]}
   ]},
-  {name:"Famille <em>Manfoh</em> Nguetsop Michel",kids:[
-    {n:"Lafric",gc:[{n:"Daisy",e:"👧🏾"},{n:"Jordan",e:"👦🏾"},{n:"Ashley",e:"👧🏾"},{n:"Kaila",y:2024,e:"👧🏾"}]},
-    {n:"Mandela",gc:[{n:"Jamal",y:2019,e:"👦🏽"},{n:"Zendaya",y:2025,e:"👧🏽"}]},
-    {n:"Michèle",gc:[{n:"Berakah",y:2021,e:"👧🏾"},{n:"Ange Shalom",y:2023,e:"👧🏾"}]},
-    {n:"Richelle",gc:[]},{n:"Alexandra",gc:[{n:"Maylon",y:2023,e:"👦🏾"}]},
-    {n:"Élysée",gc:[{n:"Nathanaël",y:2024,e:"👦🏾"}]},
+  {name:"<em>Manfoh</em> Nguetsop Michel",kids:[
+    {n:"Lafric",gc:[{n:"Daisy",e:"\ud83d\udc67\ud83c\udffe"},{n:"Jordan",e:"\ud83d\udc66\ud83c\udffe"},{n:"Ashley",e:"\ud83d\udc67\ud83c\udffe"},{n:"Kaila",y:2024,e:"\ud83d\udc67\ud83c\udffe"}]},
+    {n:"Mandela",gc:[{n:"Jamal",y:2019,e:"\ud83d\udc66\ud83c\udffd"},{n:"Zendaya",y:2025,e:"\ud83d\udc67\ud83c\udffd"}]},
+    {n:"Michèle",gc:[{n:"Berakah",y:2021,e:"\ud83d\udc67\ud83c\udffe"},{n:"Ange Shalom",y:2023,e:"\ud83d\udc67\ud83c\udffe"}]},
+    {n:"Richelle",gc:[]},{n:"Alexandra",gc:[{n:"Maylon",y:2023,e:"\ud83d\udc66\ud83c\udffe"}]},
+    {n:"Élysée",gc:[{n:"Nathanaël",y:2024,e:"\ud83d\udc66\ud83c\udffe"}]},
     {n:"Estelle",gc:[]},{n:"Maddy",gc:[]},{n:"Serge",gc:[]},
-    {n:"Sonia",gc:[{n:"Leroi",y:2014,e:"👦🏾"}]},
+    {n:"Sonia",gc:[{n:"Leroi",y:2014,e:"\ud83d\udc66\ud83c\udffe"}]},
     {n:"Genny",gc:[]},{n:"Dongwa",gc:[]},{n:"Djeff",gc:[]},
     {n:"Angela",gc:[]},{n:"Ange",gc:[]},{n:"Dave",gc:[]}
   ]},
-  {name:"Famille <em>Foh Miatsuet II</em> Jiotsa Jean Gallo",kids:[
-    {n:"Jessica",gc:[{n:"Léon",y:2023,e:"👦🏽"}]},
+  {name:"<em>Foh Miatsuet II</em> Jiotsa Jean Gallo",kids:[
+    {n:"Jessica",gc:[{n:"Léon",y:2023,e:"\ud83d\udc66\ud83c\udffd"}]},
     {n:"Barbara",gc:[]},{n:"Aurélie",gc:[]},{n:"Samira",gc:[]},
     {n:"Lindsay",gc:[]},{n:"Malaïka",gc:[]},{n:"Satia",gc:[]},
     {n:"Nathan",gc:[]},{n:"Reina",gc:[]},{n:"Myriam",gc:[]},{n:"Paul",gc:[]}
   ]},
-  {name:"Famille Nguetsop Robinson",kids:[{n:"Maria",gc:[]}]},
-  {name:"Famille <em>Foh Nleng</em> Nguetsop Salomon",kids:[
-    {n:"Patricia",gc:[{n:"Inaya",y:2022,e:"👧🏾"},{n:"Kehphren",y:2024,e:"👦🏾"}]},
+  {name:"Nguetsop Robinson",kids:[{n:"Maria",gc:[]}]},
+  {name:"<em>Foh Nleng</em> Nguetsop Salomon",kids:[
+    {n:"Patricia",gc:[{n:"Inaya",y:2022,e:"\ud83d\udc67\ud83c\udffe"},{n:"Kehphren",y:2024,e:"\ud83d\udc66\ud83c\udffe"}]},
     {n:"Franck",gc:[]},{n:"Anakiya",gc:[]}
   ]},
-  {name:"Famille Nguetsop Serge",kids:[
-    {n:"Habisha",gc:[]},{n:"Egla",gc:[]},{n:"Harry",gc:[]},{n:"Clara",gc:[]},{n:"Michael",gc:[]}
-  ]},
-  {name:"Famille Nguetsop Léopold",kids:[
-    {n:"Christ",gc:[]},{n:"Franck",gc:[]},{n:"Mathilda",gc:[]},{n:"Naomie",gc:[]}
-  ]},
-  {name:"Famille <em>Nkem Ngouh</em> Mezazeme Édouard",kids:[{n:"Denzel",gc:[]}]},
-  {name:"Famille Vouffo Étienne",kids:[
-    {n:"Ashley",gc:[]},{n:"Juidy",gc:[]},{n:"Marie-Carla",gc:[]},{n:"Chavy",gc:[]}
-  ]}
+  {name:"Nguetsop Serge",kids:[{n:"Habisha",gc:[]},{n:"Egla",gc:[]},{n:"Harry",gc:[]},{n:"Clara",gc:[]},{n:"Michael",gc:[]}]},
+  {name:"Nguetsop Léopold",kids:[{n:"Christ",gc:[]},{n:"Franck",gc:[]},{n:"Mathilda",gc:[]},{n:"Naomie",gc:[]}]},
+  {name:"<em>Nkem Ngouh</em> Mezazeme Édouard",kids:[{n:"Denzel",gc:[]}]},
+  {name:"Vouffo Étienne",kids:[{n:"Ashley",gc:[]},{n:"Juidy",gc:[]},{n:"Marie-Carla",gc:[]},{n:"Chavy",gc:[]}]}
 ];
 
-var treeCur = -1;
-var gcOpen = -1;
+var treeCur=-1,gcOpen=-1;
 
-function toggleTree(id) {
-  var box = document.getElementById("itree-sub");
-  var nodes = document.querySelectorAll(".itree-child");
-  if (treeCur === id) { box.innerHTML = ""; nodes[id].classList.remove("open"); treeCur = -1; gcOpen = -1; return; }
-  if (treeCur >= 0) nodes[treeCur].classList.remove("open");
-  nodes[id].classList.add("open"); treeCur = id; gcOpen = -1;
-  renderGC(id);
-  setTimeout(function() { box.scrollIntoView({behavior:"smooth",block:"nearest"}); }, 150);
+function toggleTree(id){
+  var box=document.getElementById("itree-sub");
+  var nodes=document.querySelectorAll(".itree-child");
+  if(treeCur===id){box.innerHTML="";nodes[id].classList.remove("open");treeCur=-1;gcOpen=-1;return}
+  if(treeCur>=0)nodes[treeCur].classList.remove("open");
+  nodes[id].classList.add("open");treeCur=id;gcOpen=-1;
+  renderSubtree(id);
+  setTimeout(function(){box.scrollIntoView({behavior:"smooth",block:"nearest"})},150);
 }
 
-function renderGC(famIdx) {
-  var box = document.getElementById("itree-sub");
-  var f = treeFams[famIdx];
-  var h = f.kids.map(function(k, i) {
-    var hasKids = k.gc && k.gc.length > 0;
-    var cls = "itree-gc" + (hasKids ? " itree-gc-parent" : "");
-    var click = hasKids ? ' onclick="toggleGC(' + famIdx + ',' + i + ')"' : '';
-    var badge = hasKids ? '<span class="itree-gc-badge">' + k.gc.length + '</span>' : '';
-    var photoHtml = (famIdx === 1) ? '<img src="/images/enfant-placeholder.jpg" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%">' : '👤';
-    return '<div class="' + cls + '"' + click + '><div class="itree-gc-photo">' + photoHtml + '</div><div class="itree-gc-name">' + k.n + '</div>' + badge + '</div>';
+function renderSubtree(famIdx){
+  var box=document.getElementById("itree-sub");
+  var f=treeFams[famIdx];
+  // Get the photo from the clicked child element
+  var childEl=document.querySelectorAll(".itree-child")[famIdx];
+  var photoEl=childEl.querySelector(".itree-child-photo");
+  var photoHtml=photoEl.innerHTML;
+
+  // Build kids circles
+  var kidsHtml=f.kids.map(function(k,i){
+    var hasK=k.gc&&k.gc.length>0;
+    var cls="subtree-kid"+(hasK?" clickable":"");
+    var click=hasK?' onclick="toggleGC('+famIdx+','+i+')"':'';
+    var badge=hasK?'<span class="subtree-kid-badge">'+k.gc.length+'</span>':'';
+    // Use placeholder photo for Michel's family (famIdx 1)
+    var ph=(famIdx===1)?'<img src="/images/enfant-placeholder.jpg" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%">':'\ud83d\udc64';
+    return '<div class="'+cls+'"'+click+'>'+badge+'<div class="subtree-kid-photo">'+ph+'</div><div class="subtree-kid-name">'+k.n+'</div></div>';
   }).join("");
 
-  box.innerHTML = '<div class="itree-sub show">' +
-    '<div class="itree-sub-head"><div class="itree-sub-info"><div class="itree-sub-label">Petits-enfants</div><div class="itree-sub-parent">' + f.name + '</div></div>' +
-    '<div class="itree-sub-close" onclick="toggleTree(' + famIdx + ')">✕</div></div>' +
-    '<div class="itree-gc-grid">' + h + '</div>' +
-    '<div id="itree-ggc"></div>' +
+  var spread=f.kids.length>1?'<div class="subtree-line"></div><div class="subtree-spread"></div>':'<div class="subtree-line"></div>';
+
+  box.innerHTML='<div class="subtree" style="position:relative">'+
+    '<div class="subtree-close" onclick="toggleTree('+famIdx+')">✕</div>'+
+    '<div class="subtree-root">'+
+      '<div class="subtree-root-photo">'+photoHtml+'</div>'+
+      '<div class="subtree-root-name">'+f.name+'</div>'+
+      (f.htitle?'<div class="subtree-root-note">'+f.htitle+'</div>':'')+
+      (f.deceased?'<div class="subtree-root-note">\ud83d\udd4a 2011</div>':'')+
+    '</div>'+
+    '<div class="subtree-label">'+f.kids.length+' enfant'+(f.kids.length>1?'s':'')+'</div>'+
+    spread+
+    '<div class="subtree-kids">'+kidsHtml+'</div>'+
+    '<div id="itree-ggc"></div>'+
   '</div>';
 }
 
-function toggleGC(famIdx, kidIdx) {
-  var ggcBox = document.getElementById("itree-ggc");
-  if (gcOpen === kidIdx) { ggcBox.innerHTML = ""; gcOpen = -1; return; }
-  gcOpen = kidIdx;
-  var k = treeFams[famIdx].kids[kidIdx];
-  var h = k.gc.map(function(c) {
-    var yearHtml = c.y ? '<span class="itree-ggc-year">' + c.y + '</span>' : '';
-    var emoji = c.e || '👤';
-    return '<div class="itree-ggc"><div class="itree-ggc-photo">' + emoji + '</div><div class="itree-ggc-name">' + c.n + '</div>' + yearHtml + '</div>';
+function toggleGC(famIdx,kidIdx){
+  var ggcBox=document.getElementById("itree-ggc");
+  if(gcOpen===kidIdx){ggcBox.innerHTML="";gcOpen=-1;return}
+  gcOpen=kidIdx;
+  var k=treeFams[famIdx].kids[kidIdx];
+  var h=k.gc.map(function(c){
+    var yearHtml=c.y?'<span class="ggc-year">'+c.y+'</span>':'';
+    var emoji=c.e||'\ud83d\udc64';
+    return '<div class="ggc-item"><span class="ggc-emoji">'+emoji+'</span><span class="ggc-name">'+c.n+'</span>'+yearHtml+'</div>';
   }).join("");
-
-  ggcBox.innerHTML = '<div class="itree-ggc-panel show">' +
-    '<div class="itree-ggc-head"><div class="itree-sub-label">Arrière-petits-enfants</div><div style="font-family:var(--font-d);font-size:.95rem;font-weight:600;color:var(--cream)">Enfants de ' + k.n + '</div></div>' +
-    '<div class="itree-ggc-grid">' + h + '</div>' +
-  '</div>';
-  setTimeout(function() { ggcBox.scrollIntoView({behavior:"smooth",block:"nearest"}); }, 150);
+  ggcBox.innerHTML='<div class="ggc-panel"><div class="ggc-head"><div class="ggc-head-label">Arrière-petits-enfants</div><div class="ggc-head-name">Enfants de '+k.n+'</div></div><div class="ggc-list">'+h+'</div></div>';
+  setTimeout(function(){ggcBox.scrollIntoView({behavior:"smooth",block:"nearest"})},150);
 }
-
 </script>
 <script src="/js/main.js"></script>
 </body>

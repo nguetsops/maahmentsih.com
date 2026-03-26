@@ -58,20 +58,11 @@
     La famille vous remercie pour votre soutien.
   </p>
 
-  <div class="don-card">
+  <div class="don-card" onclick="openMomoModal()" style="cursor:pointer">
     <div class="don-icon">📱</div>
-    <div class="don-title">Mobile Money (MTN)</div>
-    <div class="don-desc">Envoyez votre contribution via MTN Mobile Money</div>
-    <div class="don-number">+237 XXX XXX XXX</div>
-    <div class="don-name">Au nom de : <strong>À compléter</strong></div>
-  </div>
-
-  <div class="don-card">
-    <div class="don-icon">📱</div>
-    <div class="don-title">Orange Money</div>
-    <div class="don-desc">Envoyez votre contribution via Orange Money</div>
-    <div class="don-number">+237 XXX XXX XXX</div>
-    <div class="don-name">Au nom de : <strong>À compléter</strong></div>
+    <div class="don-title">Mobile Money</div>
+    <div class="don-desc">Cliquez pour voir les numéros MTN et Orange Money</div>
+    <div style="font-size:.75rem;color:var(--gold);margin-top:.3rem">Voir les contacts →</div>
   </div>
 
   
@@ -117,6 +108,48 @@
 </div>
 <div class="f-copy">© 2026 Famille Maah Mentsih — Tous droits réservés</div>
 </footer>
+
+<!-- Modal MoMo -->
+<div id="momo-modal" style="display:none;position:fixed;inset:0;background:rgba(10,15,12,.92);z-index:9999;overflow-y:auto;padding:1rem" onclick="if(event.target===this)closeMomoModal()">
+  <div style="max-width:500px;margin:2rem auto;background:var(--bg2);border:1px solid rgba(200,164,92,.2);border-radius:14px;padding:1.5rem;position:relative">
+    <button onclick="closeMomoModal()" style="position:absolute;top:.75rem;right:.75rem;background:none;border:none;color:var(--cream);font-size:1.2rem;cursor:pointer">✕</button>
+    <div style="font-family:var(--font-d);font-size:1.15rem;font-weight:600;color:var(--cream);margin-bottom:.3rem;text-align:center">Contacts Mobile Money</div>
+    <div style="font-size:.75rem;color:var(--text-m);text-align:center;margin-bottom:1.25rem">Choisissez un contact pour envoyer votre contribution</div>
+    <div id="momo-list" style="display:flex;flex-direction:column;gap:.6rem"></div>
+  </div>
+</div>
+
+<script>
+var momoContacts=[
+  {nom:"Wamba Clément",photo:"👤",mtn:"",om:"",deceased:true},
+  {nom:"Manfoh Nguetsop Michel",photo:"/images/michel.jpg",mtn:"+237 XXX XXX XXX",om:"+237 XXX XXX XXX"},
+  {nom:"Foh Miatsuet II Jiotsa Jean Gallo",photo:"👤",mtn:"+237 XXX XXX XXX",om:"+237 XXX XXX XXX"},
+  {nom:"Nguetsop Robinson",photo:"👤",mtn:"+237 XXX XXX XXX",om:"+237 XXX XXX XXX"},
+  {nom:"Foh Nleng Nguetsop Salomon",photo:"👤",mtn:"+237 XXX XXX XXX",om:"+237 XXX XXX XXX"},
+  {nom:"Nguetsop Serge",photo:"👤",mtn:"+237 XXX XXX XXX",om:"+237 XXX XXX XXX"},
+  {nom:"Nguetsop Léopold",photo:"👤",mtn:"+237 XXX XXX XXX",om:"+237 XXX XXX XXX"},
+  {nom:"Nkem Ngouh Mezazeme Édouard",photo:"👤",mtn:"+237 XXX XXX XXX",om:"+237 XXX XXX XXX"},
+  {nom:"Vouffo Étienne",photo:"👤",mtn:"+237 XXX XXX XXX",om:"+237 XXX XXX XXX"}
+];
+
+function openMomoModal(){
+  var list=document.getElementById("momo-list");
+  list.innerHTML=momoContacts.filter(function(c){return !c.deceased}).map(function(c){
+    var ph=c.photo.startsWith("/")?'<img src="'+c.photo+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">':c.photo;
+    return '<div style="display:flex;align-items:center;gap:.75rem;padding:.75rem;background:var(--bg3);border:1px solid rgba(200,164,92,.08);border-radius:10px">'+
+      '<div style="width:42px;height:42px;border-radius:50%;overflow:hidden;border:1.5px solid rgba(200,164,92,.2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">'+ph+'</div>'+
+      '<div style="flex:1;min-width:0"><div style="font-family:var(--font-d);font-size:.85rem;font-weight:600;color:var(--cream)">'+c.nom+'</div>'+
+      '<div style="display:flex;gap:.75rem;margin-top:.3rem;flex-wrap:wrap">'+
+        '<div style="font-size:.7rem"><span style="color:var(--gold-d)">MTN</span> <a href="tel:'+c.mtn.replace(/\s/g,"")+'" style="color:var(--cream-s);text-decoration:none">'+c.mtn+'</a></div>'+
+        '<div style="font-size:.7rem"><span style="color:#f60">OM</span> <a href="tel:'+c.om.replace(/\s/g,"")+'" style="color:var(--cream-s);text-decoration:none">'+c.om+'</a></div>'+
+      '</div></div></div>';
+  }).join("");
+  document.getElementById("momo-modal").style.display="block";
+  document.body.style.overflow="hidden";
+}
+function closeMomoModal(){document.getElementById("momo-modal").style.display="none";document.body.style.overflow=""}
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeMomoModal()});
+</script>
 
 
 <!-- Firebase -->
