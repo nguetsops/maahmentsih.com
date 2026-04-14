@@ -145,9 +145,9 @@ var rang="",hasK="",lastA=0,lastB=0;
 
 // Configuration d'optimisation
 const IMAGE_CONFIG={
-  maxSizeMB:50, // Limite permissive, Firebase peut gérer
-  maxWidthOrHeight:3000, // Redimensionne si plus grand
-  maxTotalSize:200 // MB pour tous les uploads d'une session
+  maxSizeMB:10, // Réduit de 50 à 10MB
+  maxWidthOrHeight:2048, // Réduit de 3000 à 2048px
+  quality:0.85 // Amélioration de la qualité
 };
 
 // Utilitaires d'erreur et progression
@@ -170,51 +170,66 @@ function prog(s){
   });
 }
 
-// Compression simple et rapide - compress seulement si trop gros
+// Compression efficace et intelligente
 async function compressImage(file){
   return new Promise(function(resolve,reject){
-    // Fichiers < 5MB: upload direct sans compression
-    if(file.size<5*1024*1024){
-      resolve(file);
-      return;
-    }
-    
-    // Fichiers >= 5MB: compresse basiquement
+    // Rejet si trop gros
     if(file.size>IMAGE_CONFIG.maxSizeMB*1024*1024){
       reject(new Error("L'image "+file.name+" dépasse "+IMAGE_CONFIG.maxSizeMB+"MB"));
       return;
     }
     
-    var blobUrl=URL.createObjectURL(file);
+    // Upload direct pour petites images
+    if(file.size<1*1024*1024){
+      resolve(file);
+      return;
+    }
+
+    // Compression pour images >= 1MB
     var img=new Image();
     img.onload=function(){
-      var canvas=document.createElement("canvas");
+      URL.revokeObjectURL(img.src);
+
       var w=img.width,h=img.height;
-      
-      // Redimensionne si très grande
-      if(w>3000||h>3000){
-        var ratio=Math.min(3000/w,3000/h);
+      var needResize=w>IMAGE_CONFIG.maxWidthOrHeight||h>IMAGE_CONFIG.maxWidthOrHeight;
+
+      // Si petite image et déjà JPEG, pas besoin de re-compresser
+      if(!needResize&&file.type==="image/jpeg"&&file.size<3*1024*1024){
+        resolve(file);
+        return;
+      }
+
+      // Redimensionnement si nécessaire
+      if(needResize){
+        var ratio=Math.min(IMAGE_CONFIG.maxWidthOrHeight/w,IMAGE_CONFIG.maxWidthOrHeight/h);
         w=Math.round(w*ratio);
         h=Math.round(h*ratio);
       }
       
+      var canvas=document.createElement("canvas");
       canvas.width=w;
       canvas.height=h;
       var ctx=canvas.getContext("2d");
       ctx.drawImage(img,0,0,w,h);
       
-      // Compression JPEG unique
-      canvas.toBlob(resolve,"image/jpeg",0.8);
+      canvas.toBlob(function(blob){
+        if(!blob){
+          reject(new Error("Compression échouée pour "+file.name));
+          return;
+        }
+        // Garde l'original si la compression l'a rendu plus gros
+        resolve(blob.size<file.size?blob:file);
+      },"image/jpeg",IMAGE_CONFIG.quality);
     };
     img.onerror=function(){
-      reject(new Error("Impossible de charger l'image "+file.name));
+      reject(new Error("Impossible de charger "+file.name));
     };
-    img.src=blobUrl;
+    img.src=URL.createObjectURL(file);
   });
 }
 
-// Preview optimisé - AUCUNE compression, juste blob URL du fichier original
-async function prev1(inp,pid){
+// Preview sans compression
+function prev1(inp,pid){
   var pv=document.getElementById(pid);
   pv.innerHTML="";
   
@@ -226,7 +241,7 @@ async function prev1(inp,pid){
   }
 }
 
-// Preview multiple - AUCUNE compression, juste blob URLs
+// Preview multiple sans compression
 function prevN(inp,pid){
   var pv=document.getElementById(pid);
   pv.innerHTML="";
@@ -244,48 +259,52 @@ function prevN(inp,pid){
   }
 }
 
-// Upload optimisé avec gestion d'erreur et compression
-async function uploadOptimized(file,path){
+// Upload unique
+async function uploadOne(file,path){
   if(!file)throw new Error("Fichier manquant");
-  
-  try{
-    var compressed=await compressImage(file);
-    var ref=storage.ref(path);
-    var snapshot=await ref.put(compressed);
-    return await snapshot.ref.getDownloadURL();
-  }catch(e){
-    throw new Error("Upload échoué: "+e.message);
-  }
+  var compressed=await compressImage(file);
+  var ref=storage.ref(path);
+  var snapshot=await ref.put(compressed);
+  return await snapshot.ref.getDownloadURL();
 }
 
-// Upload parallelisé avec limite de concurrence
-async function uploadBatch(files,pathPrefix,maxConcurrent){
+// Upload batch VRAIMENT en parallèle avec progression
+async function uploadBatch(files,pathPrefix,maxConcurrent,onProgress){
   if(!files||files.length===0)return[];
   
-  maxConcurrent=maxConcurrent||4;
-  var urls=[];
-  var queue=Array.from(files).map(function(f,i){return{file:f,index:i}});
-  var uploading=[];
-  
-  while(queue.length>0||uploading.length>0){
-    // Remplis la queue jusqu'à maxConcurrent
-    while(uploading.length<maxConcurrent&&queue.length>0){
-      var task=queue.shift();
-      var promise=uploadOptimized(task.file,pathPrefix+task.index+"."+task.file.name.split(".").pop())
-        .then(function(url){return{index:task.index,url:url}})
-        .catch(function(e){throw e});
-      uploading.push(promise);
-    }
-    
-    // Attend le prochain upload
-    if(uploading.length>0){
-      var result=await Promise.race(uploading);
-      uploading=uploading.filter(function(p){return p!==uploading.find(function(u){return u===p})});
-      urls[result.index]=result.url;
-    }
+  var total=files.length;
+  var completed=0;
+  var results=new Array(total);
+
+  // Fonction d'upload avec index
+  async function uploadTask(file,index){
+    var ext=file.name.split(".").pop();
+    var path=pathPrefix+index+"."+ext;
+    var url=await uploadOne(file,path);
+    completed++;
+    if(onProgress)onProgress(completed,total);
+    return{index:index,url:url};
   }
-  
-  return urls;
+
+  // Lance maxConcurrent uploads en parallèle avec Promise.all
+  var batches=[];
+  for(var i=0;i<total;i+=maxConcurrent){
+    var batch=[];
+    for(var j=i;j<Math.min(i+maxConcurrent,total);j++){
+      batch.push(uploadTask(files[j],j));
+    }
+    batches.push(batch);
+  }
+
+  // Traite chaque batch séquentiellement
+  for(var k=0;k<batches.length;k++){
+    var batchResults=await Promise.all(batches[k]);
+    batchResults.forEach(function(r){
+      results[r.index]=r.url;
+    });
+  }
+
+  return results;
 }
 
 // Navigation et génération d'enfants (inchangé)
@@ -366,7 +385,7 @@ function genB(){
   document.getElementById("f-kids-b").innerHTML=h;
 }
 
-// Submit optimisé avec uploads parallelisés
+// Submit optimisé avec uploads vraiment parallèles et feedback
 async function send(){
   noErr();
   var btn=rang==="fils"?document.getElementById("btn-a"):rang==="adoptif"?document.getElementById("btn-c"):document.getElementById("btn-b");
@@ -399,31 +418,31 @@ async function send(){
         }
       }
       
-      btn.textContent="Compression et upload...";
-      
-      // Upload photo principal
-      var pUrl=await uploadOptimized(photo,"formulaire/"+ts+"/photo."+photo.name.split(".").pop());
-      
-      // Compile enfants et leurs photos
+      btn.textContent="Upload de ta photo...";
+      var pUrl=await uploadOne(photo,"formulaire/"+ts+"/photo."+photo.name.split(".").pop());
+
+      // Compile enfants
       var enfants=[];
       var enfantPhotos=[];
       for(var i=1;i<=nb;i++){
         var cn=document.getElementById("ka-n-"+i).value.trim();
         enfantPhotos.push(document.getElementById("ka-p-"+i).files[0]);
-        enfants.push({nom:cn,photoUrl:null}); // URL sera remplie après
+        enfants.push({nom:cn,photoUrl:null});
       }
       
-      // Upload toutes les photos d'enfants en parallèle (8 simultanés)
-      btn.textContent="Upload des enfants...";
-      var enfantUrls=await uploadBatch(enfantPhotos,"formulaire/"+ts+"/enfant-",8);
+      // Upload enfants avec progression
+      var enfantUrls=await uploadBatch(enfantPhotos,"formulaire/"+ts+"/enfant-",6,function(done,total){
+        btn.textContent="Upload enfants ("+done+"/"+total+")...";
+      });
       enfants.forEach(function(e,i){e.photoUrl=enfantUrls[i]});
       
-      // Upload photos de Maah en parallèle
-      btn.textContent="Upload des photos de Maah...";
+      // Upload photos Maah avec progression
       var mp=document.getElementById("f-maah-a").files;
       var maahUrls=[];
       if(mp.length>0){
-        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",8);
+        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",6,function(done,total){
+          btn.textContent="Photos de Maah ("+done+"/"+total+")...";
+        });
       }
       
       data.nom=nom;
@@ -440,14 +459,15 @@ async function send(){
       if(!nom){err("Ton nom est obligatoire.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
       if(!photo){err("Ta photo est obligatoire.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
       
-      btn.textContent="Compression et upload...";
-      var pUrl=await uploadOptimized(photo,"formulaire/"+ts+"/photo."+photo.name.split(".").pop());
-      
-      btn.textContent="Upload des photos de Maah...";
+      btn.textContent="Upload de ta photo...";
+      var pUrl=await uploadOne(photo,"formulaire/"+ts+"/photo."+photo.name.split(".").pop());
+
       var mp=document.getElementById("f-maah-c").files;
       var maahUrls=[];
       if(mp.length>0){
-        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",8);
+        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",6,function(done,total){
+          btn.textContent="Photos de Maah ("+done+"/"+total+")...";
+        });
       }
       
       data.nom=nom;
@@ -465,9 +485,9 @@ async function send(){
       if(!photo){err("Ta photo est obligatoire.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
       if(!hasK){err("Indique si tu as des enfants.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
       
-      btn.textContent="Compression et upload...";
-      var pUrl=await uploadOptimized(photo,"formulaire/"+ts+"/photo."+photo.name.split(".").pop());
-      
+      btn.textContent="Upload de ta photo...";
+      var pUrl=await uploadOne(photo,"formulaire/"+ts+"/photo."+photo.name.split(".").pop());
+
       var enfants=[];
       if(hasK==="oui"){
         var nb=parseInt(document.getElementById("f-nb-b").value)||0;
@@ -484,11 +504,12 @@ async function send(){
         }
       }
       
-      btn.textContent="Upload des photos de Maah...";
       var mp=document.getElementById("f-maah-b").files;
       var maahUrls=[];
       if(mp.length>0){
-        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",8);
+        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",6,function(done,total){
+          btn.textContent="Photos de Maah ("+done+"/"+total+")...";
+        });
       }
       
       data.pere=pere;
