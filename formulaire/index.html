@@ -145,9 +145,9 @@ var rang="",hasK="",lastA=0,lastB=0;
 
 // Configuration d'optimisation
 const IMAGE_CONFIG={
-  maxSizeMB:2,
-  maxWidthOrHeight:2000,
-  maxTotalSize:50 // MB pour tous les uploads d'une session
+  maxSizeMB:50, // Limite permissive, Firebase peut gérer
+  maxWidthOrHeight:3000, // Redimensionne si plus grand
+  maxTotalSize:200 // MB pour tous les uploads d'une session
 };
 
 // Utilitaires d'erreur et progression
@@ -173,7 +173,7 @@ function prog(s){
 // Compression d'image asynchrone sans blocage
 async function compressImage(file){
   return new Promise(function(resolve,reject){
-    // Validation taille brute
+    // Validation taille brute (permissive, 50MB max)
     if(file.size>IMAGE_CONFIG.maxSizeMB*1024*1024){
       reject(new Error("L'image "+file.name+" dépasse "+IMAGE_CONFIG.maxSizeMB+"MB"));
       return;
@@ -198,18 +198,25 @@ async function compressImage(file){
         var ctx=canvas.getContext("2d");
         ctx.drawImage(img,0,0,w,h);
         
-        // Compression avec quality progressive
-        var quality=0.85;
-        canvas.toBlob(function(blob){
-          if(blob.size>IMAGE_CONFIG.maxSizeMB*1024*1024){
-            quality=0.7;
-            canvas.toBlob(function(blob2){
-              resolve(blob2);
-            },"image/jpeg",quality);
-          }else{
-            resolve(blob);
-          }
-        },"image/jpeg",quality);
+        // Compression progressive (cherche le meilleur ratio qualité/taille)
+        var quality=0.9;
+        var maxAttempts=3;
+        var attempt=0;
+        
+        function tryCompress(){
+          canvas.toBlob(function(blob){
+            attempt++;
+            // Si trop gros et on peut réduire la qualité, essaie
+            if(blob.size>5*1024*1024 && quality>0.6 && attempt<maxAttempts){
+              quality-=0.2;
+              tryCompress();
+            }else{
+              resolve(blob);
+            }
+          },"image/jpeg",quality);
+        }
+        
+        tryCompress();
       };
       img.onerror=function(){
         reject(new Error("Impossible de charger l'image "+file.name));
