@@ -143,11 +143,10 @@ firebase.initializeApp({apiKey:"AIzaSyDr8vf7KZmSYO5w0uuzokO-2Z5WC5RY7zY",authDom
 var db=firebase.firestore(),storage=firebase.storage();
 var rang="",hasK="",lastA=0,lastB=0;
 
-// Configuration d'optimisation
+// Configuration ZERO compression = vitesse MAX
 const IMAGE_CONFIG={
-  maxSizeMB:10, // Réduit de 50 à 10MB
-  maxWidthOrHeight:2048, // Réduit de 3000 à 2048px
-  quality:0.85 // Amélioration de la qualité
+  maxSizeMB:10, // Limite stricte
+  compressionEnabled:false // DÉSACTIVÉ pour vitesse maximale
 };
 
 // Utilitaires d'erreur et progression
@@ -170,62 +169,14 @@ function prog(s){
   });
 }
 
-// Compression efficace et intelligente
+// AUCUNE compression = upload INSTANTANÉ
 async function compressImage(file){
-  return new Promise(function(resolve,reject){
-    // Rejet si trop gros
-    if(file.size>IMAGE_CONFIG.maxSizeMB*1024*1024){
-      reject(new Error("L'image "+file.name+" dépasse "+IMAGE_CONFIG.maxSizeMB+"MB"));
-      return;
-    }
-    
-    // Upload direct pour petites images
-    if(file.size<1*1024*1024){
-      resolve(file);
-      return;
-    }
-
-    // Compression pour images >= 1MB
-    var img=new Image();
-    img.onload=function(){
-      URL.revokeObjectURL(img.src);
-
-      var w=img.width,h=img.height;
-      var needResize=w>IMAGE_CONFIG.maxWidthOrHeight||h>IMAGE_CONFIG.maxWidthOrHeight;
-
-      // Si petite image et déjà JPEG, pas besoin de re-compresser
-      if(!needResize&&file.type==="image/jpeg"&&file.size<3*1024*1024){
-        resolve(file);
-        return;
-      }
-
-      // Redimensionnement si nécessaire
-      if(needResize){
-        var ratio=Math.min(IMAGE_CONFIG.maxWidthOrHeight/w,IMAGE_CONFIG.maxWidthOrHeight/h);
-        w=Math.round(w*ratio);
-        h=Math.round(h*ratio);
-      }
-      
-      var canvas=document.createElement("canvas");
-      canvas.width=w;
-      canvas.height=h;
-      var ctx=canvas.getContext("2d");
-      ctx.drawImage(img,0,0,w,h);
-      
-      canvas.toBlob(function(blob){
-        if(!blob){
-          reject(new Error("Compression échouée pour "+file.name));
-          return;
-        }
-        // Garde l'original si la compression l'a rendu plus gros
-        resolve(blob.size<file.size?blob:file);
-      },"image/jpeg",IMAGE_CONFIG.quality);
-    };
-    img.onerror=function(){
-      reject(new Error("Impossible de charger "+file.name));
-    };
-    img.src=URL.createObjectURL(file);
-  });
+  // Validation de taille uniquement
+  if(file.size>IMAGE_CONFIG.maxSizeMB*1024*1024){
+    throw new Error("L'image "+file.name+" dépasse "+IMAGE_CONFIG.maxSizeMB+"MB. Utilise une photo moins lourde.");
+  }
+  // Retourne le fichier tel quel - Firebase Storage gère très bien
+  return file;
 }
 
 // Preview sans compression
@@ -430,17 +381,17 @@ async function send(){
         enfants.push({nom:cn,photoUrl:null});
       }
       
-      // Upload enfants avec progression
-      var enfantUrls=await uploadBatch(enfantPhotos,"formulaire/"+ts+"/enfant-",6,function(done,total){
+      // Upload enfants avec progression - 10 parallèles pour vitesse max
+      var enfantUrls=await uploadBatch(enfantPhotos,"formulaire/"+ts+"/enfant-",10,function(done,total){
         btn.textContent="Upload enfants ("+done+"/"+total+")...";
       });
       enfants.forEach(function(e,i){e.photoUrl=enfantUrls[i]});
       
-      // Upload photos Maah avec progression
+      // Upload photos Maah avec progression - 10 parallèles
       var mp=document.getElementById("f-maah-a").files;
       var maahUrls=[];
       if(mp.length>0){
-        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",6,function(done,total){
+        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",10,function(done,total){
           btn.textContent="Photos de Maah ("+done+"/"+total+")...";
         });
       }
@@ -465,7 +416,7 @@ async function send(){
       var mp=document.getElementById("f-maah-c").files;
       var maahUrls=[];
       if(mp.length>0){
-        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",6,function(done,total){
+        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",10,function(done,total){
           btn.textContent="Photos de Maah ("+done+"/"+total+")...";
         });
       }
@@ -507,7 +458,7 @@ async function send(){
       var mp=document.getElementById("f-maah-b").files;
       var maahUrls=[];
       if(mp.length>0){
-        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",6,function(done,total){
+        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",10,function(done,total){
           btn.textContent="Photos de Maah ("+done+"/"+total+")...";
         });
       }
