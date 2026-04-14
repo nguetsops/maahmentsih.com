@@ -170,117 +170,77 @@ function prog(s){
   });
 }
 
-// Compression d'image asynchrone sans blocage
+// Compression simple et rapide - compress seulement si trop gros
 async function compressImage(file){
   return new Promise(function(resolve,reject){
-    // Validation taille brute (permissive, 50MB max)
+    // Fichiers < 5MB: upload direct sans compression
+    if(file.size<5*1024*1024){
+      resolve(file);
+      return;
+    }
+    
+    // Fichiers >= 5MB: compresse basiquement
     if(file.size>IMAGE_CONFIG.maxSizeMB*1024*1024){
       reject(new Error("L'image "+file.name+" dépasse "+IMAGE_CONFIG.maxSizeMB+"MB"));
       return;
     }
     
-    var reader=new FileReader();
-    reader.onload=function(e){
-      var img=new Image();
-      img.onload=function(){
-        var canvas=document.createElement("canvas");
-        var w=img.width,h=img.height;
-        
-        // Redimensionne si nécessaire
-        if(w>IMAGE_CONFIG.maxWidthOrHeight||h>IMAGE_CONFIG.maxWidthOrHeight){
-          var ratio=Math.min(IMAGE_CONFIG.maxWidthOrHeight/w,IMAGE_CONFIG.maxWidthOrHeight/h);
-          w=Math.round(w*ratio);
-          h=Math.round(h*ratio);
-        }
-        
-        canvas.width=w;
-        canvas.height=h;
-        var ctx=canvas.getContext("2d");
-        ctx.drawImage(img,0,0,w,h);
-        
-        // Compression progressive (cherche le meilleur ratio qualité/taille)
-        var quality=0.9;
-        var maxAttempts=3;
-        var attempt=0;
-        
-        function tryCompress(){
-          canvas.toBlob(function(blob){
-            attempt++;
-            // Si trop gros et on peut réduire la qualité, essaie
-            if(blob.size>5*1024*1024 && quality>0.6 && attempt<maxAttempts){
-              quality-=0.2;
-              tryCompress();
-            }else{
-              resolve(blob);
-            }
-          },"image/jpeg",quality);
-        }
-        
-        tryCompress();
-      };
-      img.onerror=function(){
-        reject(new Error("Impossible de charger l'image "+file.name));
-      };
-      img.src=e.target.result;
+    var blobUrl=URL.createObjectURL(file);
+    var img=new Image();
+    img.onload=function(){
+      var canvas=document.createElement("canvas");
+      var w=img.width,h=img.height;
+      
+      // Redimensionne si très grande
+      if(w>3000||h>3000){
+        var ratio=Math.min(3000/w,3000/h);
+        w=Math.round(w*ratio);
+        h=Math.round(h*ratio);
+      }
+      
+      canvas.width=w;
+      canvas.height=h;
+      var ctx=canvas.getContext("2d");
+      ctx.drawImage(img,0,0,w,h);
+      
+      // Compression JPEG unique
+      canvas.toBlob(resolve,"image/jpeg",0.8);
     };
-    reader.onerror=function(){
-      reject(new Error("Erreur de lecture du fichier"));
+    img.onerror=function(){
+      reject(new Error("Impossible de charger l'image "+file.name));
     };
-    reader.readAsDataURL(file);
+    img.src=blobUrl;
   });
 }
 
-// Preview optimisé avec blob URL (léger, pas de DataURL)
+// Preview optimisé - AUCUNE compression, juste blob URL du fichier original
 async function prev1(inp,pid){
   var pv=document.getElementById(pid);
   pv.innerHTML="";
   
   if(inp.files&&inp.files[0]){
-    try{
-      var compressed=await compressImage(inp.files[0]);
-      var blobUrl=URL.createObjectURL(compressed);
-      pv.innerHTML='<div class="f-thumb"><img src="'+blobUrl+'"></div>';
-      inp.parentElement.querySelector(".f-file-label").className="f-file-label done";
-      inp.parentElement.querySelector(".f-file-label").textContent="✓ Photo sélectionnée";
-    }catch(e){
-      err("Erreur avec l'image: "+e.message);
-      inp.value="";
-    }
+    var blobUrl=URL.createObjectURL(inp.files[0]);
+    pv.innerHTML='<div class="f-thumb"><img src="'+blobUrl+'"></div>';
+    inp.parentElement.querySelector(".f-file-label").className="f-file-label done";
+    inp.parentElement.querySelector(".f-file-label").textContent="✓ Photo sélectionnée";
   }
 }
 
-// Preview multiple optimisé
-async function prevN(inp,pid){
+// Preview multiple - AUCUNE compression, juste blob URLs
+function prevN(inp,pid){
   var pv=document.getElementById(pid);
   pv.innerHTML="";
   
   if(!inp.files||inp.files.length===0)return;
   
-  try{
-    var label=inp.parentElement.querySelector(".f-file-label");
-    label.textContent="Compression en cours...";
-    
-    // Compresse toutes les images en parallèle
-    var promises=[];
-    for(var i=0;i<inp.files.length;i++){
-      promises.push(compressImage(inp.files[i]));
-    }
-    
-    var compressed=await Promise.all(promises);
-    
-    // Crée les previews
-    compressed.forEach(function(blob){
-      var blobUrl=URL.createObjectURL(blob);
-      pv.innerHTML+='<div class="f-thumb"><img src="'+blobUrl+'"></div>';
-    });
-    
-    if(inp.files.length>0){
-      inp.parentElement.querySelector(".f-file-label").className="f-file-label done";
-      inp.parentElement.querySelector(".f-file-label").textContent="✓ "+inp.files.length+" photo(s)";
-    }
-  }catch(e){
-    err("Erreur avec les images: "+e.message);
-    inp.value="";
+  for(var i=0;i<inp.files.length;i++){
+    var blobUrl=URL.createObjectURL(inp.files[i]);
+    pv.innerHTML+='<div class="f-thumb"><img src="'+blobUrl+'"></div>';
+  }
+  
+  if(inp.files.length>0){
+    inp.parentElement.querySelector(".f-file-label").className="f-file-label done";
+    inp.parentElement.querySelector(".f-file-label").textContent="✓ "+inp.files.length+" photo(s)";
   }
 }
 
@@ -453,9 +413,9 @@ async function send(){
         enfants.push({nom:cn,photoUrl:null}); // URL sera remplie après
       }
       
-      // Upload toutes les photos d'enfants en parallèle (4 à la fois)
-      btn.textContent="Upload des enfants (4 parallèles)...";
-      var enfantUrls=await uploadBatch(enfantPhotos,"formulaire/"+ts+"/enfant-",4);
+      // Upload toutes les photos d'enfants en parallèle (8 simultanés)
+      btn.textContent="Upload des enfants...";
+      var enfantUrls=await uploadBatch(enfantPhotos,"formulaire/"+ts+"/enfant-",8);
       enfants.forEach(function(e,i){e.photoUrl=enfantUrls[i]});
       
       // Upload photos de Maah en parallèle
@@ -463,7 +423,7 @@ async function send(){
       var mp=document.getElementById("f-maah-a").files;
       var maahUrls=[];
       if(mp.length>0){
-        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",4);
+        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",8);
       }
       
       data.nom=nom;
@@ -487,7 +447,7 @@ async function send(){
       var mp=document.getElementById("f-maah-c").files;
       var maahUrls=[];
       if(mp.length>0){
-        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",4);
+        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",8);
       }
       
       data.nom=nom;
@@ -528,7 +488,7 @@ async function send(){
       var mp=document.getElementById("f-maah-b").files;
       var maahUrls=[];
       if(mp.length>0){
-        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",4);
+        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",8);
       }
       
       data.pere=pere;
