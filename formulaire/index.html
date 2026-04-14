@@ -137,16 +137,20 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.js"></script>
 <script>
 firebase.initializeApp({apiKey:"AIzaSyDr8vf7KZmSYO5w0uuzokO-2Z5WC5RY7zY",authDomain:"maahmentsih-5d5db.firebaseapp.com",projectId:"maahmentsih-5d5db",storageBucket:"maahmentsih-5d5db.firebasestorage.app",messagingSenderId:"296174723200",appId:"1:296174723200:web:8e6b0129970da7e4d8c665"});
 
 var db=firebase.firestore(),storage=firebase.storage();
 var rang="",hasK="",lastA=0,lastB=0;
 
-// Configuration ZERO compression = vitesse MAX
+// Configuration compression optimisée : max 800KB par photo
 const IMAGE_CONFIG={
-  maxSizeMB:10, // Limite stricte
-  compressionEnabled:false // DÉSACTIVÉ pour vitesse maximale
+  maxSizeMB:0.8, // 800 KB max - réduit drastiquement le temps d'upload
+  maxWidthOrHeight:1920, // Résolution max suffisante pour le web
+  useWebWorker:true, // Utilise un worker pour ne pas bloquer l'interface
+  fileType:'image/jpeg', // JPEG = meilleur ratio qualité/taille
+  initialQuality:0.85 // Qualité excellente mais optimisée
 };
 
 // Utilitaires d'erreur et progression
@@ -169,14 +173,23 @@ function prog(s){
   });
 }
 
-// AUCUNE compression = upload INSTANTANÉ
+// Compression INTELLIGENTE avec browser-image-compression
 async function compressImage(file){
-  // Validation de taille uniquement
-  if(file.size>IMAGE_CONFIG.maxSizeMB*1024*1024){
-    throw new Error("L'image "+file.name+" dépasse "+IMAGE_CONFIG.maxSizeMB+"MB. Utilise une photo moins lourde.");
+  try{
+    // Si déjà petite (<500KB), pas besoin de compresser
+    if(file.size<512000){
+      return file;
+    }
+
+    // Sinon, compresse à 800KB max
+    const compressed=await imageCompression(file,IMAGE_CONFIG);
+    console.log('Photo '+file.name+' : '+Math.round(file.size/1024)+'KB → '+Math.round(compressed.size/1024)+'KB');
+    return compressed;
+  }catch(error){
+    console.error('Erreur compression:',error);
+    // En cas d'erreur, utilise l'original
+    return file;
   }
-  // Retourne le fichier tel quel - Firebase Storage gère très bien
-  return file;
 }
 
 // Preview sans compression
