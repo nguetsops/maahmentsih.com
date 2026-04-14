@@ -336,7 +336,7 @@ function genB(){
   document.getElementById("f-kids-b").innerHTML=h;
 }
 
-// Submit optimisé avec uploads vraiment parallèles et feedback
+// Submit ULTRA-RAPIDE avec uploads 100% parallèles
 async function send(){
   noErr();
   var btn=rang==="fils"?document.getElementById("btn-a"):rang==="adoptif"?document.getElementById("btn-c"):document.getElementById("btn-b");
@@ -369,9 +369,6 @@ async function send(){
         }
       }
       
-      btn.textContent="Upload de ta photo...";
-      var pUrl=await uploadOne(photo,"formulaire/"+ts+"/photo."+photo.name.split(".").pop());
-
       // Compile enfants
       var enfants=[];
       var enfantPhotos=[];
@@ -381,27 +378,43 @@ async function send(){
         enfants.push({nom:cn,photoUrl:null});
       }
       
-      // Upload enfants avec progression - 10 parallèles pour vitesse max
-      var enfantUrls=await uploadBatch(enfantPhotos,"formulaire/"+ts+"/enfant-",10,function(done,total){
-        btn.textContent="Upload enfants ("+done+"/"+total+")...";
-      });
-      enfants.forEach(function(e,i){e.photoUrl=enfantUrls[i]});
-      
-      // Upload photos Maah avec progression - 10 parallèles
       var mp=document.getElementById("f-maah-a").files;
-      var maahUrls=[];
-      if(mp.length>0){
-        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",10,function(done,total){
-          btn.textContent="Photos de Maah ("+done+"/"+total+")...";
-        });
+
+      // VITESSE MAX: Lance TOUT en même temps (photo principale + enfants + Maah)
+      btn.textContent="Upload des photos (0/"+(1+nb+mp.length)+")...";
+      var totalCompleted=0;
+      var totalPhotos=1+nb+mp.length;
+
+      var updateProgress=function(){
+        totalCompleted++;
+        btn.textContent="Upload des photos ("+totalCompleted+"/"+totalPhotos+")...";
+      };
+
+      var uploads=[
+        uploadOne(photo,"formulaire/"+ts+"/photo."+photo.name.split(".").pop()).then(function(url){updateProgress();return url})
+      ];
+
+      for(var i=0;i<enfantPhotos.length;i++){
+        (function(idx,file){
+          uploads.push(uploadOne(file,"formulaire/"+ts+"/enfant-"+idx+"."+file.name.split(".").pop()).then(function(url){updateProgress();return url}));
+        })(i,enfantPhotos[i]);
       }
-      
+
+      for(var i=0;i<mp.length;i++){
+        (function(idx,file){
+          uploads.push(uploadOne(file,"formulaire/"+ts+"/maah-"+idx+"."+file.name.split(".").pop()).then(function(url){updateProgress();return url}));
+        })(i,mp[i]);
+      }
+
+      var allUrls=await Promise.all(uploads);
+
       data.nom=nom;
-      data.photoUrl=pUrl;
+      data.photoUrl=allUrls[0];
       data.momo=momo;
+      enfants.forEach(function(e,i){e.photoUrl=allUrls[1+i]});
       data.enfants=enfants;
-      data.photosMaah=maahUrls;
-      
+      data.photosMaah=allUrls.slice(1+nb);
+
     }else if(rang==="adoptif"){
       var nom=document.getElementById("f-nom-c").value.trim(),
           photo=document.getElementById("f-photo-c").files[0],
@@ -410,22 +423,34 @@ async function send(){
       if(!nom){err("Ton nom est obligatoire.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
       if(!photo){err("Ta photo est obligatoire.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
       
-      btn.textContent="Upload de ta photo...";
-      var pUrl=await uploadOne(photo,"formulaire/"+ts+"/photo."+photo.name.split(".").pop());
-
       var mp=document.getElementById("f-maah-c").files;
-      var maahUrls=[];
-      if(mp.length>0){
-        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",10,function(done,total){
-          btn.textContent="Photos de Maah ("+done+"/"+total+")...";
-        });
+
+      btn.textContent="Upload des photos (0/"+(1+mp.length)+")...";
+      var totalCompleted=0;
+      var totalPhotos=1+mp.length;
+
+      var updateProgress=function(){
+        totalCompleted++;
+        btn.textContent="Upload des photos ("+totalCompleted+"/"+totalPhotos+")...";
+      };
+
+      var uploads=[
+        uploadOne(photo,"formulaire/"+ts+"/photo."+photo.name.split(".").pop()).then(function(url){updateProgress();return url})
+      ];
+
+      for(var i=0;i<mp.length;i++){
+        (function(idx,file){
+          uploads.push(uploadOne(file,"formulaire/"+ts+"/maah-"+idx+"."+file.name.split(".").pop()).then(function(url){updateProgress();return url}));
+        })(i,mp[i]);
       }
-      
+
+      var allUrls=await Promise.all(uploads);
+
       data.nom=nom;
-      data.photoUrl=pUrl;
+      data.photoUrl=allUrls[0];
       data.momo=momo;
-      data.photosMaah=maahUrls;
-      
+      data.photosMaah=allUrls.slice(1);
+
     }else{
       var pere=document.getElementById("f-pere").value,
           prenom=document.getElementById("f-prenom").value.trim(),
@@ -436,9 +461,6 @@ async function send(){
       if(!photo){err("Ta photo est obligatoire.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
       if(!hasK){err("Indique si tu as des enfants.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
       
-      btn.textContent="Upload de ta photo...";
-      var pUrl=await uploadOne(photo,"formulaire/"+ts+"/photo."+photo.name.split(".").pop());
-
       var enfants=[];
       if(hasK==="oui"){
         var nb=parseInt(document.getElementById("f-nb-b").value)||0;
@@ -456,19 +478,34 @@ async function send(){
       }
       
       var mp=document.getElementById("f-maah-b").files;
-      var maahUrls=[];
-      if(mp.length>0){
-        maahUrls=await uploadBatch(mp,"formulaire/"+ts+"/maah-",10,function(done,total){
-          btn.textContent="Photos de Maah ("+done+"/"+total+")...";
-        });
+
+      btn.textContent="Upload des photos (0/"+(1+mp.length)+")...";
+      var totalCompleted=0;
+      var totalPhotos=1+mp.length;
+
+      var updateProgress=function(){
+        totalCompleted++;
+        btn.textContent="Upload des photos ("+totalCompleted+"/"+totalPhotos+")...";
+      };
+
+      var uploads=[
+        uploadOne(photo,"formulaire/"+ts+"/photo."+photo.name.split(".").pop()).then(function(url){updateProgress();return url})
+      ];
+
+      for(var i=0;i<mp.length;i++){
+        (function(idx,file){
+          uploads.push(uploadOne(file,"formulaire/"+ts+"/maah-"+idx+"."+file.name.split(".").pop()).then(function(url){updateProgress();return url}));
+        })(i,mp[i]);
       }
-      
+
+      var allUrls=await Promise.all(uploads);
+
       data.pere=pere;
       data.prenom=prenom;
-      data.photoUrl=pUrl;
+      data.photoUrl=allUrls[0];
       data.hasKids=hasK;
       data.enfants=enfants;
-      data.photosMaah=maahUrls;
+      data.photosMaah=allUrls.slice(1);
     }
     
     btn.textContent="Enregistrement...";
