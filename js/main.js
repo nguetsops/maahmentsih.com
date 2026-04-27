@@ -66,16 +66,6 @@ document.addEventListener("keydown",function(e){
     }
   }
 });
-// Close menu on Escape
-document.addEventListener("keydown",function(e){
-  if(e.key==="Escape"){
-    var nl=document.getElementById("nav-links");
-    if(nl&&nl.classList.contains("open")){
-      nl.classList.remove("open");
-      if(toggle)toggle.textContent="☰";
-    }
-  }
-});
 
 // === Nav active state ===
 !function(){

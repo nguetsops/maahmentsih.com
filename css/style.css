@@ -149,7 +149,7 @@ body{font-family:var(--font-b);font-weight:300;color:var(--text);background:var(
 .itree-root-title{font-size:.75rem;color:var(--gold);font-style:italic;margin-top:.15rem}
 .itree-root-spouse{margin-top:.6rem;padding-top:.6rem;border-top:1px solid rgba(200,164,92,.15);position:relative}
 .itree-ring{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:rgba(200,164,92,.06);border:1px solid rgba(200,164,92,.2);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:.7rem;color:var(--gold-d)}
-.itree-root-spouse-name{font-family:var(--font-d);font-size:.95rem;font-weight:600;color:var(--text-m)}
+.itree-root-spouse-name{font-family:var(--font-d);font-size:.95rem;font-weight:600;color:var(--text-m);opacity:.7}
 .itree-root-spouse-sub{font-size:.7rem;color:var(--text-m);font-style:italic}
 .itree-death-tag{opacity:.6;font-size:.75rem;color:var(--text-m)}
 
@@ -163,7 +163,7 @@ body{font-family:var(--font-b);font-weight:300;color:var(--text);background:var(
 .itree-child::before{content:'';position:absolute;top:0;left:50%;width:2px;height:18px;background:var(--gold-d);transform:translateX(-50%)}
 .itree-child:hover{transform:translateY(-2px)}
 
-.itree-child-photo{width:50px;height:50px;border-radius:50%;background:transparent;border:2px dashed rgba(200,164,92,.2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--gold-dd);transition:all .3s;overflow:hidden}
+.itree-child-photo{width:50px;height:50px;border-radius:50%;background:rgba(200,164,92,.05);border:2px dashed rgba(200,164,92,.15);display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--gold-dd);transition:all .3s}
 .itree-child:hover .itree-child-photo{border-color:rgba(200,164,92,.35)}
 .itree-child.open .itree-child-photo{border-color:var(--gold);border-style:solid;background:rgba(200,164,92,.1);box-shadow:0 0 15px rgba(200,164,92,.15)}
 .itree-child.successor .itree-child-photo{border-color:var(--gold);border-style:double;border-width:4px;background:rgba(200,164,92,.06);box-shadow:0 0 15px rgba(200,164,92,.15)}
@@ -194,7 +194,7 @@ body{font-family:var(--font-b);font-weight:300;color:var(--text);background:var(
 
 .itree-gc-grid{display:flex;flex-wrap:wrap;gap:.4rem}
 .itree-gc{display:flex;align-items:center;gap:.35rem;padding:.35rem .6rem;background:var(--bg3);border:1px solid rgba(200,164,92,.08);border-radius:8px}
-.itree-gc-photo{width:32px;height:32px;border-radius:50%;background:rgba(200,164,92,.05);border:1px solid rgba(200,164,92,.15);display:flex;align-items:center;justify-content:center;font-size:.55rem;color:var(--gold-dd);flex-shrink:0;overflow:hidden}
+.itree-gc-photo{width:28px;height:28px;border-radius:50%;background:rgba(200,164,92,.05);border:1px dashed rgba(200,164,92,.1);display:flex;align-items:center;justify-content:center;font-size:.55rem;color:var(--gold-dd);flex-shrink:0}
 .itree-gc-name{font-size:.78rem;color:var(--cream-s)}
 
 

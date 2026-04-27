@@ -173,7 +173,7 @@
   <div class="tree-stats">
     <div class="tree-stat"><div class="tree-stat-num">9</div><div class="tree-stat-label">Enfants</div></div>
     <div class="tree-stat"><div class="tree-stat-num">52</div><div class="tree-stat-label">Petits-enfants</div></div>
-    <div class="tree-stat"><div class="tree-stat-num">25</div><div class="tree-stat-label">Arr.-petits-enfants</div></div>
+    <div class="tree-stat"><div class="tree-stat-num">29</div><div class="tree-stat-label">Arr.-petits-enfants</div></div>
   </div>
 
   <!-- ENFANTS ADOPTIFS -->
@@ -206,7 +206,7 @@ var treeFams = [
   {name:"Wamba Clément",htitle:"dit WamClé",deceased:true,kids:[
     {n:"Lucrèce",gc:[{n:"Julien-Eymard",y:2011,e:"\ud83d\udc66\ud83c\udffe"},{n:"Jémima",y:2015,e:"\ud83d\udc67\ud83c\udffe"}]},
     {n:"Yannick",gc:[{n:"Francesca",y:2011,e:"\ud83d\udc67\ud83c\udffe"},{n:"Yann",y:2017,e:"\ud83d\udc66\ud83c\udffe"}]},
-    {n:"Martial",gc:[]},
+    {n:"Martial",gc:[{n:"Erika",y:2010,e:"👧🏾"},{n:"Noé",y:2014,e:"👦🏾"},{n:"Indira",y:2016,e:"👧🏾"},{n:"Adriana",y:2020,e:"👧🏾"}]},
     {n:"Tony",gc:[{n:"Ivy",y:2015,e:"\ud83d\udc67\ud83c\udffe"},{n:"Nora",y:2024,e:"\ud83d\udc67\ud83c\udffe"}]},
     {n:"Arthur",gc:[{n:"King Alexander",y:2021,e:"\ud83d\udc66\ud83c\udffe"},{n:"Juliette",y:2025,e:"\ud83d\udc67\ud83c\udffe"},{n:"Lovelyne",e:"\ud83d\udc67\ud83c\udffe"}]},
     {n:"Ostian",gc:[{n:"Simeyah",y:2024,e:"\ud83d\udc67\ud83c\udffe"},{n:"Aaron",y:2026,e:"\ud83d\udc66\ud83c\udffe"}]},
@@ -267,7 +267,8 @@ function renderSubtree(famIdx){
     var click=hasK?' onclick="toggleGC('+famIdx+','+i+')"':'';
     var badge=hasK?'<span class="subtree-kid-badge">'+k.gc.length+'</span>':'';
     // Use placeholder photo for Michel's family (famIdx 1)
-    var ph=(famIdx===1)?'<img src="/images/enfant-placeholder.jpg" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%">':'\ud83d\udc64';
+    var photoUrl=gcPhotos[k.n]||(gcPhotosByFam[famIdx]&&gcPhotosByFam[famIdx][k.n])||null;
+    var ph=photoUrl?'<img src="'+photoUrl+'" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%">':(famIdx===1)?'<img src="/images/enfant-placeholder.jpg" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%">':'\ud83d\udc64';
     return '<div class="'+cls+'"'+click+'>'+badge+'<div class="subtree-kid-photo">'+ph+'</div><div class="subtree-kid-name">'+k.n+'</div></div>';
   }).join("");
 
