@@ -202,6 +202,22 @@
 </footer>
 
 <script>
+var portraitMap = {
+  "Yannick": "/images/portraits/yannick.jpg",
+  "Fortune": "/images/portraits/fortune.jpg",
+  "Djeff": "/images/portraits/djeff.jpg",
+  "Estelle": "/images/portraits/estelle.jpg",
+  "Genny": "/images/portraits/genny.jpg",
+  "Serge": "/images/portraits/serge-michel.jpg",
+  "Michèle": "/images/portraits/michele.jpg",
+  "Aurélie": "/images/portraits/aurelie.jpg",
+  "Satia": "/images/portraits/satia.jpg",
+  "Malaïka": "/images/portraits/malaika.jpg"
+};
+var portraitByFam = {
+  4: {"Franck": "/images/portraits/franck-salomon.jpg"},
+  6: {"Franck": "/images/portraits/franck-leopold.jpg"}
+};
 var treeFams = [
   {name:"Wamba Clément",htitle:"dit WamClé",deceased:true,kids:[
     {n:"Lucrèce",gc:[{n:"Julien-Eymard",y:2011,e:"\ud83d\udc66\ud83c\udffe"},{n:"Jémima",y:2015,e:"\ud83d\udc67\ud83c\udffe"}]},
@@ -267,7 +283,7 @@ function renderSubtree(famIdx){
     var click=hasK?' onclick="toggleGC('+famIdx+','+i+')"':'';
     var badge=hasK?'<span class="subtree-kid-badge">'+k.gc.length+'</span>':'';
     // Use placeholder photo for Michel's family (famIdx 1)
-    var photoUrl=gcPhotos[k.n]||(gcPhotosByFam[famIdx]&&gcPhotosByFam[famIdx][k.n])||null;
+    var photoUrl=portraitMap[k.n]||(portraitByFam[famIdx]&&portraitByFam[famIdx][k.n])||null;
     var ph=photoUrl?'<img src="'+photoUrl+'" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%">':(famIdx===1)?'<img src="/images/enfant-placeholder.jpg" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%">':'\ud83d\udc64';
     return '<div class="'+cls+'"'+click+'>'+badge+'<div class="subtree-kid-photo">'+ph+'</div><div class="subtree-kid-name">'+k.n+'</div></div>';
   }).join("");
