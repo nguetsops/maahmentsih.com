@@ -90,3 +90,26 @@ document.addEventListener("keydown",function(e){
     }
   });
 }();
+
+// === Visit counter (once per session) ===
+!function(){
+  var db;
+  try {
+    if(typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length){
+      db = firebase.firestore();
+    }
+  } catch(e){}
+  if(!db) return;
+  var ref = db.collection('config').doc('visits');
+  var alreadyCounted = sessionStorage.getItem('visit_counted');
+  ref.get().then(function(doc){
+    var count = (doc.exists && doc.data().count) ? doc.data().count : 0;
+    if(!alreadyCounted){
+      count++;
+      ref.set({count: count});
+      sessionStorage.setItem('visit_counted','1');
+    }
+    var el = document.getElementById('visit-counter');
+    if(el) el.textContent = '👁 ' + count.toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ') + ' visiteurs';
+  }).catch(function(){});
+}();
