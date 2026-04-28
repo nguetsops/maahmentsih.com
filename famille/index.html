@@ -335,6 +335,23 @@ function toggleGC(famIdx,kidIdx){
   setTimeout(function(){ggcBox.scrollIntoView({behavior:"smooth",block:"nearest"})},150);
 }
 </script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>if(!firebase.apps.length){firebase.initializeApp({apiKey:"AIzaSyDr8vf7KZmSYO5w0uuzokO-2Z5WC5RY7zY",authDomain:"maahmentsih-5d5db.firebaseapp.com",projectId:"maahmentsih-5d5db",storageBucket:"maahmentsih-5d5db.firebasestorage.app",messagingSenderId:"296174723200",appId:"1:296174723200:web:8e6b0129970da7e4d8c665"})}</script>
+<script>
+!function(){
+  var db=firebase.firestore();
+  var ref=db.collection("config").doc("visits");
+  var counted=sessionStorage.getItem("visit_counted");
+  ref.get().then(function(doc){
+    var n=(doc.exists&&doc.data().count)?doc.data().count:0;
+    if(!counted){n++;ref.set({count:n});sessionStorage.setItem("visit_counted","1")}
+    var el=document.getElementById("visit-counter");
+    if(el)el.textContent="👁 "+n.toString().replace(/\B(?=(\d{3})+(?!\d))/g," ")+" visiteurs";
+  }).catch(function(){});
+}();
+</script>
 <script src="/js/main.js"></script>
 
 <!-- Modal Chef -->

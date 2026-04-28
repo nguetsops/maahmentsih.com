@@ -212,6 +212,20 @@ if (sessionStorage.getItem("admin_auth") === "1") {
 loadMessages();
 </script>
 
+
+<script>
+!function(){
+  var db=firebase.firestore();
+  var ref=db.collection("config").doc("visits");
+  var counted=sessionStorage.getItem("visit_counted");
+  ref.get().then(function(doc){
+    var n=(doc.exists&&doc.data().count)?doc.data().count:0;
+    if(!counted){n++;ref.set({count:n});sessionStorage.setItem("visit_counted","1")}
+    var el=document.getElementById("visit-counter");
+    if(el)el.textContent="👁 "+n.toString().replace(/\B(?=(\d{3})+(?!\d))/g," ")+" visiteurs";
+  }).catch(function(){});
+}();
+</script>
 <script src="/js/main.js"></script>
 </body>
 </html>
