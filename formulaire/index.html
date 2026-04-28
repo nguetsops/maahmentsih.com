@@ -137,405 +137,67 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.js"></script>
 <script>
 firebase.initializeApp({apiKey:"AIzaSyDr8vf7KZmSYO5w0uuzokO-2Z5WC5RY7zY",authDomain:"maahmentsih-5d5db.firebaseapp.com",projectId:"maahmentsih-5d5db",storageBucket:"maahmentsih-5d5db.firebasestorage.app",messagingSenderId:"296174723200",appId:"1:296174723200:web:8e6b0129970da7e4d8c665"});
-
 var db=firebase.firestore(),storage=firebase.storage();
 var rang="",hasK="",lastA=0,lastB=0;
 
-// Configuration compression optimisée : max 800KB par photo
-const IMAGE_CONFIG={
-  maxSizeMB:0.8, // 800 KB max - réduit drastiquement le temps d'upload
-  maxWidthOrHeight:1920, // Résolution max suffisante pour le web
-  useWebWorker:true, // Utilise un worker pour ne pas bloquer l'interface
-  fileType:'image/jpeg', // JPEG = meilleur ratio qualité/taille
-  initialQuality:0.85 // Qualité excellente mais optimisée
-};
+function err(m){var e=document.getElementById("f-error");e.textContent=m;e.style.display="block";e.scrollIntoView({behavior:"smooth",block:"nearest"})}
+function noErr(){document.getElementById("f-error").style.display="none"}
+function prog(s){document.querySelectorAll(".f-progress-dot").forEach(function(d,i){d.className="f-progress-dot";if(i<s-1)d.classList.add("done");if(i===s-1)d.classList.add("now")})}
 
-// Utilitaires d'erreur et progression
-function err(m){
-  var e=document.getElementById("f-error");
-  e.textContent=m;
-  e.style.display="block";
-  e.scrollIntoView({behavior:"smooth",block:"nearest"});
-}
+function pickRang(el,v){rang=v;document.querySelectorAll("#rg .f-radio").forEach(function(r){r.classList.remove("on")});el.classList.add("on")}
+function pickK(el,v){hasK=v;el.parentElement.querySelectorAll(".f-radio").forEach(function(r){r.classList.remove("on")});el.classList.add("on");document.getElementById("f-kids-sec-b").style.display=v==="oui"?"block":"none";if(v==="oui"&&lastB===0){document.getElementById("f-nb-b").value=1;genB()}}
 
-function noErr(){
-  document.getElementById("f-error").style.display="none";
-}
+function go(from){noErr();if(from===1){if(!rang){err("Choisis ton rang dans la famille.");return}document.getElementById("step1").classList.remove("active");if(rang==="fils"){document.getElementById("step2a").classList.add("active");if(lastA===0){document.getElementById("f-nb").value=1;genA()}}else if(rang==="adoptif"){document.getElementById("step2c").classList.add("active")}else{document.getElementById("step2b").classList.add("active")}prog(2);window.scrollTo({top:0,behavior:"smooth"})}}
+function back(){noErr();document.getElementById("step2a").classList.remove("active");document.getElementById("step2b").classList.remove("active");document.getElementById("step2c").classList.remove("active");document.getElementById("step1").classList.add("active");prog(1);window.scrollTo({top:0,behavior:"smooth"})}
 
-function prog(s){
-  document.querySelectorAll(".f-progress-dot").forEach(function(d,i){
-    d.className="f-progress-dot";
-    if(i<s-1)d.classList.add("done");
-    if(i===s-1)d.classList.add("now");
-  });
-}
+function genA(){var n=parseInt(document.getElementById("f-nb").value)||0;if(n<0)n=0;if(n>30)n=30;if(n===lastA)return;lastA=n;var h="";for(var i=1;i<=n;i++){h+='<div class="f-child"><div class="f-child-title">Enfant '+i+'</div><div class="f-group"><label class="f-label" style="font-size:.85rem">Prénom<span class="req">*</span></label><input class="f-input" type="text" id="ka-n-'+i+'" placeholder="Prénom"></div><div class="f-group"><label class="f-label" style="font-size:.85rem">Photo<span class="req">*</span></label><div class="f-file"><input type="file" accept="image/*" id="ka-p-'+i+'" onchange="prev1(this,\'kav-'+i+'\')"><div class="f-file-label">📷 Photo</div></div><div class="f-preview" id="kav-'+i+'"></div></div></div>'}document.getElementById("f-kids-a").innerHTML=h}
 
-// Compression INTELLIGENTE avec browser-image-compression
-async function compressImage(file){
-  try{
-    // Si déjà petite (<500KB), pas besoin de compresser
-    if(file.size<512000){
-      return file;
-    }
+function genB(){var n=parseInt(document.getElementById("f-nb-b").value)||0;if(n<0)n=0;if(n>20)n=20;if(n===lastB)return;lastB=n;var h="";for(var i=1;i<=n;i++){h+='<div class="f-child"><div class="f-child-title">Enfant '+i+'</div><div class="f-child-row"><div class="f-group"><label class="f-label" style="font-size:.85rem">Prénom<span class="req">*</span></label><input class="f-input" type="text" id="kb-n-'+i+'" placeholder="Prénom"></div><div class="f-group"><label class="f-label" style="font-size:.85rem">Année<span class="req">*</span></label><input class="f-input" type="number" id="kb-a-'+i+'" placeholder="2020" min="1980" max="2026"></div></div></div>'}document.getElementById("f-kids-b").innerHTML=h}
 
-    // Sinon, compresse à 800KB max
-    const compressed=await imageCompression(file,IMAGE_CONFIG);
-    console.log('Photo '+file.name+' : '+Math.round(file.size/1024)+'KB → '+Math.round(compressed.size/1024)+'KB');
-    return compressed;
-  }catch(error){
-    console.error('Erreur compression:',error);
-    // En cas d'erreur, utilise l'original
-    return file;
-  }
-}
+function prev1(inp,pid){var pv=document.getElementById(pid);pv.innerHTML="";if(inp.files&&inp.files[0]){var r=new FileReader();r.onload=function(e){pv.innerHTML='<div class="f-thumb"><img src="'+e.target.result+'"></div>'};r.readAsDataURL(inp.files[0]);inp.parentElement.querySelector(".f-file-label").className="f-file-label done";inp.parentElement.querySelector(".f-file-label").textContent="✓ Photo sélectionnée"}}
+function prevN(inp,pid){var pv=document.getElementById(pid);pv.innerHTML="";if(inp.files){for(var i=0;i<inp.files.length;i++){(function(f){var r=new FileReader();r.onload=function(e){pv.innerHTML+='<div class="f-thumb"><img src="'+e.target.result+'"></div>'};r.readAsDataURL(f)})(inp.files[i])}if(inp.files.length>0){inp.parentElement.querySelector(".f-file-label").className="f-file-label done";inp.parentElement.querySelector(".f-file-label").textContent="✓ "+inp.files.length+" photo(s)"}}}
 
-// Preview sans compression
-function prev1(inp,pid){
-  var pv=document.getElementById(pid);
-  pv.innerHTML="";
-  
-  if(inp.files&&inp.files[0]){
-    var blobUrl=URL.createObjectURL(inp.files[0]);
-    pv.innerHTML='<div class="f-thumb"><img src="'+blobUrl+'"></div>';
-    inp.parentElement.querySelector(".f-file-label").className="f-file-label done";
-    inp.parentElement.querySelector(".f-file-label").textContent="✓ Photo sélectionnée";
-  }
-}
+async function up(file,path){var ref=storage.ref(path);await ref.put(file);return await ref.getDownloadURL()}
 
-// Preview multiple sans compression
-function prevN(inp,pid){
-  var pv=document.getElementById(pid);
-  pv.innerHTML="";
-  
-  if(!inp.files||inp.files.length===0)return;
-  
-  for(var i=0;i<inp.files.length;i++){
-    var blobUrl=URL.createObjectURL(inp.files[i]);
-    pv.innerHTML+='<div class="f-thumb"><img src="'+blobUrl+'"></div>';
-  }
-  
-  if(inp.files.length>0){
-    inp.parentElement.querySelector(".f-file-label").className="f-file-label done";
-    inp.parentElement.querySelector(".f-file-label").textContent="✓ "+inp.files.length+" photo(s)";
-  }
-}
-
-// Upload unique
-async function uploadOne(file,path){
-  if(!file)throw new Error("Fichier manquant");
-  var compressed=await compressImage(file);
-  var ref=storage.ref(path);
-  var snapshot=await ref.put(compressed);
-  return await snapshot.ref.getDownloadURL();
-}
-
-// Upload batch VRAIMENT en parallèle avec progression
-async function uploadBatch(files,pathPrefix,maxConcurrent,onProgress){
-  if(!files||files.length===0)return[];
-  
-  var total=files.length;
-  var completed=0;
-  var results=new Array(total);
-
-  // Fonction d'upload avec index
-  async function uploadTask(file,index){
-    var ext=file.name.split(".").pop();
-    var path=pathPrefix+index+"."+ext;
-    var url=await uploadOne(file,path);
-    completed++;
-    if(onProgress)onProgress(completed,total);
-    return{index:index,url:url};
-  }
-
-  // Lance maxConcurrent uploads en parallèle avec Promise.all
-  var batches=[];
-  for(var i=0;i<total;i+=maxConcurrent){
-    var batch=[];
-    for(var j=i;j<Math.min(i+maxConcurrent,total);j++){
-      batch.push(uploadTask(files[j],j));
-    }
-    batches.push(batch);
-  }
-
-  // Traite chaque batch séquentiellement
-  for(var k=0;k<batches.length;k++){
-    var batchResults=await Promise.all(batches[k]);
-    batchResults.forEach(function(r){
-      results[r.index]=r.url;
-    });
-  }
-
-  return results;
-}
-
-// Navigation et génération d'enfants (inchangé)
-function pickRang(el,v){
-  rang=v;
-  document.querySelectorAll("#rg .f-radio").forEach(function(r){r.classList.remove("on")});
-  el.classList.add("on");
-}
-
-function pickK(el,v){
-  hasK=v;
-  el.parentElement.querySelectorAll(".f-radio").forEach(function(r){r.classList.remove("on")});
-  el.classList.add("on");
-  document.getElementById("f-kids-sec-b").style.display=v==="oui"?"block":"none";
-  if(v==="oui"&&lastB===0){
-    document.getElementById("f-nb-b").value=1;
-    genB();
-  }
-}
-
-function go(from){
-  noErr();
-  if(from===1){
-    if(!rang){
-      err("Choisis ton rang dans la famille.");
-      return;
-    }
-    document.getElementById("step1").classList.remove("active");
-    if(rang==="fils"){
-      document.getElementById("step2a").classList.add("active");
-      if(lastA===0){
-        document.getElementById("f-nb").value=1;
-        genA();
-      }
-    }else if(rang==="adoptif"){
-      document.getElementById("step2c").classList.add("active");
-    }else{
-      document.getElementById("step2b").classList.add("active");
-    }
-    prog(2);
-    window.scrollTo({top:0,behavior:"smooth"});
-  }
-}
-
-function back(){
-  noErr();
-  document.getElementById("step2a").classList.remove("active");
-  document.getElementById("step2b").classList.remove("active");
-  document.getElementById("step2c").classList.remove("active");
-  document.getElementById("step1").classList.add("active");
-  prog(1);
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-
-function genA(){
-  var n=parseInt(document.getElementById("f-nb").value)||0;
-  if(n<0)n=0;
-  if(n>30)n=30;
-  if(n===lastA)return;
-  lastA=n;
-  var h="";
-  for(var i=1;i<=n;i++){
-    h+='<div class="f-child"><div class="f-child-title">Enfant '+i+'</div><div class="f-group"><label class="f-label" style="font-size:.85rem">Prénom<span class="req">*</span></label><input class="f-input" type="text" id="ka-n-'+i+'" placeholder="Prénom"></div><div class="f-group"><label class="f-label" style="font-size:.85rem">Photo<span class="req">*</span></label><div class="f-file"><input type="file" accept="image/*" id="ka-p-'+i+'" onchange="prev1(this,\'kav-'+i+'\')"><div class="f-file-label">📷 Photo</div></div><div class="f-preview" id="kav-'+i+'"></div></div></div>';
-  }
-  document.getElementById("f-kids-a").innerHTML=h;
-}
-
-function genB(){
-  var n=parseInt(document.getElementById("f-nb-b").value)||0;
-  if(n<0)n=0;
-  if(n>20)n=20;
-  if(n===lastB)return;
-  lastB=n;
-  var h="";
-  for(var i=1;i<=n;i++){
-    h+='<div class="f-child"><div class="f-child-title">Enfant '+i+'</div><div class="f-child-row"><div class="f-group"><label class="f-label" style="font-size:.85rem">Prénom<span class="req">*</span></label><input class="f-input" type="text" id="kb-n-'+i+'" placeholder="Prénom"></div><div class="f-group"><label class="f-label" style="font-size:.85rem">Année<span class="req">*</span></label><input class="f-input" type="number" id="kb-a-'+i+'" placeholder="2020" min="1980" max="2026"></div></div></div>';
-  }
-  document.getElementById("f-kids-b").innerHTML=h;
-}
-
-// Submit ULTRA-RAPIDE avec uploads 100% parallèles
 async function send(){
-  noErr();
-  var btn=rang==="fils"?document.getElementById("btn-a"):rang==="adoptif"?document.getElementById("btn-c"):document.getElementById("btn-b");
-  btn.disabled=true;
-  btn.textContent="Envoi en cours...";
-  
+  noErr();var btn=rang==="fils"?document.getElementById("btn-a"):rang==="adoptif"?document.getElementById("btn-c"):document.getElementById("btn-b");
+  btn.disabled=true;btn.textContent="Envoi en cours...";
   try{
     var data={rang:rang,date:new Date().toISOString()},ts=Date.now();
-    
     if(rang==="fils"){
-      var nom=document.getElementById("f-nom").value.trim(),
-          photo=document.getElementById("f-photo").files[0],
-          momo=document.getElementById("f-momo").value.trim(),
-          nb=parseInt(document.getElementById("f-nb").value)||0;
-      
+      var nom=document.getElementById("f-nom").value.trim(),photo=document.getElementById("f-photo").files[0],momo=document.getElementById("f-momo").value.trim(),nb=parseInt(document.getElementById("f-nb").value)||0;
       if(!nom){err("Ton nom est obligatoire.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
       if(!photo){err("Ta photo est obligatoire.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
       if(nb<1){err("Indique ton nombre d'enfants.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
-      
-      for(var i=1;i<=nb;i++){
-        if(!document.getElementById("ka-n-"+i).value.trim()){
-          err("Le prénom de l'enfant "+i+" est obligatoire.");
-          btn.disabled=false;btn.textContent="Envoyer ✓";
-          return;
-        }
-        if(!document.getElementById("ka-p-"+i).files[0]){
-          err("La photo de l'enfant "+i+" est obligatoire.");
-          btn.disabled=false;btn.textContent="Envoyer ✓";
-          return;
-        }
-      }
-      
-      // Compile enfants
-      var enfants=[];
-      var enfantPhotos=[];
-      for(var i=1;i<=nb;i++){
-        var cn=document.getElementById("ka-n-"+i).value.trim();
-        enfantPhotos.push(document.getElementById("ka-p-"+i).files[0]);
-        enfants.push({nom:cn,photoUrl:null});
-      }
-      
-      var mp=document.getElementById("f-maah-a").files;
-
-      // VITESSE MAX: Lance TOUT en même temps (photo principale + enfants + Maah)
-      btn.textContent="Upload des photos (0/"+(1+nb+mp.length)+")...";
-      var totalCompleted=0;
-      var totalPhotos=1+nb+mp.length;
-
-      var updateProgress=function(){
-        totalCompleted++;
-        btn.textContent="Upload des photos ("+totalCompleted+"/"+totalPhotos+")...";
-      };
-
-      var uploads=[
-        uploadOne(photo,"formulaire/"+ts+"/photo."+photo.name.split(".").pop()).then(function(url){updateProgress();return url})
-      ];
-
-      for(var i=0;i<enfantPhotos.length;i++){
-        (function(idx,file){
-          uploads.push(uploadOne(file,"formulaire/"+ts+"/enfant-"+idx+"."+file.name.split(".").pop()).then(function(url){updateProgress();return url}));
-        })(i,enfantPhotos[i]);
-      }
-
-      for(var i=0;i<mp.length;i++){
-        (function(idx,file){
-          uploads.push(uploadOne(file,"formulaire/"+ts+"/maah-"+idx+"."+file.name.split(".").pop()).then(function(url){updateProgress();return url}));
-        })(i,mp[i]);
-      }
-
-      var allUrls=await Promise.all(uploads);
-
-      data.nom=nom;
-      data.photoUrl=allUrls[0];
-      data.momo=momo;
-      enfants.forEach(function(e,i){e.photoUrl=allUrls[1+i]});
-      data.enfants=enfants;
-      data.photosMaah=allUrls.slice(1+nb);
-
+      for(var i=1;i<=nb;i++){if(!document.getElementById("ka-n-"+i).value.trim()){err("Le prénom de l'enfant "+i+" est obligatoire.");btn.disabled=false;btn.textContent="Envoyer ✓";return}if(!document.getElementById("ka-p-"+i).files[0]){err("La photo de l'enfant "+i+" est obligatoire.");btn.disabled=false;btn.textContent="Envoyer ✓";return}}
+      btn.textContent="Upload des photos...";var pUrl=await up(photo,"formulaire/"+ts+"/photo."+photo.name.split(".").pop());
+      var enfants=[];for(var i=1;i<=nb;i++){var cn=document.getElementById("ka-n-"+i).value.trim(),cp=document.getElementById("ka-p-"+i).files[0];var eUrl=await up(cp,"formulaire/"+ts+"/enfant-"+i+"."+cp.name.split(".").pop());enfants.push({nom:cn,photoUrl:eUrl});btn.textContent="Upload "+i+"/"+nb+"..."}
+      var maahUrls=[],mp=document.getElementById("f-maah-a").files;for(var k=0;k<mp.length;k++){var mUrl=await up(mp[k],"formulaire/"+ts+"/maah-"+k+"."+mp[k].name.split(".").pop());maahUrls.push(mUrl)}
+      data.nom=nom;data.photoUrl=pUrl;data.momo=momo;data.enfants=enfants;data.photosMaah=maahUrls;
+    
     }else if(rang==="adoptif"){
-      var nom=document.getElementById("f-nom-c").value.trim(),
-          photo=document.getElementById("f-photo-c").files[0],
-          momo=document.getElementById("f-momo-c").value.trim();
-      
+      var nom=document.getElementById("f-nom-c").value.trim(),photo=document.getElementById("f-photo-c").files[0],momo=document.getElementById("f-momo-c").value.trim();
       if(!nom){err("Ton nom est obligatoire.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
       if(!photo){err("Ta photo est obligatoire.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
-      
-      var mp=document.getElementById("f-maah-c").files;
-
-      btn.textContent="Upload des photos (0/"+(1+mp.length)+")...";
-      var totalCompleted=0;
-      var totalPhotos=1+mp.length;
-
-      var updateProgress=function(){
-        totalCompleted++;
-        btn.textContent="Upload des photos ("+totalCompleted+"/"+totalPhotos+")...";
-      };
-
-      var uploads=[
-        uploadOne(photo,"formulaire/"+ts+"/photo."+photo.name.split(".").pop()).then(function(url){updateProgress();return url})
-      ];
-
-      for(var i=0;i<mp.length;i++){
-        (function(idx,file){
-          uploads.push(uploadOne(file,"formulaire/"+ts+"/maah-"+idx+"."+file.name.split(".").pop()).then(function(url){updateProgress();return url}));
-        })(i,mp[i]);
-      }
-
-      var allUrls=await Promise.all(uploads);
-
-      data.nom=nom;
-      data.photoUrl=allUrls[0];
-      data.momo=momo;
-      data.photosMaah=allUrls.slice(1);
-
+      btn.textContent="Upload des photos...";var pUrl=await up(photo,"formulaire/"+ts+"/photo."+photo.name.split(".").pop());
+      var maahUrls=[],mp=document.getElementById("f-maah-c").files;for(var k=0;k<mp.length;k++){var mUrl=await up(mp[k],"formulaire/"+ts+"/maah-"+k+"."+mp[k].name.split(".").pop());maahUrls.push(mUrl)}
+      data.nom=nom;data.photoUrl=pUrl;data.momo=momo;data.photosMaah=maahUrls;
     }else{
-      var pere=document.getElementById("f-pere").value,
-          prenom=document.getElementById("f-prenom").value.trim(),
-          photo=document.getElementById("f-photo-b").files[0];
-      
+      var pere=document.getElementById("f-pere").value,prenom=document.getElementById("f-prenom").value.trim(),photo=document.getElementById("f-photo-b").files[0];
       if(!pere){err("Choisis le prénom de ton père.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
       if(!prenom){err("Ton prénom est obligatoire.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
       if(!photo){err("Ta photo est obligatoire.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
       if(!hasK){err("Indique si tu as des enfants.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
-      
-      var enfants=[];
-      if(hasK==="oui"){
-        var nb=parseInt(document.getElementById("f-nb-b").value)||0;
-        if(nb<1){err("Indique ton nombre d'enfants.");btn.disabled=false;btn.textContent="Envoyer ✓";return}
-        for(var i=1;i<=nb;i++){
-          var cn=document.getElementById("kb-n-"+i).value.trim(),
-              ca=document.getElementById("kb-a-"+i).value.trim();
-          if(!cn||!ca){
-            err("Le prénom et l'année de l'enfant "+i+" sont obligatoires.");
-            btn.disabled=false;btn.textContent="Envoyer ✓";
-            return;
-          }
-          enfants.push({nom:cn,annee:parseInt(ca)});
-        }
-      }
-      
-      var mp=document.getElementById("f-maah-b").files;
-
-      btn.textContent="Upload des photos (0/"+(1+mp.length)+")...";
-      var totalCompleted=0;
-      var totalPhotos=1+mp.length;
-
-      var updateProgress=function(){
-        totalCompleted++;
-        btn.textContent="Upload des photos ("+totalCompleted+"/"+totalPhotos+")...";
-      };
-
-      var uploads=[
-        uploadOne(photo,"formulaire/"+ts+"/photo."+photo.name.split(".").pop()).then(function(url){updateProgress();return url})
-      ];
-
-      for(var i=0;i<mp.length;i++){
-        (function(idx,file){
-          uploads.push(uploadOne(file,"formulaire/"+ts+"/maah-"+idx+"."+file.name.split(".").pop()).then(function(url){updateProgress();return url}));
-        })(i,mp[i]);
-      }
-
-      var allUrls=await Promise.all(uploads);
-
-      data.pere=pere;
-      data.prenom=prenom;
-      data.photoUrl=allUrls[0];
-      data.hasKids=hasK;
-      data.enfants=enfants;
-      data.photosMaah=allUrls.slice(1);
+      btn.textContent="Upload des photos...";var pUrl=await up(photo,"formulaire/"+ts+"/photo."+photo.name.split(".").pop());
+      var enfants=[];if(hasK==="oui"){var nb=parseInt(document.getElementById("f-nb-b").value)||0;if(nb<1){err("Indique ton nombre d'enfants.");btn.disabled=false;btn.textContent="Envoyer ✓";return}for(var i=1;i<=nb;i++){var cn=document.getElementById("kb-n-"+i).value.trim(),ca=document.getElementById("kb-a-"+i).value.trim();if(!cn||!ca){err("Le prénom et l'année de l'enfant "+i+" sont obligatoires.");btn.disabled=false;btn.textContent="Envoyer ✓";return}enfants.push({nom:cn,annee:parseInt(ca)})}}
+      var maahUrls=[],mp=document.getElementById("f-maah-b").files;for(var k=0;k<mp.length;k++){var mUrl=await up(mp[k],"formulaire/"+ts+"/maah-"+k+"."+mp[k].name.split(".").pop());maahUrls.push(mUrl)}
+      data.pere=pere;data.prenom=prenom;data.photoUrl=pUrl;data.hasKids=hasK;data.enfants=enfants;data.photosMaah=maahUrls;
     }
-    
-    btn.textContent="Enregistrement...";
-    await db.collection("formulaire").add(data);
-    
-    document.getElementById("step2a").classList.remove("active");
-    document.getElementById("step2b").classList.remove("active");
-    document.getElementById("step2c").classList.remove("active");
-    document.getElementById("step-ok").classList.add("active");
-    prog(3);
-    window.scrollTo({top:0,behavior:"smooth"});
-  }catch(e){
-    console.error(e);
-    err("Erreur lors de l'envoi : "+e.message);
-    btn.disabled=false;
-    btn.textContent="Envoyer ✓";
-  }
+    btn.textContent="Enregistrement...";await db.collection("formulaire").add(data);
+    document.getElementById("step2a").classList.remove("active");document.getElementById("step2b").classList.remove("active");document.getElementById("step2c").classList.remove("active");document.getElementById("step-ok").classList.add("active");prog(3);window.scrollTo({top:0,behavior:"smooth"});
+  }catch(e){console.error(e);err("Erreur lors de l'envoi : "+e.message);btn.disabled=false;btn.textContent="Envoyer ✓"}
 }
 </script>
 <script src="/js/main.js"></script>
